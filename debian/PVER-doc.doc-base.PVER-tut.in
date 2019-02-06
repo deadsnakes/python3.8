@@ -1,0 +1,13 @@
+Document: @PVER@-tut
+Title: Python Tutorial (v@VER@)
+Author: Guido van Rossum, Fred L. Drake, Jr., editor
+Abstract: This tutorial introduces the reader informally to the basic
+ concepts and features of the Python language and system.  It helps
+ to have a Python interpreter handy for hands-on experience, but
+ all examples are self-contained, so the tutorial can be read
+ off-line as well.
+Section: Programming/Python
+
+Format: HTML
+Index: /usr/share/doc/@PVER@/html/tutorial/index.html
+Files: /usr/share/doc/@PVER@/html/tutorial/*.html

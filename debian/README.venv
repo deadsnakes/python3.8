@@ -1,0 +1,230 @@
+=========================================
+ pyvenv support in Python 3.4 and beyond
+=========================================
+
+In Python 3.3, built-in support for virtual environments (venvs) was added via
+the `pyvenv`_ command.  For building venvs using Python 3, this is
+functionally equivalent to the standalone `virtualenv`_ tool, except that
+before Python 3.4, the pyvenv created venv didn't include pip and setuptools.
+
+In Python 3.4, this was made even more convenient by the `automatic
+inclusion`_ of the `pip`_ command into the venv so that third party libraries
+can be easily installed from the Python Package Index (PyPI_).  The stdlib
+module `ensurepip`_ is run when the `pyvenv-3.4` command is run to create the
+venv.
+
+This poses a problem for Debian.  ensurepip comes bundled with two third party
+libraries, setuptools and pip itself, as these are requirements for pip to
+function properly in the venv.  These are bundled in the ensurepip module of
+the upstream Python 3.4 tarball as `universal wheels`_, essentially a zip of
+the source code and a new ``dist-info`` metadata directory.  Upstream pip
+itself comes bundled with a half dozen or so of *its* dependencies, except
+that these are "vendorized", meaning their unpacked source code lives within
+the pip module, under a submodule from which pip imports them rather than the
+top-level package namespace.
+
+To make matters worse, one of pip's vendorized dependencies, the `requests`_
+module, *also* vendorizes a bunch of its own dependencies.  This stack of
+vendorized and bundled third party libraries fundamentally violates the DFSG
+and Debian policy against including code not built from source available
+within Debian, and for including embedded "convenience" copies of code in
+other packages.
+
+It's worth noting that the virtualenv package actually suffers from the same
+conflict, but its current solution in Debian is `incomplete`_.
+
+
+Solving the conflict
+====================
+
+This conflict between Debian policy and upstream Python convenience must be
+resolved, because pyvenv is the recommended way of creating venvs in Python 3,
+and because at some point, the standalone virtualenv tool will be rewritten as
+a thin layer above pyvenv.  Obviously, we want to provide the best Python
+virtual environment experience to our developers, adherent to Debian policy.
+
+The approach we've taken is layered and nuanced, so I'll provide a significant
+amount of detail to explain both what we do and why.
+
+The first thing to notice is how upstream ensurepip works to have its pip and
+setuptools dependencies available, both at venv creation time and when
+``<venv>/bin/pip`` is run.  When pyvenv-3.4 runs, it ends up calling the
+following Python command::
+
+    <venv>/bin/python -Im ensurepip --upgrade
+
+This runs the ensurepip's ``__main__.py`` module using the venv's Python in
+isolation mode, with a switch to upgrade the setuptools and pip dependencies
+(if for example, they've been updated in a new micro version of Python).
+
+Internally, ensurepip bootstraps itself by byte-copying its embedded wheels
+into a temporary directory, putting those copied wheels on ``sys.path``, and
+then calling into pip as a library.  Because wheels are just elaborate zips,
+Python can execute (pure-Python) code directly from them, if they are on
+``sys.path`` of course.  Once ensurepip has set up its execution environment,
+it calls into pip to install both pip and setuptools into the newly created
+venv.  If you poke inside the venv after successful creation, you'll see
+unpacked pip and setuptools directories in the venv's ``site-packages`
+directory.
+
+The important thing to note here is that ensurepip is *already* able to import
+from and install wheels, and because wheels are self-contained single files
+(of zipped content), it makes manipulating them quite easy.  In order to
+minimize the delta from upstream (and to eventually work with upstream to
+eliminate this delta), it seems optimal that Debian's solution should also be
+based on wheels, and re-use as much of the existing machinery as possible.
+
+The difference for Debian though is that we don't want to use the embedded pip
+and setuptools wheels from upstream Python's ensurepip; we want to use wheels
+created from the pip and setuptools *Debian* packages.  This would solve the
+problem of distributing binary packages not built from source in Debian.
+
+Thus, we modify the python-pip and python-setuptools packages to include new
+binary packages ``python-pip-whl`` and ``python-setuptools-whl` which contain
+*only* the relevant universal wheels.  Those packages ``debian/rules`` files
+gain an extra command::
+
+    python3 setup.py bdist_wheel --universal -d <path>
+
+The ``bdist_wheel`` command is provided by the `wheel`_ package, which as of
+this writing is newly available in Jessie.
+
+Note that the name of the binary packages, and other details of when and how
+wheels may be used in Debian, is described in `Debian Python Policy`_ 0.9.6 or
+newer.
+
+The universal wheels (i.e. pure-Python code compatible with both Python 2 and
+Python 3) are built for pip and setuptools and installed into
+``/usr/share/python-wheels`` when the python-{pip,setuptols}-whl packages are
+installed.  These are not needed for normal, usual, and typical operation of
+Python, so none of these are installed by default.
+
+However, this isn't enough, because since the pip and setuptools wheels are
+built from the *patched* and de-vendorized versions of the code in Debian, the
+wheels will not contain their own recursive dependencies.  That's a good thing
+for Debian policy compliance, but does add complications to the stack of hack.
+
+Using the same approach as for pip and setuptools, we *also* wheelify their
+dependencies, recursively.  As of this writing, the list of packages needing
+to be wheelified are (by Debian source package name):
+
+ * chardet
+ * distlib
+ * html5lib
+ * python-colorama
+ * python-pip
+ * python-setuptools
+ * python-urllib3
+ * requests
+ * six
+
+Most of these are DPMT maintained.  six, distlib, and colorama are not team
+maintained, so coordination with those maintainers is required.  Also note
+that the `bdist_wheel` command is a setuptools extension, so since some of
+those projects use ``distutils.core.setup()`` by default, they must be patched
+to use ``setuptools.setup()`` instead.  This isn't a problem because there's
+no functional difference relevant to those packages; they likely use
+distutils.core to avoid a third party dependency on setuptools.
+
+Each of these Debian source packages grow an additional binary package, just
+like pip and setuptools, e.g. python-chardet-whl which contains the universal
+wheel for that package built from patched Debian source.  As above, when
+installed, these binary packages drop their .whl files into the
+``/usr/share/python-wheels`` directory.
+
+Now comes the fun part.
+
+In the python3.4 source package, we add a new binary package called
+python3.4-venv.  This will only contain the ``/usr/bin/pyvenv-3.4``
+executable, and its associated manpage.  It also includes all the run-time
+dependencies to make pyvenv work *including the wheel packages described
+above*.
+
+(Technically speaking, you should substitute "Python 3.4 or later" for all
+these discussions, and e.g. pyvenv-3.x for all versions subsequent to 3.4.)
+
+Python's ensurepip module has been modified in the following ways (see
+``debian/patches/ensurepip.diff``):
+
+ * When ensurepip is run outside of a venv as root, it raises an exception.
+   This use case is only to be supported by the separate python{,3}-pip
+   packages.
+
+ * When ensurepip is run inside of a venv, it copies all dependent wheels from
+   ``/usr/share/python-wheels``.  This includes the direct dependencies pip
+   and setuptools, as well as the recursive dependencies listed above.  The
+   rest of the ensurepip machinery is unchanged: the wheels are still copied
+   into a temporary directory and placed on ``sys.path``, however only the
+   direct dependencies (i.e. pip and setuptools) are *installed* into the
+   venv's ``site-packages`` directory.  The indirect dependencies are copied
+   to ``<venv>/lib/python-wheels`` since they'll be needed by the venv's pip
+   executable.
+
+Why do we do this latter rather than also installing the recursive
+dependencies into the venv's ``site-packages``?  It's because pip requires a
+very specific set of dependencies and we don't want pip to break when the user
+upgrades or downgrades one of those packages, which is perfectly valid in a
+venv.  It's exactly the same reason why pip vendorizes those libraries in the
+first place; it's just that we're doing it in a more principled way (from the
+point of view of the Debian distribution).
+
+The final piece of the puzzle is that Debian's pip will, when run inside of a
+venv, introspect ``<venv>/lib/python-wheels`` and put every .whl file it sees
+there *at the front of its sys.path*.  Again, this is so that when pip runs,
+it will find the versions of packages known to be good first, rather than any
+other versions in the venv's ``site-packages``.
+
+As an example of the bad things that can happen if you don't do this, try
+installing nose2_ into the venv, followed by genshi_.  nose2 has a hard
+requirement on a version of six that is older than the one used by pip
+(indirectly).  This older version of six is compatible with genshi, but *not*
+with pip, so once nose2 is installed, if pip didn't load its version of six
+from the private wheel, the installation attempt of genshi would traceback.
+As it is, with the wheels early enough on ``sys.path``, pip itself works just
+fine so that both nose2 and genshi can live together in the venv.
+
+
+Updating packages
+=================
+
+Inevitably, new versions of Python or the pyvenv dependent packages will
+appear.  Unfortunately, as currently implemented (by both upstream ensurepip
+and in our ensurepip patch), the versions of both the direct and indirect
+dependencies are hardcoded in ``Lib/ensurepip/__init__.py``.  When a Debian
+developer updates any of the dependent packages, you will need to:
+
+ * *Test that the new version is compatible with ensurepip*.
+
+ * Update the version numbers in the ``debian/control`` file, for the
+   python3.x-venv binary package.
+
+ * ``quilt push`` to the ensurepip patch, and update the version number in
+   ``Lib/ensurepip/__init__.py``
+
+Then rebuild and upload python3.4.
+
+Yes, this isn't ideal, and I am working with upstream to find a good solution
+that we can share.
+
+
+Author
+======
+
+Barry A. Warsaw <barry@debian.org>
+2014-05-15
+
+
+
+.. _pyvenv: http://legacy.python.org/dev/peps/pep-0405/
+.. _virtualenv: https://pypi.python.org/pypi/virtualenv
+.. _`automatic inclusion`: http://legacy.python.org/dev/peps/pep-0453/
+.. _pip: https://pypi.python.org/pypi/pip
+.. _PyPI: https://pypi.python.org/pypi
+.. _ensurepip: https://docs.python.org/3/library/ensurepip.html
+.. _`universal wheels`: http://legacy.python.org/dev/peps/pep-0427/
+.. _requests: https://pypi.python.org/pypi/requests
+.. _incomplete: https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=719767
+.. _wheel: https://pypi.python.org/pypi/wheel
+.. _nose2: https://pypi.python.org/pypi/nose2
+.. _genshi: https://pypi.python.org/pypi/Genshi
+.. _`Debian Python Policy`: https://www.debian.org/doc/packaging-manuals/python-policy/

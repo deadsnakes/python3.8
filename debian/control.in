@@ -1,0 +1,221 @@
+Source: @PVER@
+Section: python
+Priority: optional
+Maintainer: Matthias Klose <doko@debian.org>
+Build-Depends: debhelper (>= 9), @bd_dpkgdev@
+  quilt, autoconf,
+  lsb-release, sharutils,
+  libreadline-dev, libncursesw5-dev (>= 5.3), @bd_gcc@
+  zlib1g-dev, libbz2-dev, liblzma-dev,
+  libgdbm-dev, libdb-dev,
+  tk-dev, blt-dev (>= 2.4z), libssl-dev,
+  libexpat1-dev, libmpdec-dev (>= 2.4),
+  libbluetooth-dev [!hurd-i386 !kfreebsd-i386 !kfreebsd-amd64],
+  locales [!armel !avr32 !hppa !ia64 !mipsel],
+  libsqlite3-dev, libffi-dev (>= 3.0.5) [!or1k !avr32],
+  libgpm2 [!hurd-i386 !kfreebsd-i386 !kfreebsd-amd64],
+  mime-support, netbase, bzip2, time, python3@bd_qual@,
+  net-tools, xvfb, xauth
+Build-Depends-Indep: python3-sphinx, python3-docs-theme, texinfo
+Standards-Version: 4.3.0
+Vcs-Browser: https://salsa.debian.org/cpython-team/python3
+Vcs-Git: https://salsa.debian.org/cpython-team/python3.git
+XS-Testsuite: autopkgtest
+
+Package: @PVER@
+Architecture: any
+Multi-Arch: allowed
+Priority: @PRIO@
+Depends: @PVER@-minimal (= ${binary:Version}),
+ lib@PVER@-stdlib (= ${binary:Version}),
+ mime-support,
+ ${shlibs:Depends}, ${misc:Depends}
+Suggests: @PVER@-venv, @PVER@-doc, binutils
+Breaks: python3-all (<< 3.6.5~rc1-1),
+  python3-dev (<< 3.6.5~rc1-1),
+  python3-venv (<< 3.6.5-2), ${python38:Breaks}
+Description: Interactive high-level object-oriented language (version @VER@)
+ Python is a high-level, interactive, object-oriented language. Its @VER@ version
+ includes an extensive class library with lots of goodies for
+ network programming, system administration, sounds and graphics.
+
+Package: @PVER@-venv
+Architecture: any
+Multi-Arch: allowed
+Priority: @PRIO@
+Depends: @PVER@ (= ${binary:Version}),
+ python-pip-whl (>= 8.1.0-2), ${shlibs:Depends}, ${misc:Depends},
+Breaks: python3-pip (<< 1.5.6-4)
+Description: Interactive high-level object-oriented language (pyvenv binary, version @VER@)
+ Python is a high-level, interactive, object-oriented language. Its @VER@ version
+ includes an extensive class library with lots of goodies for
+ network programming, system administration, sounds and graphics.
+ .
+ This package contains the pyvenv-@VER@ binary.
+
+Package: lib@PVER@-stdlib
+Architecture: any
+Multi-Arch: same
+Priority: @PRIO@
+Pre-Depends: ${misc:Pre-Depends}
+Depends: lib@PVER@-minimal (= ${binary:Version}), mime-support, ${shlibs:Depends}, ${misc:Depends}
+Description: Interactive high-level object-oriented language (standard library, version @VER@)
+ Python is a high-level, interactive, object-oriented language. Its @VER@ version
+ includes an extensive class library with lots of goodies for
+ network programming, system administration, sounds and graphics.
+ .
+ This package contains Python @VER@'s standard library. It is normally not
+ used on its own, but as a dependency of python@VER@.
+
+Package: @PVER@-minimal
+Architecture: any
+Multi-Arch: allowed
+Priority: @MINPRIO@
+Pre-Depends: ${shlibs:Pre-Depends}
+Depends: lib@PVER@-minimal (= ${binary:Version}), ${shlibs:Depends}, ${misc:Depends}
+Recommends: @PVER@
+Suggests: binfmt-support
+Conflicts: binfmt-support (<< 1.1.2)
+Description: Minimal subset of the Python language (version @VER@)
+ This package contains the interpreter and some essential modules.  It can
+ be used in the boot process for some basic tasks.
+ See /usr/share/doc/@PVER@-minimal/README.Debian for a list of the modules
+ contained in this package.
+
+Package: lib@PVER@-minimal
+Architecture: any
+Multi-Arch: same
+Priority: @MINPRIO@
+Pre-Depends: ${misc:Pre-Depends}
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Recommends: lib@PVER@-stdlib
+Conflicts: binfmt-support (<< 1.1.2)
+Description: Minimal subset of the Python language (version @VER@)
+ This package contains some essential modules. It is normally not
+ used on it's own, but as a dependency of @PVER@-minimal.
+
+Package: lib@PVER@
+Architecture: any
+Multi-Arch: same
+Section: libs
+Priority: @PRIO@
+Pre-Depends: ${misc:Pre-Depends}
+Depends: lib@PVER@-stdlib (= ${binary:Version}), ${shlibs:Depends}, ${misc:Depends}
+Description: Shared Python runtime library (version @VER@)
+ Python is a high-level, interactive, object-oriented language. Its @VER@ version
+ includes an extensive class library with lots of goodies for
+ network programming, system administration, sounds and graphics.
+ .
+ This package contains the shared runtime library, normally not needed
+ for programs using the statically linked interpreter.
+
+Package: @PVER@-examples
+Architecture: all
+Depends: @PVER@ (>= ${source:Version}), ${misc:Depends}
+Description: Examples for the Python language (v@VER@)
+ Examples, Demos and Tools for Python (v@VER@). These are files included in
+ the upstream Python distribution (v@VER@).
+
+Package: @PVER@-dev
+Architecture: any
+Multi-Arch: allowed
+Depends: @PVER@ (= ${binary:Version}), lib@PVER@-dev (= ${binary:Version}), lib@PVER@ (= ${binary:Version}), libexpat1-dev, ${shlibs:Depends}, ${misc:Depends}
+Recommends: libc6-dev | libc-dev
+Description: Header files and a static library for Python (v@VER@)
+ Header files, a static library and development tools for building
+ Python (v@VER@) modules, extending the Python interpreter or embedding
+ Python (v@VER@) in applications.
+ .
+ Maintainers of Python packages should read README.maintainers.
+
+Package: lib@PVER@-dev
+Section: libdevel
+Architecture: any
+Multi-Arch: same
+Pre-Depends: ${misc:Pre-Depends}
+Depends: lib@PVER@-stdlib (= ${binary:Version}), lib@PVER@ (= ${binary:Version}), libexpat1-dev, ${shlibs:Depends}, ${misc:Depends}
+Recommends: libc6-dev | libc-dev
+Description: Header files and a static library for Python (v@VER@)
+ Header files, a static library and development tools for building
+ Python (v@VER@) modules, extending the Python interpreter or embedding
+ Python (v@VER@) in applications.
+ .
+ Maintainers of Python packages should read README.maintainers.
+ .
+ This package contains development files. It is normally not
+ used on it's own, but as a dependency of @PVER@-dev.
+
+Package: lib@PVER@-testsuite
+Section: libdevel
+Architecture: all
+Depends: @PVER@ (>= ${binary:Version}), ${misc:Depends}, net-tools
+Suggests: python3-gdbm, python3-tk
+Description: Testsuite for the Python standard library (v@VER@)
+ The complete testsuite for the Python standard library.  Note that
+ a subset is found in the lib@PVER@-stdlib package, which should
+ be enough for other packages to use (please do not build-depend
+ on this package, but file a bug report to include additional 
+ testsuite files in the lib@PVER@-stdlib package).
+
+Package: idle-@PVER@
+Architecture: all
+Depends: @PVER@, python3-tk, @PVER@-tk,
+  ${misc:Depends},
+  libjs-mathjax,
+Enhances: @PVER@
+Description: IDE for Python (v@VER@) using Tkinter
+ IDLE is an Integrated Development Environment for Python (v@VER@).
+ IDLE is written using Tkinter and therefore quite platform-independent.
+
+Package: @PVER@-doc
+Section: doc
+Architecture: all
+Multi-Arch: foreign
+Depends: libjs-jquery, libjs-underscore, ${misc:Depends}
+Suggests: @PVER@
+Description: Documentation for the high-level object-oriented language Python (v@VER@)
+ These is the official set of documentation for the interactive high-level
+ object-oriented language Python (v@VER@). All documents are provided
+ in HTML format. The package consists of ten documents:
+ .
+   * What's New in Python@VER@
+   * Tutorial
+   * Python Library Reference
+   * Macintosh Module Reference
+   * Python Language Reference
+   * Extending and Embedding Python
+   * Python/C API Reference
+   * Installing Python Modules
+   * Documenting Python
+   * Distributing Python Modules
+
+Package: @PVER@-dbg
+Section: debug
+Architecture: any
+Multi-Arch: allowed
+Depends: @PVER@ (= ${binary:Version}), lib@PVER@-dbg (= ${binary:Version}), ${shlibs:Depends}, ${misc:Depends}
+Recommends: gdb
+Suggests: python3-gdbm-dbg, python3-tk-dbg
+Description: Debug Build of the Python Interpreter (version @VER@)
+ The package holds two things:
+ .
+ - A Python interpreter configured with --pydebug. Dynamically loaded modules
+   are searched as <foo>_d.so first. Third party extensions need a separate
+   build to be used by this interpreter.
+ - Debug information for standard python interpreter and extensions.
+ .
+ See the README.debug for more information.
+
+Package: lib@PVER@-dbg
+Section: debug
+Architecture: any
+Multi-Arch: same
+Pre-Depends: ${misc:Pre-Depends}
+Depends: lib@PVER@-stdlib (= ${binary:Version}), ${shlibs:Depends}, ${misc:Depends}
+Description: Debug Build of the Python Interpreter (version @VER@)
+ The package holds two things:
+ .
+ - Extensions for a Python interpreter configured with --pydebug.
+ - Debug information for standard python extensions.
+ .
+ See the README.debug for more information.

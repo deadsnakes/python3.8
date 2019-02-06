@@ -1,0 +1,22 @@
+# DP: argparse.py: Make the gettext import conditional
+
+--- a/Lib/argparse.py
++++ b/Lib/argparse.py
+@@ -88,7 +88,16 @@ import re as _re
+ import shutil as _shutil
+ import sys as _sys
+ 
+-from gettext import gettext as _, ngettext
++try:
++    from gettext import gettext as _, ngettext
++except ImportError:
++    def _(message):
++        return message
++    def ngettext(singular,plural,n):
++        if n == 1:
++            return singular
++        else:
++            return plural
+ 
+ SUPPRESS = '==SUPPRESS=='
+ 

@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=IDLE (using Python-@VER@)
+Comment=Integrated Development Environment for Python (using Python-@VER@)
+Exec=/usr/bin/idle-@PVER@
+Icon=/usr/share/pixmaps/@PVER@.xpm
+Terminal=false
+Type=Application
+Categories=Application;Development;
+StartupNotify=true

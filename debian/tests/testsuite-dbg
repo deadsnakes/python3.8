@@ -1,0 +1,60 @@
+#!/bin/sh
+
+set -e
+
+if [ "$(whoami)" = root ]; then
+  if [ -n "$SUDO_USER" ] && getent passwd "$SUDO_USER" > /dev/null; then
+    su_user="$SUDO_USER"
+  else
+    su_user=nobody
+  fi
+
+  if [ -e /etc/default/apport ]; then
+    # stop apport
+    service apport stop 2>/dev/null || true
+    sed -i '/^enabled=/s/=.*/=0/' /etc/default/apport 2>/dev/null
+  fi
+fi
+
+tmphome=$ADTTMP/home
+mkdir -p $tmphome/.local/lib/python3.8/site-packages
+if [ -n "$su_user" ]; then
+  chmod -R go+rx $ADTTMP
+  chown -R $su_user:nogroup $tmphome
+fi
+ls -la $ADTTMP
+
+debian_dir=$(dirname $(dirname $0))
+
+# no root access needed after this point
+
+TESTPYTHON="python3.8dm -W default -bb -E -R -m test"
+TESTEXCLUSIONS="-x"
+
+. $debian_dir/tests/test-common.sh
+
+if [ "$su_user" = nobody ]; then
+  log=/dev/null
+else
+  log=testsuite-dbg.log
+fi
+
+# several tests fail with configured proxy; we don't need internet access, so
+# unset proxy variables
+EXTRAENV="env -u https_proxy -u http_proxy -u no_proxy HOME=$tmphome"
+
+script=$debian_dir/script.py
+if [ -f "$script" ]; then
+  cmd="$EXTRAENV python3.8 $script \"$log\" \"$TESTPYTHON $TESTOPTS $TESTEXCLUSIONS\""
+else
+  cmd="$EXTRAENV $TESTPYTHON $TESTOPTS $TESTEXCLUSIONS"
+fi
+
+echo "Running the python testsuite with the debug enabled interpreter:"
+if [ "$(whoami)" = root ]; then
+  echo "su -s /bin/sh -c $cmd $su_user"
+  su -s /bin/sh -c "$cmd" $su_user
+else
+  echo "$cmd"
+  eval $cmd
+fi

@@ -1,0 +1,5 @@
+# generated during the build
+quilt-build-dep-but-no-series-file
+
+# in the source only, and can be built with mingw64
+source-contains-prebuilt-windows-binary

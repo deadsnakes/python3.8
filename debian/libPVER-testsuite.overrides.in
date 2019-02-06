@@ -1,0 +1,4 @@
+lib@PVER@-testsuite binary: python-script-but-no-python-dep
+lib@PVER@-testsuite binary: image-file-in-usr-lib
+lib@PVER@-testsuite binary: privacy-breach-generic
+lib@PVER@-testsuite binary: command-with-path-in-maintainer-script

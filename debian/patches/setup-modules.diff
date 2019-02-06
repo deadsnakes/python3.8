@@ -1,0 +1,48 @@
+--- a/Modules/Setup
++++ b/Modules/Setup
+@@ -174,7 +174,7 @@ _symtable symtablemodule.c
+ #_weakref _weakref.c	# basic weak reference support
+ #_testcapi _testcapimodule.c    # Python C API test module
+ #_random _randommodule.c	# Random number generator
+-#_elementtree -I$(srcdir)/Modules/expat -DHAVE_EXPAT_CONFIG_H -DUSE_PYEXPAT_CAPI _elementtree.c	# elementtree accelerator
++#_elementtree _elementtree.c -lexpat	# elementtree accelerator
+ #_pickle _pickle.c	# pickle accelerator
+ #_datetime _datetimemodule.c	# datetime accelerator
+ #_bisect _bisectmodule.c	# Bisection algorithms
+@@ -205,10 +205,7 @@ _symtable symtablemodule.c
+ 
+ # Socket module helper for SSL support; you must comment out the other
+ # socket line above, and possibly edit the SSL variable:
+-#SSL=/usr/local/ssl
+-#_ssl _ssl.c \
+-#	-DUSE_SSL -I$(SSL)/include -I$(SSL)/include/openssl \
+-#	-L$(SSL)/lib -lssl -lcrypto
++#_ssl _ssl.c -lssl -lcrypto
+ 
+ # The crypt module is now disabled by default because it breaks builds
+ # on many systems (where -lcrypt is needed), e.g. Linux (I believe).
+@@ -241,6 +238,7 @@ _symtable symtablemodule.c
+ 
+ #_md5 md5module.c
+ 
++#_hashlib _hashopenssl.c -lssl -lcrypto
+ 
+ # The _sha module implements the SHA checksum algorithms.
+ # (NIST's Secure Hash Algorithms.)
+@@ -328,6 +326,7 @@ _symtable symtablemodule.c
+ # Fred Drake's interface to the Python parser
+ #parser parsermodule.c
+ 
++#_ctypes _ctypes/_ctypes.c _ctypes/callbacks.c _ctypes/callproc.c _ctypes/stgdict.c _ctypes/cfield.c _ctypes/malloc_closure.c -lffi
+ 
+ # Andrew Kuchling's zlib module.
+ # This require zlib 1.1.3 (or later).
+@@ -337,7 +336,7 @@ _symtable symtablemodule.c
+ # Interface to the Expat XML parser
+ # More information on Expat can be found at www.libexpat.org.
+ #
+-#pyexpat expat/xmlparse.c expat/xmlrole.c expat/xmltok.c pyexpat.c -I$(srcdir)/Modules/expat -DHAVE_EXPAT_CONFIG_H -DXML_POOR_ENTROPY=1 -DUSE_PYEXPAT_CAPI
++pyexpat pyexpat.c -lexpat
+ 
+ # Hye-Shik Chang's CJKCodecs
+ 

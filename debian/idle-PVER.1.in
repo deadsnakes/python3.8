@@ -1,0 +1,104 @@
+.TH IDLE 1 "21 September 2004"
+.SH NAME
+\fBIDLE\fP \- An Integrated DeveLopment Environment for Python
+.SH SYNTAX
+.B idle [ \fI-dins\fP ] [ \fI-t title\fP ] [ \fIfile\fP ...]
+.PP
+.B idle [ \fI-dins\fP ] [ \fI-t title\fP ] ( \fI-c cmd\fP | \fI-r file\fP ) [ \fIarg\fP ...]
+.PP
+.B idle [ \fI-dins\fP ] [ \fI-t title\fP ] - [ \fIarg\fP ...]
+.SH DESCRIPTION
+This manual page documents briefly the
+.BR idle
+command.
+This manual page was written for Debian
+because the original program does not have a manual page.
+For more information, refer to IDLE's help menu.
+.PP
+.B IDLE
+is an Integrated DeveLopment Environment for Python. IDLE is based on
+Tkinter, Python's bindings to the Tk widget set. Features are 100% pure
+Python, multi-windows with multiple undo and Python colorizing, a Python
+shell window subclass, a debugger. IDLE is cross-platform, i.e. it works
+on all platforms where Tk is installed.
+.LP
+.SH OPTIONS
+.TP
+.B \-h
+.PD
+Print this help message and exit.
+.TP
+.B \-n
+.PD
+Run IDLE without a subprocess (see Help/IDLE Help for details).
+.PP
+The following options will override the IDLE 'settings' configuration:
+.TP
+.B \-e
+.PD
+Open an edit window.
+.TP
+.B \-i
+.PD
+Open a shell window.
+.PP
+The following options imply -i and will open a shell:
+.TP
+.B \-c cmd
+.PD
+Run the command in a shell, or
+.TP
+.B \-r file
+.PD
+Run script from file.
+.PP
+.TP
+.B \-d
+.PD
+Enable the debugger.
+.TP
+.B \-s
+.PD
+Run $IDLESTARTUP or $PYTHONSTARTUP before anything else.
+.TP
+.B \-t title
+.PD
+Set title of shell window.
+.PP
+A default edit window will be bypassed when -c, -r, or - are used.
+.PP
+[arg]* and [file]* are passed to the command (-c) or script (-r) in sys.argv[1:].
+.SH EXAMPLES
+.TP
+idle
+.PD
+Open an edit window or shell depending on IDLE's configuration.
+.TP
+idle foo.py foobar.py
+.PD
+Edit the files, also open a shell if configured to start with shell.
+.TP
+idle -est "Baz" foo.py
+.PD
+Run $IDLESTARTUP or $PYTHONSTARTUP, edit foo.py, and open a shell
+window with the title "Baz".
+.TP
+idle -c "import sys; print sys.argv" "foo"
+.PD
+Open a shell window and run the command, passing "-c" in sys.argv[0]
+and "foo" in sys.argv[1].
+.TP
+idle -d -s -r foo.py "Hello World"
+.PD
+Open a shell window, run a startup script, enable the debugger, and
+run foo.py, passing "foo.py" in sys.argv[0] and "Hello World" in
+sys.argv[1].
+.TP
+echo "import sys; print sys.argv" | idle - "foobar"
+.PD
+Open a shell window, run the script piped in, passing '' in sys.argv[0]
+and "foobar" in sys.argv[1].
+.SH SEE ALSO
+python(1).
+.SH AUTHORS
+Various.

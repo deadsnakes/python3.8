@@ -1,0 +1,30 @@
+# DP: adjust locations of directories to debian policy
+
+Index: b/Lib/pydoc.py
+===================================================================
+--- a/Lib/pydoc.py
++++ b/Lib/pydoc.py
+@@ -31,6 +31,10 @@ to a file named "<name>.html".
+ 
+ Module docs for core modules are assumed to be in
+ 
++    /usr/share/doc/pythonX.Y/html/library
++
++if the pythonX.Y-doc package is installed or in
++
+     https://docs.python.org/X.Y/library/
+ 
+ This can be overridden by setting the PYTHONDOCS environment variable
+Index: b/Misc/python.man
+===================================================================
+--- a/Misc/python.man
++++ b/Misc/python.man
+@@ -333,7 +333,7 @@ exception).  Error messages are written
+ These are subject to difference depending on local installation
+ conventions; ${prefix} and ${exec_prefix} are installation-dependent
+ and should be interpreted as for GNU software; they may be the same.
+-The default for both is \fI/usr/local\fP.
++On Debian GNU/{Hurd,Linux} the default for both is \fI/usr\fP.
+ .IP \fI${exec_prefix}/bin/python\fP
+ Recommended location of the interpreter.
+ .PP

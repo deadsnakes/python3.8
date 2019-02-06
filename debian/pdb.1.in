@@ -1,0 +1,16 @@
+.TH PDB@VER@ 1
+.SH NAME
+pdb@VER@ \- the Python debugger
+.SH SYNOPSIS
+.PP
+.B pdb@VER@
+.I script [...]
+.SH DESCRIPTION
+.PP
+See the chapter "The Python Debugger" in the Python Library Reference
+for more information on the use of pdb.  When the debugger is started,
+help is available via the help command.
+.SH SEE ALSO
+python@VER@(1). Chapter "The Python Debugger" of the Python Library
+Reference. Available in the python@VER@-doc package at
+/usr/share/doc/python@VER@/html/library/pdb.html.

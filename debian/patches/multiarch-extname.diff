@@ -1,0 +1,92 @@
+# DP: Make sure to rename extensions to a tag including the MULTIARCH name
+ 
+this patch can be dropped for python3.5 final, if the upstream chage is kept.
+
+Index: b/Lib/distutils/dir_util.py
+===================================================================
+--- a/Lib/distutils/dir_util.py
++++ b/Lib/distutils/dir_util.py
+@@ -96,6 +96,9 @@ def create_tree(base_dir, files, mode=0o
+     for dir in sorted(need_dir):
+         mkpath(dir, mode, verbose=verbose, dry_run=dry_run)
+ 
++import sysconfig
++_multiarch = None
++
+ def copy_tree(src, dst, preserve_mode=1, preserve_times=1,
+               preserve_symlinks=0, update=0, verbose=1, dry_run=0):
+     """Copy an entire directory tree 'src' to a new location 'dst'.
+@@ -131,6 +134,13 @@ def copy_tree(src, dst, preserve_mode=1,
+             raise DistutilsFileError(
+                   "error listing files in '%s': %s" % (src, e.strerror))
+ 
++    ext_suffix = sysconfig.get_config_var ('EXT_SUFFIX')
++    _multiarch = sysconfig.get_config_var ('MULTIARCH')
++    if ext_suffix.endswith(_multiarch + ext_suffix[-3:]):
++        new_suffix = None
++    else:
++        new_suffix = "%s-%s%s" % (ext_suffix[:-3], _multiarch, ext_suffix[-3:])
++
+     if not dry_run:
+         mkpath(dst, verbose=verbose)
+ 
+@@ -139,6 +149,9 @@ def copy_tree(src, dst, preserve_mode=1,
+     for n in names:
+         src_name = os.path.join(src, n)
+         dst_name = os.path.join(dst, n)
++        if new_suffix and _multiarch and n.endswith(ext_suffix) and not n.endswith(new_suffix):
++            dst_name = os.path.join(dst, n.replace(ext_suffix, new_suffix))
++            log.info("renaming extension %s -> %s", n, n.replace(ext_suffix, new_suffix))
+ 
+         if n.startswith('.nfs'):
+             # skip NFS rename files
+Index: b/Lib/distutils/command/install_lib.py
+===================================================================
+--- a/Lib/distutils/command/install_lib.py
++++ b/Lib/distutils/command/install_lib.py
+@@ -56,6 +56,7 @@ class install_lib(Command):
+         self.compile = None
+         self.optimize = None
+         self.skip_build = None
++        self.multiarch = None # if we should rename the extensions
+ 
+     def finalize_options(self):
+         # Get all the information we need to install pure Python modules
+@@ -68,6 +69,7 @@ class install_lib(Command):
+                                    ('compile', 'compile'),
+                                    ('optimize', 'optimize'),
+                                    ('skip_build', 'skip_build'),
++                                   ('multiarch', 'multiarch'),
+                                   )
+ 
+         if self.compile is None:
+@@ -108,6 +110,8 @@ class install_lib(Command):
+ 
+     def install(self):
+         if os.path.isdir(self.build_dir):
++            import distutils.dir_util
++            distutils.dir_util._multiarch = self.multiarch
+             outfiles = self.copy_tree(self.build_dir, self.install_dir)
+         else:
+             self.warn("'%s' does not exist -- no Python modules to install" %
+Index: b/Lib/distutils/command/install.py
+===================================================================
+--- a/Lib/distutils/command/install.py
++++ b/Lib/distutils/command/install.py
+@@ -192,6 +192,7 @@ class install(Command):
+ 
+         # enable custom installation, known values: deb
+         self.install_layout = None
++        self.multiarch = None
+         
+         self.compile = None
+         self.optimize = None
+@@ -451,6 +452,8 @@ class install(Command):
+             self.install_platbase = self.exec_prefix
+             if self.install_layout:
+                 if self.install_layout.lower() in ['deb']:
++                    import sysconfig
++                    self.multiarch = sysconfig.get_config_var('MULTIARCH')
+                     self.select_scheme("deb_system")
+                 elif self.install_layout.lower() in ['unix']:
+                     self.select_scheme("unix_prefix")

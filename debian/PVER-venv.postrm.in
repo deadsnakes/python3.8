@@ -1,0 +1,12 @@
+#! /bin/sh
+
+set -e
+
+if [ "$1" = "purge" ]; then
+    rm -rf /usr/lib/python-wheels
+    rm -rf /var/lib/python-wheels
+fi
+
+#DEBHELPER#
+
+exit 0

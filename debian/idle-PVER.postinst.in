@@ -1,0 +1,32 @@
+#! /bin/sh
+#
+# postinst script for the Debian idle-@PVER@ package.
+# Written 1998 by Gregor Hoffleit <flight@debian.org>.
+#
+
+set -e
+
+DIRLIST="/usr/lib/python@VER@/idlelib"
+
+case "$1" in
+    configure|abort-upgrade|abort-remove|abort-deconfigure)
+
+        for i in $DIRLIST ; do
+	    /usr/bin/@PVER@ /usr/lib/@PVER@/compileall.py -q $i
+	    if grep -sq '^byte-compile[^#]*optimize' /etc/python/debian_config
+	    then
+		/usr/bin/@PVER@ -O /usr/lib/@PVER@/compileall.py -q $i
+	    fi
+	done
+    ;;
+
+    *)
+	echo "postinst called with unknown argument \`$1'" >&2
+	exit 1
+    ;;
+
+esac
+
+#DEBHELPER#
+
+exit 0

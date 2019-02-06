@@ -1,0 +1,36 @@
+# DP: Assume working semaphores, don't rely on running kernel for the check.
+
+--- a/configure.ac
++++ b/configure.ac
+@@ -4429,8 +4429,13 @@ int main(void) {
+ AC_MSG_RESULT($ac_cv_posix_semaphores_enabled)
+ if test $ac_cv_posix_semaphores_enabled = no
+ then
+-  AC_DEFINE(POSIX_SEMAPHORES_NOT_ENABLED, 1,
+-            [Define if POSIX semaphores aren't enabled on your system])
++  case $ac_sys_system in
++    Linux*) # assume yes, see https://launchpad.net/bugs/630511
++      ;;
++    *)
++      AC_DEFINE(POSIX_SEMAPHORES_NOT_ENABLED, 1,
++                [Define if POSIX semaphores aren't enabled on your system])
++  esac
+ fi
+ 
+ # Multiprocessing check for broken sem_getvalue
+@@ -4465,8 +4470,13 @@ int main(void){
+ AC_MSG_RESULT($ac_cv_broken_sem_getvalue)
+ if test $ac_cv_broken_sem_getvalue = yes
+ then
+-  AC_DEFINE(HAVE_BROKEN_SEM_GETVALUE, 1,
+-  [define to 1 if your sem_getvalue is broken.])
++  case $ac_sys_system in
++    Linux*) # assume yes, see https://launchpad.net/bugs/630511
++      ;;
++    *)
++      AC_DEFINE(HAVE_BROKEN_SEM_GETVALUE, 1,
++      [define to 1 if your sem_getvalue is broken.])
++  esac
+ fi
+ 
+ AC_CHECK_DECLS([RTLD_LAZY, RTLD_NOW, RTLD_GLOBAL, RTLD_LOCAL, RTLD_NODELETE, RTLD_NOLOAD, RTLD_DEEPBIND, RTLD_MEMBER], [], [], [[#include <dlfcn.h>]])

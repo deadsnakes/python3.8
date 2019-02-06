@@ -1,0 +1,72 @@
+
+ Python and dbm modules on Debian
+ --------------------------------
+
+This file documents the configuration of the dbm modules for Debian. It
+gives hints at the preferred use of the dbm modules.
+
+
+The preferred way to access dbm databases in Python is the anydbm module.
+dbm databases behave like mappings (dictionaries).
+
+Since there exist several dbm database formats, we choose the following
+layout for Python on Debian:
+
+  * creating a new database with anydbm will create a Berkeley DB 2.X Hash
+    database file. This is the standard format used by libdb starting
+    with glibc 2.1.
+
+  * opening an existing database with anydbm will try to guess the format
+    of the file (using whichdb) and then load it using one of the bsddb,
+    bsddb1, gdbm or dbm (only if the python-gdbm package is installed)
+    or dumbdbm modules.
+
+  * The modules use the following database formats:
+
+    - bsddb:   Berkeley DB 2.X Hash (as in libc6 >=2.1 or libdb2)
+    - bsddb1:  Berkeley DB 1.85 Hash (as in libc6 >=2.1 or libdb2)
+    - gdbm:    GNU dbm 1.x or ndbm
+    - dbm:     " (nearly the same as the gdbm module for us)
+    - dumbdbm: a hand-crafted format only used in this module
+
+    That means that all usual formats should be readable with anydbm.
+
+  * If you want to create a database in a format different from DB 2.X,
+    you can still directly use the specified module.
+
+  * I.e. bsddb is the preferred module, and DB 2.X is the preferred format.
+
+  * Note that the db1hash and bsddb1 modules are Debian specific. anydbm
+    and whichdb have been modified to support DB 2.X Hash files (see
+    below for details).
+    
+
+
+For experts only:
+----------------
+
+Although bsddb employs the new DB 2.X format and uses the new Sleepycat
+DB 2 library as included with glibc >= 2.1, it's still using the old
+DB 1.85 API (which is still supported by DB 2).
+
+A more recent version 1.1 of the BSD DB module (available from
+http://starship.skyport.net/robind/python/) directly uses the DB 2.X API.
+It has a richer set of features.
+
+
+On a glibc 2.1 system, bsddb is linked with -ldb, bsddb1 is linked with
+-ldb1 and gdbm as well as dbm are linked with -lgdbm.
+
+On a glibc 2.0 system (e.g. potato for m68k or slink), bsddb will be
+linked with -ldb2 while bsddb1 will be linked with -ldb (therefore
+python-base here depends on libdb2).
+
+
+db1hash and bsddb1 nearly completely identical to dbhash and bsddb. The
+only difference is that bsddb is linked with the real DB 2 library, while
+bsddb1 is linked with an library which provides compatibility with legacy
+DB 1.85 databases.
+
+
+    July 16, 1999
+    Gregor Hoffleit <flight@debian.org>

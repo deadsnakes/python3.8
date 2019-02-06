@@ -1,0 +1,34 @@
+Index: b/Lib/ctypes/util.py
+===================================================================
+--- a/Lib/ctypes/util.py
++++ b/Lib/ctypes/util.py
+@@ -256,16 +256,27 @@ elif os.name == "posix":
+ 
+         def _findSoname_ldconfig(name):
+             import struct
++            # XXX this code assumes that we know all unames and that a single
++            # ABI is supported per uname; instead we should find what the
++            # ABI is (e.g. check ABI of current process) or simply ask libc
++            # to load the library for us
++            uname = os.uname()
++            # ARM has a variety of unames, e.g. armv7l
++            if uname.machine.startswith("arm"):
++                machine = "arm"
+             if struct.calcsize('l') == 4:
+-                machine = os.uname().machine + '-32'
++                machine = uname.machine + '-32'
+             else:
+-                machine = os.uname().machine + '-64'
++                machine = uname.machine + '-64'
+             mach_map = {
+                 'x86_64-64': 'libc6,x86-64',
+                 'ppc64-64': 'libc6,64bit',
+                 'sparc64-64': 'libc6,64bit',
+                 's390x-64': 'libc6,64bit',
+                 'ia64-64': 'libc6,IA-64',
++                # this actually breaks on biarch or multiarch as the first
++                # library wins; uname doesn't tell us which ABI we're using
++                'arm-32': 'libc6(,hard-float)?',
+                 }
+             abi_type = mach_map.get(machine, 'libc6')
+ 

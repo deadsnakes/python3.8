@@ -1,0 +1,53 @@
+.TH PYDOC@VER@ 1
+.SH NAME
+pydoc@VER@ \- the Python documentation tool
+.SH SYNOPSIS
+.PP
+.B pydoc@VER@
+.I name
+.PP
+.B pydoc@VER@ -k
+.I keyword
+.PP
+.B pydoc@VER@ -p
+.I port
+.PP
+.B pydoc@VER@ -g
+.PP
+.B pydoc@VER@ -w
+.I module [...]
+.SH DESCRIPTION
+.PP
+.B pydoc@VER@
+.I name
+Show text documentation on something.
+.I name
+may be the name of a
+Python keyword, topic, function, module, or package, or a dotted
+reference to a class or function within a module or module in a
+package.  If
+.I name
+contains a '/', it is used as the path to a
+Python source file to document. If name is 'keywords', 'topics',
+or 'modules', a listing of these things is displayed.
+.PP
+.B pydoc@VER@ -k
+.I keyword
+Search for a keyword in the synopsis lines of all available modules.
+.PP
+.B pydoc@VER@ -p
+.I port
+Start an HTTP server on the given port on the local machine.
+.PP
+.B pydoc@VER@ -g
+Pop up a graphical interface for finding and serving documentation.
+.PP
+.B pydoc@VER@ -w
+.I name [...]
+Write out the HTML documentation for a module to a file in the current
+directory.  If
+.I name
+contains a '/', it is treated as a filename; if
+it names a directory, documentation is written for all the contents.
+.SH AUTHOR
+Moshe Zadka, based on "pydoc --help"

@@ -1,0 +1,11 @@
+
+Package: @PVER@-udeb
+XC-Package-Type: udeb
+Section: debian-installer
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+XB-Python-Runtime: @PVER@
+XB-Python-Version: @VER@
+Description: A minimal subset of the Python language (version @VER@)
+ This package contains the interpreter and some essential modules, packaged
+ for use in the installer.

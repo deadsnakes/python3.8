@@ -1,0 +1,7 @@
+The source tarball is lacking the files Lib/profile.py and Lib/pstats.py,
+which Debian considers to have a license non-suitable for main (the use
+of these modules limited to python).
+
+The package uses quilt to apply / unapply patches.
+See /usr/share/doc/quilt/README.source.  The series file is generated
+during the build.

@@ -1,0 +1,9 @@
+# intentional
+lib@PVER@-minimal binary: python-script-but-no-python-dep
+
+# lintian omission, multiarch string is encoded in the filename
+lib@PVER@-minimal binary: arch-dependent-file-not-in-arch-specific-directory
+
+# yes, some extensions don't have references to any external lib
+lib@PVER@-minimal binary: shared-lib-without-dependency-information
+lib@PVER@-minimal binary: library-not-linked-against-libc

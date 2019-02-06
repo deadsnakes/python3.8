@@ -1,0 +1,24 @@
+# DP: When using GCC versions older than 4.9, automagically mangle
+# DP: -fstack-protector-strong to -fstack-protector
+
+--- a/Lib/distutils/sysconfig.py
++++ b/Lib/distutils/sysconfig.py
+@@ -13,6 +13,7 @@ import _imp
+ import os
+ import re
+ import sys
++import fnmatch
+ 
+ from .errors import DistutilsPlatformError
+ 
+@@ -195,6 +196,10 @@ def customize_compiler(compiler):
+             cc = newcc
+         if 'CXX' in os.environ:
+             cxx = os.environ['CXX']
++        if fnmatch.filter([cc, cxx], '*-4.[0-8]'):
++            configure_cflags = configure_cflags.replace('-fstack-protector-strong', '-fstack-protector')
++            ldshared = ldshared.replace('-fstack-protector-strong', '-fstack-protector')
++            cflags = cflags.replace('-fstack-protector-strong', '-fstack-protector')
+         if 'LDSHARED' in os.environ:
+             ldshared = os.environ['LDSHARED']
+         if 'CPP' in os.environ:

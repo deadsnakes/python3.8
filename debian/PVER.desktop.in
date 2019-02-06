@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=Python (v@VER@)
+Comment=Python Interpreter (v@VER@)
+Exec=/usr/bin/@PVER@
+Icon=/usr/share/pixmaps/@PVER@.xpm
+Terminal=true
+Type=Application
+Categories=Development;
+StartupNotify=true
+NoDisplay=true

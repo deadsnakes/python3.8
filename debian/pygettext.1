@@ -1,0 +1,108 @@
+.TH PYGETTEXT 1 "" "pygettext 1.4"
+.SH NAME
+pygettext \- Python equivalent of xgettext(1)
+.SH SYNOPSIS
+.B pygettext
+[\fIOPTIONS\fR] \fIINPUTFILE \fR...
+.SH DESCRIPTION
+pygettext is deprecated. The current version of xgettext supports
+many languages, including Python.
+
+pygettext uses Python's standard tokenize module to scan Python
+source code, generating .pot files identical to what GNU xgettext generates
+for C and C++ code.  From there, the standard GNU tools can be used.
+.PP
+pygettext searches only for _() by default, even though GNU xgettext
+recognizes the following keywords: gettext, dgettext, dcgettext,
+and gettext_noop. See the \fB\-k\fR/\fB\--keyword\fR flag below for how to
+augment this.
+.PP
+.SH OPTIONS
+.TP
+\fB\-a\fR, \fB\-\-extract\-all\fR
+Extract all strings.
+.TP
+\fB\-d\fR, \fB\-\-default\-domain\fR=\fINAME\fR
+Rename the default output file from messages.pot to name.pot.
+.TP
+\fB\-E\fR, \fB\-\-escape\fR
+Replace non-ASCII characters with octal escape sequences.
+.TP
+\fB\-D\fR, \fB\-\-docstrings\fR
+Extract module, class, method, and function docstrings.
+These do not need to be wrapped in _() markers, and in fact cannot
+be for Python to consider them docstrings. (See also the \fB\-X\fR option).
+.TP
+\fB\-h\fR, \fB\-\-help\fR
+Print this help message and exit.
+.TP
+\fB\-k\fR, \fB\-\-keyword\fR=\fIWORD\fR
+Keywords to look for in addition to the default set, which are: _
+.IP
+You can have multiple \fB\-k\fR flags on the command line.
+.TP
+\fB\-K\fR, \fB\-\-no\-default\-keywords\fR
+Disable the default set of keywords (see above).
+Any keywords explicitly added with the \fB\-k\fR/\fB\--keyword\fR option
+are still recognized.
+.TP
+\fB\-\-no\-location\fR
+Do not write filename/lineno location comments.
+.TP
+\fB\-n\fR, \fB\-\-add\-location\fR
+Write filename/lineno location comments indicating where each
+extracted string is found in the source.  These lines appear before
+each msgid.  The style of comments is controlled by the
+\fB\-S\fR/\fB\--style\fR option.  This is the default.
+.TP
+\fB\-o\fR, \fB\-\-output\fR=\fIFILENAME\fR
+Rename the default output file from messages.pot to FILENAME.
+If FILENAME is `-' then the output is sent to standard out.
+.TP
+\fB\-p\fR, \fB\-\-output\-dir\fR=\fIDIR\fR
+Output files will be placed in directory DIR.
+.TP
+\fB\-S\fR, \fB\-\-style\fR=\fISTYLENAME\fR
+Specify which style to use for location comments.
+Two styles are supported:
+.RS
+.IP \(bu 4
+Solaris	# File: filename, line: line-number
+.IP \(bu 4
+GNU		#: filename:line
+.RE
+.IP
+The style name is case insensitive.
+GNU style is the default.
+.TP
+\fB\-v\fR, \fB\-\-verbose\fR
+Print the names of the files being processed.
+.TP
+\fB\-V\fR, \fB\-\-version\fR
+Print the version of pygettext and exit.
+.TP
+\fB\-w\fR, \fB\-\-width\fR=\fICOLUMNS\fR
+Set width of output to columns.
+.TP
+\fB\-x\fR, \fB\-\-exclude\-file\fR=\fIFILENAME\fR
+Specify a file that contains a list of strings that are not be
+extracted from the input files.  Each string to be excluded must
+appear on a line by itself in the file.
+.TP
+\fB\-X\fR, \fB\-\-no\-docstrings\fR=\fIFILENAME\fR
+Specify a file that contains a list of files (one per line) that
+should not have their docstrings extracted.  This is only useful in
+conjunction with the \fB\-D\fR option above.
+.PP
+If `INPUTFILE' is -, standard input is read.
+.SH BUGS
+pygettext attempts to be option and feature compatible with GNU xgettext
+where ever possible.  However some options are still missing or are not fully
+implemented.  Also, xgettext's use of command line switches with option
+arguments is broken, and in these cases, pygettext just defines additional
+switches.
+.SH AUTHOR
+pygettext is written by Barry Warsaw <barry@zope.com>.
+.PP
+Joonas Paalasmaa <joonas.paalasmaa@iki.fi> put this manual page together
+based on "pygettext --help".

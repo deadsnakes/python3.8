@@ -1,0 +1,34 @@
+# DP: Description: support alternative gettext tree in
+# DP: /usr/share/locale-langpack; if a file is present in both trees,
+# DP: prefer the newer one
+# DP: Upstream status: Ubuntu-Specific
+
+--- a/Lib/gettext.py
++++ b/Lib/gettext.py
+@@ -560,11 +560,26 @@ def find(domain, localedir=None, languag
+         if lang == 'C':
+             break
+         mofile = os.path.join(localedir, lang, 'LC_MESSAGES', '%s.mo' % domain)
++        mofile_lp = os.path.join("/usr/share/locale-langpack", lang,
++                               'LC_MESSAGES', '%s.mo' % domain)
++
++	# first look into the standard locale dir, then into the 
++	# langpack locale dir
++
++	# standard mo file
+         if os.path.exists(mofile):
+             if all:
+                 result.append(mofile)
+             else:
+                 return mofile
++        
++	# langpack mofile -> use it
++        if os.path.exists(mofile_lp): 
++            if all:
++                result.append(mofile_lp)
++            else:
++                return mofile_lp
++
+     return result
+ 
+ 

@@ -1,0 +1,12 @@
+# DP: suggest installation of python3-gdbm package on failing _gdbm import
+
+--- a/Lib/dbm/gnu.py
++++ b/Lib/dbm/gnu.py
+@@ -1,3 +1,6 @@
+ """Provide the _gdbm module as a dbm submodule."""
+ 
+-from _gdbm import *
++try:
++    from _gdbm import *
++except ImportError as msg:
++    raise ImportError(str(msg) + ', please install the python3-gdbm package')

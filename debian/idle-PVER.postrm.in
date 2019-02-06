@@ -1,0 +1,11 @@
+#! /bin/sh
+
+set -e
+
+if [ "$1" = "purge" ]; then
+    rm -rf /etc/idle-@PVER@
+fi
+
+#DEBHELPER#
+
+exit 0

@@ -1,0 +1,23 @@
+#! /bin/sh
+
+set -e
+
+case "$1" in
+    remove)
+	dpkg -L lib@PVER@-dbg@HOST_QUAL@ \
+	    | awk '/\.py$/ {print $0"c\n" $0"o"}' \
+	    | xargs -r rm -f >&2
+        ;;
+    upgrade)
+        ;;
+    deconfigure)
+        ;;
+    failed-upgrade)
+        ;;
+    *)
+        echo "prerm called with unknown argument \`$1'" >&2
+        exit 1
+    ;;
+esac
+
+#DEBHELPER#

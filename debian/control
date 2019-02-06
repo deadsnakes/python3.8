@@ -1,0 +1,222 @@
+Source: python3.8
+Section: python
+Priority: optional
+Maintainer: Ubuntu Core Developers <ubuntu-devel-discuss@lists.ubuntu.com>
+XSBC-Original-Maintainer: Matthias Klose <doko@debian.org>
+Build-Depends: debhelper (>= 9), dpkg-dev (>= 1.17.11),
+  quilt, autoconf,
+  lsb-release, sharutils,
+  libreadline-dev, libncursesw5-dev (>= 5.3), 
+  zlib1g-dev, libbz2-dev, liblzma-dev,
+  libgdbm-dev, libdb-dev,
+  tk-dev, blt-dev (>= 2.4z), libssl-dev,
+  libexpat1-dev, libmpdec-dev (>= 2.4),
+  libbluetooth-dev [!hurd-i386 !kfreebsd-i386 !kfreebsd-amd64],
+  locales [!armel !avr32 !hppa !ia64 !mipsel],
+  libsqlite3-dev, libffi-dev (>= 3.0.5) [!or1k !avr32],
+  libgpm2 [!hurd-i386 !kfreebsd-i386 !kfreebsd-amd64],
+  mime-support, netbase, bzip2, time, python3:any,
+  net-tools, xvfb, xauth
+Build-Depends-Indep: python3-sphinx, python3-docs-theme, texinfo
+Standards-Version: 4.3.0
+Vcs-Browser: https://salsa.debian.org/cpython-team/python3
+Vcs-Git: https://salsa.debian.org/cpython-team/python3.git
+XS-Testsuite: autopkgtest
+
+Package: python3.8
+Architecture: any
+Multi-Arch: allowed
+Priority: optional
+Depends: python3.8-minimal (= ${binary:Version}),
+ libpython3.8-stdlib (= ${binary:Version}),
+ mime-support,
+ ${shlibs:Depends}, ${misc:Depends}
+Suggests: python3.8-venv, python3.8-doc, binutils
+Breaks: python3-all (<< 3.6.5~rc1-1),
+  python3-dev (<< 3.6.5~rc1-1),
+  python3-venv (<< 3.6.5-2), ${python38:Breaks}
+Description: Interactive high-level object-oriented language (version 3.8)
+ Python is a high-level, interactive, object-oriented language. Its 3.8 version
+ includes an extensive class library with lots of goodies for
+ network programming, system administration, sounds and graphics.
+
+Package: python3.8-venv
+Architecture: any
+Multi-Arch: allowed
+Priority: optional
+Depends: python3.8 (= ${binary:Version}),
+ python-pip-whl (>= 8.1.0-2), ${shlibs:Depends}, ${misc:Depends},
+Breaks: python3-pip (<< 1.5.6-4)
+Description: Interactive high-level object-oriented language (pyvenv binary, version 3.8)
+ Python is a high-level, interactive, object-oriented language. Its 3.8 version
+ includes an extensive class library with lots of goodies for
+ network programming, system administration, sounds and graphics.
+ .
+ This package contains the pyvenv-3.8 binary.
+
+Package: libpython3.8-stdlib
+Architecture: any
+Multi-Arch: same
+Priority: optional
+Pre-Depends: ${misc:Pre-Depends}
+Depends: libpython3.8-minimal (= ${binary:Version}), mime-support, ${shlibs:Depends}, ${misc:Depends}
+Description: Interactive high-level object-oriented language (standard library, version 3.8)
+ Python is a high-level, interactive, object-oriented language. Its 3.8 version
+ includes an extensive class library with lots of goodies for
+ network programming, system administration, sounds and graphics.
+ .
+ This package contains Python 3.8's standard library. It is normally not
+ used on its own, but as a dependency of python3.8.
+
+Package: python3.8-minimal
+Architecture: any
+Multi-Arch: allowed
+Priority: optional
+Pre-Depends: ${shlibs:Pre-Depends}
+Depends: libpython3.8-minimal (= ${binary:Version}), ${shlibs:Depends}, ${misc:Depends}
+Recommends: python3.8
+Suggests: binfmt-support
+Conflicts: binfmt-support (<< 1.1.2)
+Description: Minimal subset of the Python language (version 3.8)
+ This package contains the interpreter and some essential modules.  It can
+ be used in the boot process for some basic tasks.
+ See /usr/share/doc/python3.8-minimal/README.Debian for a list of the modules
+ contained in this package.
+
+Package: libpython3.8-minimal
+Architecture: any
+Multi-Arch: same
+Priority: optional
+Pre-Depends: ${misc:Pre-Depends}
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Recommends: libpython3.8-stdlib
+Conflicts: binfmt-support (<< 1.1.2)
+Description: Minimal subset of the Python language (version 3.8)
+ This package contains some essential modules. It is normally not
+ used on it's own, but as a dependency of python3.8-minimal.
+
+Package: libpython3.8
+Architecture: any
+Multi-Arch: same
+Section: libs
+Priority: optional
+Pre-Depends: ${misc:Pre-Depends}
+Depends: libpython3.8-stdlib (= ${binary:Version}), ${shlibs:Depends}, ${misc:Depends}
+Description: Shared Python runtime library (version 3.8)
+ Python is a high-level, interactive, object-oriented language. Its 3.8 version
+ includes an extensive class library with lots of goodies for
+ network programming, system administration, sounds and graphics.
+ .
+ This package contains the shared runtime library, normally not needed
+ for programs using the statically linked interpreter.
+
+Package: python3.8-examples
+Architecture: all
+Depends: python3.8 (>= ${source:Version}), ${misc:Depends}
+Description: Examples for the Python language (v3.8)
+ Examples, Demos and Tools for Python (v3.8). These are files included in
+ the upstream Python distribution (v3.8).
+
+Package: python3.8-dev
+Architecture: any
+Multi-Arch: allowed
+Depends: python3.8 (= ${binary:Version}), libpython3.8-dev (= ${binary:Version}), libpython3.8 (= ${binary:Version}), libexpat1-dev, ${shlibs:Depends}, ${misc:Depends}
+Recommends: libc6-dev | libc-dev
+Description: Header files and a static library for Python (v3.8)
+ Header files, a static library and development tools for building
+ Python (v3.8) modules, extending the Python interpreter or embedding
+ Python (v3.8) in applications.
+ .
+ Maintainers of Python packages should read README.maintainers.
+
+Package: libpython3.8-dev
+Section: libdevel
+Architecture: any
+Multi-Arch: same
+Pre-Depends: ${misc:Pre-Depends}
+Depends: libpython3.8-stdlib (= ${binary:Version}), libpython3.8 (= ${binary:Version}), libexpat1-dev, ${shlibs:Depends}, ${misc:Depends}
+Recommends: libc6-dev | libc-dev
+Description: Header files and a static library for Python (v3.8)
+ Header files, a static library and development tools for building
+ Python (v3.8) modules, extending the Python interpreter or embedding
+ Python (v3.8) in applications.
+ .
+ Maintainers of Python packages should read README.maintainers.
+ .
+ This package contains development files. It is normally not
+ used on it's own, but as a dependency of python3.8-dev.
+
+Package: libpython3.8-testsuite
+Section: libdevel
+Architecture: all
+Depends: python3.8 (>= ${binary:Version}), ${misc:Depends}, net-tools
+Suggests: python3-gdbm, python3-tk
+Description: Testsuite for the Python standard library (v3.8)
+ The complete testsuite for the Python standard library.  Note that
+ a subset is found in the libpython3.8-stdlib package, which should
+ be enough for other packages to use (please do not build-depend
+ on this package, but file a bug report to include additional 
+ testsuite files in the libpython3.8-stdlib package).
+
+Package: idle-python3.8
+Architecture: all
+Depends: python3.8, python3-tk, python3.8-tk,
+  ${misc:Depends},
+  libjs-mathjax,
+Enhances: python3.8
+Description: IDE for Python (v3.8) using Tkinter
+ IDLE is an Integrated Development Environment for Python (v3.8).
+ IDLE is written using Tkinter and therefore quite platform-independent.
+
+Package: python3.8-doc
+Section: doc
+Architecture: all
+Multi-Arch: foreign
+Depends: libjs-jquery, libjs-underscore, ${misc:Depends}
+Suggests: python3.8
+Description: Documentation for the high-level object-oriented language Python (v3.8)
+ These is the official set of documentation for the interactive high-level
+ object-oriented language Python (v3.8). All documents are provided
+ in HTML format. The package consists of ten documents:
+ .
+   * What's New in Python3.8
+   * Tutorial
+   * Python Library Reference
+   * Macintosh Module Reference
+   * Python Language Reference
+   * Extending and Embedding Python
+   * Python/C API Reference
+   * Installing Python Modules
+   * Documenting Python
+   * Distributing Python Modules
+
+Package: python3.8-dbg
+Section: debug
+Architecture: any
+Multi-Arch: allowed
+Depends: python3.8 (= ${binary:Version}), libpython3.8-dbg (= ${binary:Version}), ${shlibs:Depends}, ${misc:Depends}
+Recommends: gdb
+Suggests: python3-gdbm-dbg, python3-tk-dbg
+Description: Debug Build of the Python Interpreter (version 3.8)
+ The package holds two things:
+ .
+ - A Python interpreter configured with --pydebug. Dynamically loaded modules
+   are searched as <foo>_d.so first. Third party extensions need a separate
+   build to be used by this interpreter.
+ - Debug information for standard python interpreter and extensions.
+ .
+ See the README.debug for more information.
+
+Package: libpython3.8-dbg
+Section: debug
+Architecture: any
+Multi-Arch: same
+Pre-Depends: ${misc:Pre-Depends}
+Depends: libpython3.8-stdlib (= ${binary:Version}), ${shlibs:Depends}, ${misc:Depends}
+Description: Debug Build of the Python Interpreter (version 3.8)
+ The package holds two things:
+ .
+ - Extensions for a Python interpreter configured with --pydebug.
+ - Debug information for standard python extensions.
+ .
+ See the README.debug for more information.

@@ -1,0 +1,20 @@
+#! /bin/sh
+
+set -e
+
+case "$1" in
+    configure)
+    files=$(dpkg -L lib@PVER@-stdlib@HOST_QUAL@ | sed -n '/^\/usr\/lib\/@PVER@\/.*\.py$/p')
+    if [ -n "$files" ]; then
+	/usr/bin/@PVER@ -E -S /usr/lib/@PVER@/py_compile.py $files
+	if grep -sq '^byte-compile[^#]*optimize' /etc/python/debian_config; then
+	    /usr/bin/@PVER@ -E -S -O /usr/lib/@PVER@/py_compile.py $files
+	fi
+    else
+	echo >&2 "@PVER@: can't get files for byte-compilation"
+    fi
+esac
+
+#DEBHELPER#
+
+exit 0

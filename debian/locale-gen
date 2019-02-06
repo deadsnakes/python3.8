@@ -1,0 +1,31 @@
+#!/bin/sh
+
+LOCPATH=`pwd`/locales
+export LOCPATH
+
+[ -d $LOCPATH ] || mkdir -p $LOCPATH
+
+umask 022
+
+echo "Generating locales..."
+while read locale charset; do
+	case $locale in \#*) continue;; esac
+	[ -n "$locale" -a -n "$charset" ] || continue
+	echo -n "  `echo $locale | sed 's/\([^.\@]*\).*/\1/'`"
+	echo -n ".$charset"
+	echo -n `echo $locale | sed 's/\([^\@]*\)\(\@.*\)*/\2/'`
+	echo -n '...'
+        if [ -f $LOCPATH/$locale ]; then
+	    input=$locale
+	else
+            input=`echo $locale | sed 's/\([^.]*\)[^@]*\(.*\)/\1\2/'`
+	fi
+	localedef -i $input -c -f $charset $LOCPATH/$locale #-A /etc/locale.alias
+	echo ' done'; \
+done <<EOF
+# This file lists locales that the python testsuite depends on
+en_US			ISO-8859-1
+en_US.UTF-8		UTF-8
+EOF
+
+echo "Generation complete."

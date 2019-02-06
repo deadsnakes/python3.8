@@ -1,0 +1,19 @@
+# DP:   * Lib/locale.py:
+# DP:     - Don't map 'utf8', 'utf-8' to 'utf', which is not a known encoding
+# DP:       for glibc.
+
+Index: b/Lib/locale.py
+===================================================================
+--- a/Lib/locale.py
++++ b/Lib/locale.py
+@@ -1403,8 +1403,8 @@ locale_alias = {
+     'ug_cn':                                'ug_CN.UTF-8',
+     'uk':                                   'uk_UA.KOI8-U',
+     'uk_ua':                                'uk_UA.KOI8-U',
+-    'univ':                                 'en_US.utf',
+-    'universal':                            'en_US.utf',
++    'univ':                                 'en_US.UTF-8',
++    'universal':                            'en_US.UTF-8',
+     'universal.utf8@ucs4':                  'en_US.UTF-8',
+     'unm_us':                               'unm_US.UTF-8',
+     'ur':                                   'ur_PK.CP1256',

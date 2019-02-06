@@ -1,0 +1,16 @@
+Package: @PVER@-tk
+Architecture: any
+Depends: @PVER@ (= ${Source-Version}), ${shlibs:Depends}
+Suggests: tix
+XB-Python-Version: @VER@
+Description: Tkinter - Writing Tk applications with Python (v@VER@)
+ A module for writing portable GUI applications with Python (v@VER@) using Tk.
+ Also known as Tkinter.
+
+Package: @PVER@-gdbm
+Architecture: any
+Depends: @PVER@ (= ${Source-Version}), ${shlibs:Depends}
+Description: GNU dbm database support for Python (v@VER@)
+ GNU dbm database module for Python. Install this if you want to
+ create or read GNU dbm database files with Python.
+

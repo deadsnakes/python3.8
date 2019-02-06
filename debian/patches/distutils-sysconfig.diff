@@ -1,0 +1,43 @@
+# DP: Get CONFIGURE_CFLAGS, CONFIGURE_CPPFLAGS, CONFIGURE_LDFLAGS from
+# DP: the python build, when CFLAGS, CPPFLAGS, LDSHARED) are not set
+# DP: in the environment.
+
+--- a/Lib/distutils/sysconfig.py
++++ b/Lib/distutils/sysconfig.py
+@@ -175,9 +175,11 @@ def customize_compiler(compiler):
+                 _osx_support.customize_compiler(_config_vars)
+                 _config_vars['CUSTOMIZED_OSX_COMPILER'] = 'True'
+ 
+-        (cc, cxx, opt, cflags, ccshared, ldshared, shlib_suffix, ar, ar_flags) = \
++        (cc, cxx, opt, cflags, ccshared, ldshared, shlib_suffix, ar, ar_flags,
++         configure_cppflags, configure_cflags, configure_ldflags) = \
+             get_config_vars('CC', 'CXX', 'OPT', 'CFLAGS',
+-                            'CCSHARED', 'LDSHARED', 'SHLIB_SUFFIX', 'AR', 'ARFLAGS')
++                            'CCSHARED', 'LDSHARED', 'SHLIB_SUFFIX', 'AR', 'ARFLAGS',
++                            'CONFIGURE_CPPFLAGS', 'CONFIGURE_CFLAGS', 'CONFIGURE_LDFLAGS')
+ 
+         if 'CC' in os.environ:
+             newcc = os.environ['CC']
+@@ -198,13 +200,22 @@ def customize_compiler(compiler):
+             cpp = cc + " -E"           # not always
+         if 'LDFLAGS' in os.environ:
+             ldshared = ldshared + ' ' + os.environ['LDFLAGS']
++        elif configure_ldflags:
++            ldshared = ldshared + ' ' + configure_ldflags
+         if 'CFLAGS' in os.environ:
+             cflags = opt + ' ' + os.environ['CFLAGS']
+             ldshared = ldshared + ' ' + os.environ['CFLAGS']
++        elif configure_cflags:
++            cflags = opt + ' ' + configure_cflags
++            ldshared = ldshared + ' ' + configure_cflags
+         if 'CPPFLAGS' in os.environ:
+             cpp = cpp + ' ' + os.environ['CPPFLAGS']
+             cflags = cflags + ' ' + os.environ['CPPFLAGS']
+             ldshared = ldshared + ' ' + os.environ['CPPFLAGS']
++        elif configure_cppflags:
++            cpp = cpp + ' ' + configure_cppflags
++            cflags = cflags + ' ' + configure_cppflags
++            ldshared = ldshared + ' ' + configure_cppflags
+         if 'AR' in os.environ:
+             ar = os.environ['AR']
+         if 'ARFLAGS' in os.environ:

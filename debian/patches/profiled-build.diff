@@ -1,0 +1,21 @@
+# DP: Ignore errors in the profile task.
+
+--- a/Makefile.pre.in
++++ b/Makefile.pre.in
+@@ -508,6 +508,16 @@ build_all_generate_profile:
+ run_profile_task:
+ 	@ # FIXME: can't run for a cross build
+ 	$(LLVM_PROF_FILE) $(RUNSHARED) ./$(BUILDPYTHON) $(PROFILE_TASK) || true
++	task="$(PROFILE_TASK)"; \
++	case "$$task" in \
++	*-s\ *) \
++	  $(LLVM_PROF_FILE) $(RUNSHARED) ./$(BUILDPYTHON) $$task; \
++	  while [ -f $(abs_builddir)/build/pynexttest ]; do \
++	    $(LLVM_PROF_FILE) $(RUNSHARED) ./$(BUILDPYTHON) $$task; \
++	  done;; \
++	*) \
++	  $(LLVM_PROF_FILE) $(RUNSHARED) ./$(BUILDPYTHON) $$task; \
++	esac
+ 
+ build_all_merge_profile:
+ 	$(LLVM_PROF_MERGER)

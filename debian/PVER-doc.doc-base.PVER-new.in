@@ -1,0 +1,10 @@
+Document: @PVER@-new
+Title: What's new in Python @VER@
+Author: A.M. Kuchling
+Abstract: This documents lists new features and changes worth mentioning
+ in Python @VER@.
+Section: Programming/Python
+
+Format: HTML
+Index: /usr/share/doc/@PVER@/html/whatsnew/@VER@.html
+Files: /usr/share/doc/@PVER@/html/whatsnew/@VER@.html

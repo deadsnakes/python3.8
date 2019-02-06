@@ -1,0 +1,13 @@
+Document: @PVER@-api
+Title: Python/C API Reference Manual (v@VER@)
+Author: Guido van Rossum
+Abstract: This manual documents the API used by C (or C++) programmers who
+ want to write extension modules or embed Python.  It is a
+ companion to *Extending and Embedding the Python Interpreter*,
+ which describes the general principles of extension writing but
+ does not document the API functions in detail.
+Section: Programming/Python
+
+Format: HTML
+Index: /usr/share/doc/@PVER@/html/c-api/index.html
+Files: /usr/share/doc/@PVER@/html/c-api/*.html

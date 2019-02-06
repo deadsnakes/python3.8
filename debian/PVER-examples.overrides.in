@@ -1,0 +1,2 @@
+# don't care about permissions of the example files
+@PVER@-examples binary: executable-not-elf-or-script

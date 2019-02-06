@@ -1,0 +1,12 @@
+Document: @PVER@-inst
+Title: Installing Python Modules (v@VER@)
+Author: Greg Ward
+Abstract: This document describes the Python Distribution Utilities
+ (``Distutils'') from the end-user's point-of-view, describing how to
+ extend the capabilities of a standard Python installation by building
+ and installing third-party Python modules and extensions.
+Section: Programming/Python
+
+Format: HTML
+Index: /usr/share/doc/@PVER@/html/install/index.html
+Files: /usr/share/doc/@PVER@/html/install/*.html

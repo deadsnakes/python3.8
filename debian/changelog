@@ -1,0 +1,4042 @@
+python3.8 (3.8.0~a1-0ubuntu1) disco; urgency=medium
+
+  * Python 3.8.0 alpha 1 release.
+  * Update VCS attributes.
+  * Refresh patches.
+  * Update symbols files.
+  * Fix some lintian warnings.
+  * Add pathlib to the set of the minimal modules.
+
+ -- Matthias Klose <doko@ubuntu.com>  Wed, 06 Feb 2019 08:51:02 +0100
+
+python3.7 (3.7.1-1) unstable; urgency=medium
+
+  * Python 3.7.1 release.
+
+ -- Matthias Klose <doko@debian.org>  Sun, 21 Oct 2018 10:03:53 +0200
+
+python3.7 (3.7.1~rc2-1) unstable; urgency=medium
+
+  * Python 3.7.1 release candidate 2.
+
+ -- Matthias Klose <doko@debian.org>  Mon, 15 Oct 2018 11:24:12 +0200
+
+python3.7 (3.7.1~rc1-1) unstable; urgency=medium
+
+  * Python 3.7.1 release candidate 1.
+
+ -- Matthias Klose <doko@debian.org>  Thu, 27 Sep 2018 11:41:42 +0200
+
+python3.7 (3.7.0-7) unstable; urgency=medium
+
+  * Update to 20180925 from the 3.7 branch.
+  * Don't run OpenSSL related tests during the build. Hanging on
+    some buildds.
+
+ -- Matthias Klose <doko@debian.org>  Tue, 25 Sep 2018 16:01:24 +0200
+
+python3.7 (3.7.0-6) unstable; urgency=medium
+
+  * Update to 20180901 from the 3.7 branch.
+    - Fixes the build with OpenSSL 1.1.1. Closes: #907031.
+  * Don't run the test_ftplib and test_ssl autopkg tests, not yet ready
+    for OpenSSL 1.1.1.
+
+ -- Matthias Klose <doko@debian.org>  Sat, 01 Sep 2018 01:21:37 +0200
+
+python3.7 (3.7.0-5) unstable; urgency=medium
+
+  * Update to 20180820 from the 3.7 branch.
+  * Avoid usage of distutils in the platform module. See issue #26544.
+  * Fix some issues on architectures from the computer museum (Jason Duerstock).
+    Closes: #905536.
+    - Disable -O3 on ia64 (see PR rtl-optimization/85412).
+    - Remove the -O2 override on m68k (see Debian #326903).
+    - Remove the -mieee and -O2 overrides for DEC Alpha (see Debian #212912).
+  * Add more breaks for packages not compatible with Python 3.7:
+    - python3-aiomeasures. See #906159.
+    - python3-motor (updated). See #903527.
+  * Again close the RC issue about the syntax errors triggered by Python 3.7.
+    Closes: #902788.
+  * Update symbols files.
+
+ -- Matthias Klose <doko@debian.org>  Mon, 20 Aug 2018 19:52:20 +0200
+
+python3.7 (3.7.0-4) unstable; urgency=medium
+
+  * Update to 20180802 from the 3.7 branch.
+  * Add more breaks for packages not compatible with Python 3.7:
+    - python3-pyatspi. See #902989.
+  * Move test/__main__.py into libpython3.7-stdlib.
+
+ -- Matthias Klose <doko@debian.org>  Thu, 02 Aug 2018 08:46:56 +0200
+
+python3.7 (3.7.0-3) unstable; urgency=medium
+
+  * Update to 20180730 from the 3.7 branch.
+  * Add more breaks for packages not compatible with Python 3.7:
+    - python3-trollius. See #903888.
+    - python3-sleekxmpp. See #904453.
+    - voltron. See #904657.
+    - visidata. See #904656.
+    - salt-common. See #903654.
+    - python3-yowsup. See #904653.
+    - python3-websockets. See #904650.
+    - python3-txfixtures. See #904649.
+    - python3-tweepy. See #904648.
+    - python3-slixmpp. See #904644.
+    - python3-signaller. See #904642.
+    - python3-rpyc. See #904615.
+    - python3-protorpc-standalone. See #904603.
+    - python3-nova. See #904587.
+    - python3-murano. See #904581.
+    - python3-mastodon. See #904579.
+    - python3-hug. See #904576.
+    - python3-async. See #904492.
+    - python3-pylama. See #904491.
+    - python3-exabgp. See #904390.
+    - python3-glance. See #904389.
+    - python3-gbulb. See #904388.
+    - python3-engineio. See #904383.
+    - python3-doublex. See #904382.
+    - python3-dns. See #904381.
+    - python3-opcua. See #904373.
+    - openscap-daemon. See #904.
+    - oca-core. See #904370.
+    - patroni. See #904369.
+    - python3-panoramisk. See #904368.
+    - linux-show-player-. See #904367.
+    - python3-cs. See #904365.
+    - python3-azure. See #904364.
+    - python3-applicationinsights. See #904363.
+    - python3-aiopg. See #904361.
+    - python3-aiozmq. See #904358.
+    - python3-pysnmp4. See #904357.
+    - python3-astroquery. See #904351.
+    - snakemake. See #904350.
+    - fail2ban. See #902817.
+    - python3-morse-simulator. See #904343.
+    - python3-tango. See #904298.
+    - python3-pycuda. See #903826.
+    - python3-pycsw. See #903784.
+    - gnome3-builder. See #903558.
+  * Close the RC issue about the syntax errors triggered by Python 3.7, now
+    that all the breaks are in place. Closes: #902788.
+  * Mark the lib2to3 and site tests as succeeding again, mark the tcl test
+    as failing (issue #34178).
+
+ -- Matthias Klose <doko@debian.org>  Mon, 30 Jul 2018 06:39:20 +0200
+
+python3.7 (3.7.0-2) unstable; urgency=medium
+
+  * Update to 20180720 from the 3.7 branch.
+  * Add breaks for packages not compatible with Python 3.7:
+    - python3-twisted. See #902766.
+    - python3-pexpect. See #902646.
+    - python3-cxx-dev. See #902673.
+    - libboost-python1.62.0. See #902702.
+    - python3-psycopg2. See #902715.
+    - python3-maxminddb. See #902756.
+    - python3-blist. See #902757.
+    - python3-django. See #902761.
+    - diffoscope. See #902650.
+    - gpodder. See #902704.
+    - python3-http-parser. See: #902759.
+    - python3-celery. See #902900.
+    - python3-astroid. See #902631.
+    - python3-ubjson. See #902762.
+    - python3-protobuf. See #902597.
+    - python3-opengl. See #903218.
+    - python3-ws4py. See #903529.
+    - python3-dropbox. See #903525.
+    - python3-pycuda. See #903826.
+    - python3-libcloud. See #903388.
+    - python3-motor. See #903527.
+    - python3-jira. See #903526.
+
+ -- Matthias Klose <doko@debian.org>  Fri, 20 Jul 2018 15:51:14 +0200
+
+python3.7 (3.7.0-1~18.04) bionic-proposed; urgency=medium
+
+  * SRU: LP: #1792140. Update Python 3.7 to the final 3.7.0 release.
+
+ -- Matthias Klose <doko@ubuntu.com>  Wed, 12 Sep 2018 20:30:08 +0200
+
+python3.7 (3.7.0-1) unstable; urgency=medium
+
+  * Python 3.7.0 release.
+
+ -- Matthias Klose <doko@debian.org>  Wed, 27 Jun 2018 16:40:03 +0200
+
+python3.7 (3.7.0~rc1-3) unstable; urgency=medium
+
+  * Update to 20180622 from the 3.7 branch.
+    - Fix installation of the idlelib tests.
+
+ -- Matthias Klose <doko@debian.org>  Fri, 22 Jun 2018 10:11:22 +0200
+
+python3.7 (3.7.0~rc1-2) unstable; urgency=medium
+
+  * Update to 20180619 from the 3.7 branch.
+  * Let ensurepip work with pip versions 9 or 10. Addresses: #901797.
+  * pdb(1): Fix pointer to HTML documentation. Addresses: #901603.
+
+ -- Matthias Klose <doko@debian.org>  Tue, 19 Jun 2018 09:10:27 +0200
+
+python3.7 (3.7.0~rc1-1) unstable; urgency=medium
+
+  * Python 3.7.0 release candidate 1.
+
+ -- Matthias Klose <doko@debian.org>  Wed, 13 Jun 2018 10:04:13 +0200
+
+python3.7 (3.7.0~b5-1) unstable; urgency=medium
+
+  * Python 3.7.0 beta 5 release.
+
+ -- Matthias Klose <doko@debian.org>  Thu, 31 May 2018 12:14:46 +0200
+
+python3.7 (3.7.0~b4-5) unstable; urgency=medium
+
+  * Update to 20180529 from the 3.7 branch.
+  * sysconfig: The 'posix_local' schema name is the default unless the env var
+    DEB_PYTHON_INSTALL_LAYOUT is set to 'deb' or 'deb_system'.  Use the latter
+    for package buillds.
+
+ -- Matthias Klose <doko@ubuntu.com>  Tue, 29 May 2018 13:54:38 +0200
+
+python3.7 (3.7.0~b4-4) unstable; urgency=medium
+
+  * Update to 20180516 from the 3.7 branch.
+  * Fix building cmath and build cmath as a builtin instead of an extension.
+  * Run the test_code_module, test_dbm, test_zipfile tests in the autopkg
+    tests again.
+
+ -- Matthias Klose <doko@debian.org>  Wed, 16 May 2018 16:51:00 -0400
+
+python3.7 (3.7.0~b4-3) unstable; urgency=medium
+
+  * python3.7: Add breaks on python3-all (<< 3.6.5~rc1-1),
+    python3-dev (<< 3.6.5~rc1-1), python3-venv (<< 3.6.5-2). Addresses: #898401.
+  * Restore the sysconfig-debian-schemes patch.
+
+ -- Matthias Klose <doko@debian.org>  Fri, 11 May 2018 11:18:40 -0400
+
+python3.7 (3.7.0~b4-2) unstable; urgency=medium
+
+  * Fix the lto build for extensions, passing -fPIC to the linker.
+
+ -- Matthias Klose <doko@debian.org>  Mon, 07 May 2018 19:24:57 +0200
+
+python3.7 (3.7.0~b4-1) unstable; urgency=medium
+
+  * Python 3.7.0 beta 4 release.
+  * Fix library name in python debug pkgconfig file. Addresses: #894498.
+  * Re-enable pgo/lto builds.
+  * Update autopkg tests to really run with 3.7.
+  * Make the build of the shared modules verbose again.
+
+ -- Matthias Klose <doko@debian.org>  Thu, 03 May 2018 13:45:04 +0200
+
+python3.7 (3.7.0~b3-1) unstable; urgency=medium
+
+  * Python 3.7.0 beta 3 release.
+  * libpython3.7-stdlib: Add missing python3-distutils breaks. Closes: #894204.
+
+ -- Matthias Klose <doko@debian.org>  Fri, 30 Mar 2018 12:35:22 +0800
+
+python3.7 (3.7.0~b2-2) unstable; urgency=medium
+
+  * libpython3.7-stdlib: Ship again distutils/{__init__,version}.py.
+
+ -- Matthias Klose <doko@debian.org>  Fri, 23 Mar 2018 11:21:34 +0800
+
+python3.7 (3.7.0~b2-1) unstable; urgency=medium
+
+  * Python 3.7.0 beta 2 release.
+    - Fix issue #32185: The SSL module no longer sends IP addresses in SNI TLS
+      extension on platforms with OpenSSL 1.0.2+ or inet_pton. See #892814.
+  * Add support for riscv64 (Aurelien Jarno). Addresses: #892328.
+  * Update symbols files.
+
+ -- Matthias Klose <doko@debian.org>  Tue, 13 Mar 2018 20:55:14 +0100
+
+python3.7 (3.7.0~b1-1) unstable; urgency=medium
+
+  * Python 3.7.0 beta 1 release.
+  * Update symbols files.
+
+ -- Matthias Klose <doko@debian.org>  Thu, 01 Feb 2018 08:36:28 +0100
+
+python3.7 (3.7.0~a4-1) unstable; urgency=medium
+
+  * Python 3.7.0 alpha 4 release.
+
+ -- Matthias Klose <doko@debian.org>  Wed, 10 Jan 2018 13:34:16 +0100
+
+python3.7 (3.7.0~a3-4) unstable; urgency=medium
+
+  * Stop building python3.7-2to3, now replaced by 2to3 and python3-lib2to3.
+
+ -- Matthias Klose <doko@debian.org>  Fri, 05 Jan 2018 03:45:13 +0100
+
+python3.7 (3.7.0~a3-3) unstable; urgency=medium
+
+  * Stop shipping lib2to3, now shipped in python3-lib2to3.
+
+ -- Matthias Klose <doko@debian.org>  Wed, 27 Dec 2017 14:04:53 +0100
+
+python3.7 (3.7.0~a3-2) unstable; urgency=medium
+
+  * Split out a python3.7-2to3 package.
+  * Stop shipping the tkinter and distutils modules in libpython3.7-stdlib.
+
+ -- Matthias Klose <doko@debian.org>  Wed, 13 Dec 2017 12:18:54 +0100
+
+python3.7 (3.7.0~a3-1) unstable; urgency=medium
+
+  * Python 3.7.0 alpha 3 release.
+  * Add support for mipsr6 triplets (YunQiang Su). Addresses: #881942.
+  * Move the idle library into the idle-python3.7 package.
+  * Build documentation in info format (Benjamin Moody). Addresses: #881959.
+
+ -- Matthias Klose <doko@debian.org>  Wed, 06 Dec 2017 13:24:25 +0100
+
+python3.7 (3.7.0~a2-1) experimental; urgency=medium
+
+  * Python 3.7.0 alpha 2 release.
+
+ -- Matthias Klose <doko@debian.org>  Wed, 18 Oct 2017 20:58:26 +0200
+
+python3.7 (3.7.0~a1-2) experimental; urgency=medium
+
+  * Build with -fstack-protector instead of -fstack-protector-strong.
+    Performance improvements of around 1-2% according to LP #1638695.
+
+ -- Matthias Klose <doko@debian.org>  Wed, 20 Sep 2017 14:12:51 +0200
+
+python3.7 (3.7.0~a1-1) experimental; urgency=medium
+
+  * Python 3.7.0 alpha 1 release.
+  * Explicitly use the system python for byte compilation in postinst scripts.
+    Addresses: #852163. LP: #1682934.
+  * Build using -fexceptions on ppc64 and ppc64el.
+    Addresses: #862925. LP: #1691848.
+
+ -- Matthias Klose <doko@debian.org>  Wed, 20 Sep 2017 14:12:51 +0200
+
+python3.7 (3.7-20170522-1) experimental; urgency=medium
+
+  * Python 3.7 snapshot 20170522.
+
+ -- Matthias Klose <doko@ubuntu.com>  Mon, 22 May 2017 14:32:31 -0700
+
+python3.6 (3.6.0~b4-1) experimental; urgency=medium
+
+  * Python 3.6.0 beta 4.
+  * Update symbols files.
+
+ -- Matthias Klose <doko@debian.org>  Tue, 22 Nov 2016 14:41:03 +0100
+
+python3.6 (3.6.0~b3-1) experimental; urgency=medium
+
+  * Python 3.6.0 beta 3.
+  * Update symbols files.
+
+ -- Matthias Klose <doko@debian.org>  Wed, 02 Nov 2016 14:33:32 +0200
+
+python3.6 (3.6.0~b2-1) experimental; urgency=medium
+
+  * Python 3.6.0 beta 2.
+
+ -- Matthias Klose <doko@debian.org>  Tue, 11 Oct 2016 07:27:10 +0200
+
+python3.6 (3.6.0~b1-1) experimental; urgency=medium
+
+  * Python 3.6.0 beta 1.
+  * Don't build the fpectl module on hppa. Addresses: #837314.
+
+ -- Matthias Klose <doko@debian.org>  Tue, 13 Sep 2016 13:59:11 +0200
+
+python3.6 (3.6.0~a4-1) experimental; urgency=medium
+
+  * Python 3.6.0 alpha 4.
+
+ -- Matthias Klose <doko@debian.org>  Tue, 16 Aug 2016 08:29:13 +0200
+
+python3.6 (3.6.0~a3-1) experimental; urgency=medium
+
+  * Python 3.6.0 alpha 3.
+
+ -- Matthias Klose <doko@debian.org>  Mon, 25 Jul 2016 11:12:59 +0200
+
+python3.6 (3.6.0~a2-1) experimental; urgency=medium
+
+  * Python 3.6.0 alpha 2.
+  * Update to 20160614 from the trunk.
+  * Update symbols files.
+
+ -- Matthias Klose <doko@debian.org>  Tue, 14 Jun 2016 13:36:38 +0200
+
+python3.6 (3.6.0~a1-1) experimental; urgency=medium
+
+  * Python 3.6.0 alpha 1.
+
+ -- Matthias Klose <doko@debian.org>  Wed, 18 May 2016 10:11:08 +0200
+
+python3.5 (3.5.1-12) unstable; urgency=medium
+
+  * Update to 20160509 from the 3.5 branch.
+    - Issue #26811: gc.get_objects() no longer contains a broken tuple with
+      NULL pointer.
+    - Issue #20120: Use RawConfigParser for .pypirc parsing, removing support
+      for interpolation unintentionally added with move to Python 3. Behavior
+      no longer does any interpolation in .pypirc files, matching behavior in
+      Python 2.7 and Setuptools 19.0.
+    - Issue #25745: Fixed leaking a userptr in curses panel destructor.
+    - Issue #26881: The modulefinder module now supports extended opcode
+      arguments.
+    - Issue #23815: Fixed crashes related to directly created instances of
+      types in _tkinter and curses.panel modules.
+    - Issue #17765: weakref.ref() no longer silently ignores keyword arguments.
+    - Issue #26873: xmlrpc now raises ResponseError on unsupported type tags
+      instead of silently return incorrect result.
+    - Issue #26881: modulefinder now works with bytecode with extended args.
+    - Issue #26711: Fixed the comparison of plistlib.Data with other types.
+    - Issue #24114: Fix an uninitialized variable in `ctypes.util`.
+    - Issue #26864: In urllib.request, change the proxy bypass host checking
+      against no_proxy to be case-insensitive, and to not match unrelated host
+      names that happen to have a bypassed hostname as a suffix.
+    - Issue #26634: recursive_repr() now sets __qualname__ of wrapper.
+    - Issue #26804: urllib.request will prefer lower_case proxy environment
+      variables over UPPER_CASE or Mixed_Case ones.
+    - Issue #26837: assertSequenceEqual() now correctly outputs non-stringified
+      differing items (like bytes in the -b mode).
+      This affects assertListEqual() and assertTupleEqual().
+    - Issue #26041: Remove "will be removed in Python 3.7" from deprecation
+      messages of platform.dist() and platform.linux_distribution().
+    - Issue #26822: itemgetter, attrgetter and methodcaller objects no longer
+      silently ignore keyword arguments.
+    - Issue #26733: Disassembling a class now disassembles class and static
+      methods.
+    - Issue #26801: Fix error handling in :func:`shutil.get_terminal_size`,
+      catch :exc:`AttributeError` instead of :exc:`NameError`.
+    - Issue #24838: tarfile's ustar and gnu formats now correctly calculate name
+      and link field limits for multibyte character encodings like utf-8.
+    - Issue #26657: Fix directory traversal vulnerability with http.server on
+      Windows.
+    - Issue #26736: Used HTTPS for external links in the documentation if
+      possible.
+    - Issue #22359: Disable the rules for running _freeze_importlib and pgen
+      when cross-compiling.  The output of these programs is normally saved
+      with the source code anyway, and is still regenerated when doing a
+      native build. Closes: #820509.
+    - Issue #21668: Link audioop, _datetime, _ctypes_test modules to libm.
+    - Issue #26799: Fix python-gdb.py: don't get C types once when the Python
+      code is loaded, but get C types on demand. The C types can change if
+      python-gdb.py is loaded before the Python executable.
+  * Fix issue #26673, runtime error in idle3. LP: #1574892.
+  * Update symbols files.
+
+ -- Matthias Klose <doko@debian.org>  Mon, 09 May 2016 13:00:17 +0200
+
+python3.5 (3.5.1-11) unstable; urgency=medium
+
+  * Update to 20160330 from the 3.5 branch.
+    - Issue #26659: Make the builtin slice type support cycle collection.
+    - Issue #26718: super.__init__ no longer leaks memory if called multiple
+      times.  NOTE: A direct call of super.__init__ is not endorsed!
+    - Issue #25339: PYTHONIOENCODING now has priority over locale in setting
+      the error handler for stdin and stdout.
+    - Issue #26717: Stop encoding Latin-1-ized WSGI paths with UTF-8.
+    - Issue #26735: Fix :func:`os.urandom` on Solaris 11.3 and newer when
+      reading more than 1,024 bytes: call ``getrandom()`` multiple times with
+      a limit of 1024 bytes per call.
+    - Issue #16329: Add .webm to mimetypes.types_map.
+    - Issue #13952: Add .csv to mimetypes.types_map.
+    - Issue #26709: Fixed Y2038 problem in loading binary PLists.
+    - Issue #23735: Handle terminal resizing with Readline 6.3+ by installing
+      our own SIGWINCH handler.
+    - Issue #26586: In http.server, respond with "413 Request header fields too
+      large" if there are too many header fields to parse, rather than killing
+      the connection and raising an unhandled exception.
+    - Issue #22854: Change BufferedReader.writable() and
+      BufferedWriter.readable() to always return False.
+    - Issue #6953: Rework the Readline module documentation to group related
+      functions together, and add more details such as what underlying Readline
+      functions and variables are accessed.
+
+ -- Matthias Klose <doko@debian.org>  Sun, 17 Apr 2016 18:14:06 +0200
+
+python3.5 (3.5.1-10) unstable; urgency=medium
+
+  * Update to 20160330 from the 3.5 branch.
+
+ -- Matthias Klose <doko@debian.org>  Thu, 31 Mar 2016 00:46:26 +0200
+
+python3.5 (3.5.1-9) unstable; urgency=medium
+
+  * Update to 20160323 from the 3.5 branch.
+  * Always build _math.o with -fPIC.
+
+ -- Matthias Klose <doko@debian.org>  Wed, 23 Mar 2016 11:47:21 +0100
+
+python3.5 (3.5.1-8) unstable; urgency=medium
+
+  * Update to 20160318 from the 3.5 branch.
+  * Fix python3-venv with updated python-pip packages (Barry Warsaw).
+    Closes: #815014, #815864.
+  * Fix generating devhelp documentation (Simon McVittie).
+    Closes: #816299. LP: #1553633.
+
+ -- Matthias Klose <doko@debian.org>  Fri, 18 Mar 2016 16:12:19 +0100
+
+python3.5 (3.5.1-7) unstable; urgency=medium
+
+  * Update to 20160224 from the 3.5 branch.
+  * python3.5-venv: Drop the dependency on python-setuptools-whl,
+    depend on python-pip-whl (>= 8.0.2-7).
+  * Don't run the test_socket test, hangs on some buildds.
+
+ -- Matthias Klose <doko@debian.org>  Wed, 24 Feb 2016 12:28:57 +0100
+
+python3.5 (3.5.1-6) unstable; urgency=medium
+
+  * Update to 20160221 from the 3.5 branch.
+
+ -- Matthias Klose <doko@debian.org>  Mon, 22 Feb 2016 00:11:32 +0100
+
+python3.5 (3.5.1-5) unstable; urgency=medium
+
+  * Update to 20160113 from the 3.5 branch.
+
+ -- Matthias Klose <doko@debian.org>  Wed, 13 Jan 2016 16:09:18 +0100
+
+python3.5 (3.5.1-4) unstable; urgency=medium
+
+  * Update to 20160111 from the 3.5 branch.
+
+ -- Matthias Klose <doko@debian.org>  Mon, 11 Jan 2016 21:50:55 +0100
+
+python3.5 (3.5.1-3) unstable; urgency=medium
+
+  * Update to 20160105 from the 3.5 branch.
+  * Fix maintainer scripts with findutils 4.6. Closes: #809079.
+
+ -- Matthias Klose <doko@debian.org>  Tue, 05 Jan 2016 12:13:30 +0100
+
+python3.5 (3.5.1-2) unstable; urgency=medium
+
+  * Disable LTO on Debian/s390x.
+  * Don't run test_signal on alpha, currently breaks the testsuite.
+
+ -- Matthias Klose <doko@debian.org>  Thu, 10 Dec 2015 15:34:41 +0100
+
+python3.5 (3.5.1-1) unstable; urgency=medium
+
+  * Python 3.5.1 release.
+  * Fix building architecture independent packages only. Closes: #806870.
+  * Update symbols files for i386.
+  * d/p/fix-sslv3-test.diff: properly handle Ubuntu's openssl having OP_NO_SSLv3
+    forced on by default (Marc Deslauriers).
+
+ -- Matthias Klose <doko@debian.org>  Mon, 07 Dec 2015 11:34:52 +0100
+
+python3.5 (3.5.1~rc1-2) unstable; urgency=medium
+
+  * Build-depend on time.
+
+ -- Matthias Klose <doko@debian.org>  Tue, 24 Nov 2015 08:26:06 +0100
+
+python3.5 (3.5.1~rc1-1) unstable; urgency=medium
+
+  * Python 3.5.1 release candidate 1.
+  * Don't ship menu files anymore, just desktop files.
+  * Update symbols file.
+
+ -- Matthias Klose <doko@debian.org>  Mon, 23 Nov 2015 22:10:38 +0100
+
+python3.5 (3.5.0-4) unstable; urgency=medium
+
+  * Update to 20151028 from the 3.5 branch.
+    - Issue #25274: sys.setrecursionlimit() now raises a RecursionError if the
+      new recursion limit is too low depending at the current recursion depth.
+      Modify also the "lower-water mark" formula to make it monotonic. This mark
+      is used to decide when the overflowed flag of the thread state is reset.
+    - Issue #25447: The lru_cache() wrapper objects now can be copied and
+      pickled (by returning the original object unchanged).
+    - Issue #25390: typing: Don't crash on Union[str, Pattern].
+    - Issue #25441: asyncio: Raise error from drain() when socket is closed.
+    - Issue #25410: Cleaned up and fixed minor bugs in C implementation of
+      OrderedDict.
+    - Issue #25411: Improved Unicode support in SMTPHandler through better use
+      of the email package.
+    - Issue #25407: Remove mentions of the formatter module being removed in
+      Python 3.6.
+    - Issue #25406: Fixed a bug in C implementation of OrderedDict.move_to_end()
+      that caused segmentation fault or hang in iterating after moving several
+      items to the start of ordered dict.
+    - Issue #25380: Fixed protocol for the STACK_GLOBAL opcode in
+      pickletools.opcodes.
+    - Issue #25471: Sockets returned from accept() shouldn't appear to be
+      nonblocking.
+    - Issue #25440: Fix output of python-config --extension-suffix.
+
+ -- Matthias Klose <doko@debian.org>  Wed, 28 Oct 2015 16:31:37 +0100
+
+python3.5 (3.5.0-3) unstable; urgency=medium
+
+  * Update to 20151011 from the 3.5 branch.
+    - Idle updates.
+    - Issue #24402: Fix input() to prompt to the redirected stdout when
+      sys.stdout.fileno() fails.
+    - Issue #24806: Prevent builtin types that are not allowed to be subclassed
+      from being subclassed through multiple inheritance.
+    - Issue #24848: Fixed a number of bugs in UTF-7 decoding of misformed data.
+    - Issue #25280: Import trace messages emitted in verbose (-v) mode are no
+      longer formatted twice.
+    - Issue #25003: On Solaris 11.3 or newer, os.urandom() now uses the
+      getrandom() function instead of the getentropy() function. The getentropy()
+      function is blocking to generate very good quality entropy, os.urandom()
+      doesn't need such high-quality entropy.
+    - Issue #25182: The stdprinter (used as sys.stderr before the io module is
+      imported at startup) now uses the backslashreplace error handler.
+    - Issue #25131: Make the line number and column offset of set/dict literals
+      and comprehensions correspond to the opening brace.
+    - Issue #25364: zipfile now works in threads disabled builds.
+    - Issue #25328: smtpd's SMTPChannel now correctly raises a ValueError if
+      both decode_data and enable_SMTPUTF8 are set to true.
+    - Issue #25316: distutils raises OSError instead of DistutilsPlatformError
+      when MSVC is not installed.
+    - Issue #23972: Updates asyncio datagram create method allowing reuseport
+      and reuseaddr socket options to be set prior to binding the socket.
+      Mirroring the existing asyncio create_server method the reuseaddr option
+      for datagram sockets defaults to True if the O/S is 'posix' (except if
+      the platform is Cygwin).
+    - Issue #25304: Add asyncio.run_coroutine_threadsafe().  This lets you
+      submit a coroutine to a loop from another thread, returning a
+      concurrent.futures.Future.
+    - Issue #25232: Fix CGIRequestHandler to split the query from the URL at the
+      first question mark (?) rather than the last.
+    - Issue #24657: Prevent CGIRequestHandler from collapsing slashes in the
+      query part of the URL as if it were a path.
+    - Issue #24483: C implementation of functools.lru_cache() now calculates
+      key's hash only once.
+    - Issue #22958: Constructor and update method of weakref.WeakValueDictionary
+      now accept the self and the dict keyword arguments.
+    - Issue #22609: Constructor of collections.UserDict now accepts the self
+      keyword argument.
+    - Issue #25111: Fixed comparison of traceback.FrameSummary.
+    - Issue #25262. Added support for BINBYTES8 opcode in Python implementation
+      of unpickler.
+    - Issue #25034: Fix string.Formatter problem with auto-numbering and
+      nested format_specs.
+    - Issue #25233: Rewrite the guts of asyncio.Queue and
+      asyncio.Semaphore to be more understandable and correct.
+    - Issue #25203: Failed readline.set_completer_delims() no longer left the
+      module in inconsistent state.
+    - Issue #23600: Default implementation of tzinfo.fromutc() was returning
+      wrong results in some cases.
+    - Issue #23329: Allow the ssl module to be built with older versions of
+      LibreSSL.
+    - Issue #25319: When threading.Event is reinitialized, the underlying
+      condition should use a regular lock rather than a recursive lock.
+    - Issue #25099: Make test_compileall not fail when a entry on sys.path
+      cannot be written to.
+    - Issue #23919: Prevents assert dialogs appearing in the test suite.
+  * Back-out the local patch for issue 21264, supposed to be fixed by #25099.
+  * Adjust setting DH_COMPAT for dh_movefiles with updated debhelper supporting
+    globbing of arguments. Closes: #800247.
+  * pydoc: use the pager command if available. Addresses: #799555.
+
+ -- Matthias Klose <doko@debian.org>  Sun, 11 Oct 2015 11:05:38 +0200
+
+python3.5 (3.5.0-2) unstable; urgency=medium
+
+  * Update to 20150924 from the 3.5 branch.
+  * Expect the test_code_module test to fail in the autopkg tests.
+    See upstream issue #25109.
+  * Provide some user-friendly advice when `python3 -m venv` fails because the
+    python3-venv package is not installed (Barry Warsaw).
+
+ -- Matthias Klose <doko@debian.org>  Thu, 24 Sep 2015 01:01:34 +0200
+
+python3.5 (3.5.0-1) unstable; urgency=medium
+
+  * Python 3.5.0 release.
+  * Drop the no-zip-on-sys.path patch; not worth saving, and the test suite
+    needs adjustments ...
+  * Mark the test_site test as failing. Investigate why this fails.
+    The package has one sitedir less than expected.
+
+ -- Matthias Klose <doko@debian.org>  Sun, 13 Sep 2015 16:38:26 +0200
+
+python3.5 (3.5.0~rc3-1) unstable; urgency=medium
+
+  * Python 3.5.0 release candidate 3.
+
+ -- Matthias Klose <doko@debian.org>  Tue, 08 Sep 2015 09:56:15 +0200
+
+python3.5 (3.5.0~rc2-1) unstable; urgency=medium
+
+  * Python 3.5.0 release candidate 2.
+
+ -- Matthias Klose <doko@debian.org>  Tue, 25 Aug 2015 22:29:07 +0200
+
+python3.5 (3.5.0~rc1-1) unstable; urgency=medium
+
+  * Python 3.5.0 release candidate 1.
+  * Update symbols file.
+
+ -- Matthias Klose <doko@debian.org>  Wed, 12 Aug 2015 16:57:46 +0200
+
+python3.5 (3.5.0~b4-1) unstable; urgency=medium
+
+  * Python 3.5.0 beta 4.
+
+ -- Matthias Klose <doko@debian.org>  Mon, 27 Jul 2015 12:27:48 +0200
+
+python3.5 (3.5.0~b3-2) unstable; urgency=medium
+
+  * Fix expansion of makefile macros for _sysconfigdata. Issue #24705.
+    LP: #1477759.
+
+ -- Matthias Klose <doko@debian.org>  Fri, 24 Jul 2015 15:25:23 +0200
+
+python3.5 (3.5.0~b3-1) unstable; urgency=medium
+
+  * Python 3.5.0 beta 3.
+
+ -- Matthias Klose <doko@debian.org>  Mon, 06 Jul 2015 13:55:07 +0200
+
+python3.5 (3.5.0~b2-1) unstable; urgency=medium
+
+  * Python 3.5.0 beta 2.
+  * Make the build reproducible (Jérémy Bobbio). Closes: #786959.
+    - Pass time of latest debian/changelog entry to sphinx via SPHINXOPTS.
+    - Do not store a timestamps when compressing devhelp.
+  * Pass DATE and TIME macros matching the current debian/changelog entry
+    when building getbuildinfo.o.
+
+ -- Matthias Klose <doko@debian.org>  Mon, 01 Jun 2015 12:18:33 +0200
+
+python3.5 (3.5.0~b1-1ubuntu1) wily; urgency=medium
+
+  * Disable pgo optimization on i386.
+
+ -- Matthias Klose <doko@ubuntu.com>  Tue, 26 May 2015 23:30:38 +0200
+
+python3.5 (3.5.0~b1-1) unstable; urgency=medium
+
+  * Python 3.5.0 beta 1.
+  * Refresh patches.
+  * Update symbols files.
+
+ -- Matthias Klose <doko@debian.org>  Tue, 26 May 2015 02:08:13 +0200
+
+python3.5 (3.5.0~a4-5) unstable; urgency=medium
+
+  * Update to 20150519 from the trunk.
+    - Fix issue #24226, parsing of many sequential one-line 'def' statements.
+  * Don't rename extensions when they already have the multiarch tag.
+
+ -- Matthias Klose <doko@debian.org>  Tue, 19 May 2015 09:55:39 +0200
+
+python3.5 (3.5.0~a4-4) unstable; urgency=medium
+
+  * Update to 20150518 from the trunk.
+    - Fix build on big endian targets.
+  * Work around issue #24226, byte compilation of IN.py.
+  * Disable PGO (fails to build in unstable).
+
+ -- Matthias Klose <doko@debian.org>  Mon, 18 May 2015 13:48:38 +0200
+
+python3.5 (3.5.0~a4-3) unstable; urgency=medium
+
+  * Update to 20150517 from the trunk.
+
+ -- Matthias Klose <doko@debian.org>  Sun, 17 May 2015 17:22:56 +0200
+
+python3.5 (3.5.0~a4-2) experimental; urgency=medium
+
+  * Update to 20150421 from the trunk.
+  * Fix renaming of extensions. Closes: #783090.
+
+ -- Matthias Klose <doko@debian.org>  Wed, 22 Apr 2015 14:41:45 +0200
+
+python3.5 (3.5.0~a4-1) experimental; urgency=medium
+
+  * Python 3.5.0 alpha 4.
+  * Update to 20150420 from the trunk.
+  * Build debug builds with -Og.
+
+ -- Matthias Klose <doko@debian.org>  Mon, 20 Apr 2015 20:59:53 +0200
+
+python3.5 (3.5.0~a3-1) experimental; urgency=medium
+
+  * Python 3.5.0 alpha 3.
+  * Update to 20150415 from the trunk.
+
+ -- Matthias Klose <doko@debian.org>  Wed, 15 Apr 2015 21:43:00 +0200
+
+python3.4 (3.4.3-3) experimental; urgency=medium
+
+  * Update to 20150311 from the 3.4 branch.
+  * Relax the version check for mpdecimal (all required patches applied
+    in the distro version of mpdecimal 2.4.0).
+  * When using GCC versions older than 4.9 for extension builds, automagically
+    mangle -fstack-protector-strong to -fstack-protector.
+
+ -- Matthias Klose <doko@debian.org>  Sat, 11 Apr 2015 20:50:40 +0200
+
+python3.4 (3.4.3-2) experimental; urgency=medium
+
+  * debian/tests: Use init system agnostic "service" command instead of
+    upstart specific "stop". Also drop unnecessary "status" call right after
+    stopping apport (Martin Pitt).
+
+ -- Matthias Klose <doko@debian.org>  Tue, 10 Mar 2015 20:28:20 +0100
+
+python3.4 (3.4.3-1) experimental; urgency=medium
+
+  * Python 3.4.3 release.
+  * Changes since 20141202 (3.4.2-4):
+    - Issue #22896: Avoid using PyObject_AsCharBuffer(),
+      PyObject_AsReadBuffer(), and PyObject_AsWriteBuffer().
+    - Issue #21295: Revert some changes (issue #16795) to AST line numbers and
+      column offsets that constituted a regression.
+    - Issue #21408: The default __ne__() now returns NotImplemented if __eq__()
+      returned NotImplemented.
+    - Issue #23321: Fixed a crash in str.decode() when error handler returned
+      replacment string longer than mailformed input data.
+    - Issue #23048: Fix jumping out of an infinite while loop in the pdb.
+    - Issue #23165: Perform overflow checks before allocating memory in the
+      _Py_char2wchar function.
+    - Issue #23099: Closing io.BytesIO with exported buffer is rejected now to
+      prevent corrupting exported buffer.
+    - Issue #23363: Fix possible overflow in itertools.permutations.
+    - Issue #23364: Fix possible overflow in itertools.product.
+    - Issue #23366: Fixed possible integer overflow in itertools.combinations.
+    - Issue #23369: Fixed possible integer overflow in
+      _json.encode_basestring_ascii.
+    - Issue #23353: Fix the exception handling of generators in
+      PyEval_EvalFrameEx(). At entry, save or swap the exception state even if
+      PyEval_EvalFrameEx() is called with throwflag=0. At exit, the exception
+      state is now always restored or swapped, not only if why is WHY_YIELD or
+      WHY_RETURN.
+    - Issue #18518: timeit now rejects statements which can't be compiled
+      outside a function or a loop (e.g. "return" or "break").
+    - Issue #23094: Fixed readline with frames in Python implementation of
+      pickle.
+    - Issue #23268: Fixed bugs in the comparison of ipaddress classes.
+    - Issue #21408: Removed incorrect implementations of __ne__() which didn't
+      returned NotImplemented if __eq__() returned NotImplemented.  The default
+      __ne__() now works correctly.
+    - Issue #19996: :class:`email.feedparser.FeedParser` now handles
+      (malformed) headers with no key rather than amusing the body has started.
+    - Issue #23248: Update ssl error codes from latest OpenSSL git master.
+    - Issue #23098: 64-bit dev_t is now supported in the os module.
+    - Issue #23250: In the http.cookies module, capitalize "HttpOnly" and
+      "Secure" as they are written in the standard.
+    - Issue #23063: In the disutils' check command, fix parsing of reST with
+      code or code-block directives.
+    - Issue #23209, #23225: selectors.BaseSelector.close() now clears its
+      internal reference to the selector mapping to break a reference cycle.
+    - Issue #21356: Make ssl.RAND_egd() optional to support LibreSSL. The
+      availability of the function is checked during the compilation.
+    - Issue #20896, #22935: The :func:`ssl.get_server_certificate` function
+      now uses the :data:`~ssl.PROTOCOL_SSLv23` protocol by default, not
+      :data:`~ssl.PROTOCOL_SSLv3`, for maximum compatibility and support
+      platforms where :data:`~ssl.PROTOCOL_SSLv3` support is disabled.
+    - Issue #23111: In the ftplib, make ssl.PROTOCOL_SSLv23 the default
+      protocol version.
+    - Issue #23132: Mitigate regression in speed and clarity in
+      functools.total_ordering.
+    - Issue #22585: On OpenBSD 5.6 and newer, os.urandom() now calls
+      getentropy(), instead of reading /dev/urandom, to get pseudo-random
+      bytes.
+    - Issue #23112: Fix SimpleHTTPServer to correctly carry the query string
+      and fragment when it redirects to add a trailing slash.
+    - Issue #23093: In the io, module allow more operations to work on detached
+      streams.
+    - Issue #19104: pprint now produces evaluable output for wrapped strings.
+    - Issue #23071: Added missing names to codecs.__all__.
+    - Issue #15513: Added a __sizeof__ implementation for pickle classes.
+    - Issue #19858: pickletools.optimize() now aware of the MEMOIZE opcode, can
+      produce more compact result and no longer produces invalid output if
+      input data contains MEMOIZE opcodes together with PUT or BINPUT opcodes.
+    - Issue #22095: Fixed HTTPConnection.set_tunnel with default port.
+      The port value in the host header was set to "None".
+    - Issue #23016: A warning no longer produces an AttributeError when the
+      program is run with pythonw.exe.
+    - Issue #21775: shutil.copytree(): fix crash when copying to VFAT. An
+      exception handler assumed that that OSError objects always have a
+      'winerror' attribute.  That is not the case, so the exception handler
+      itself raised AttributeError when run on Linux (and, presumably,
+      any other non-Windows OS).
+    - Issue #1218234: Fix inspect.getsource() to load updated source of
+      reloaded module.
+    - Issue #22959: In the constructor of http.client.HTTPSConnection, prefer
+      the context's check_hostname attribute over the *check_hostname*
+      parameter.
+    - Issue #23009: Make sure selectors.EpollSelecrtor.select() works when no
+      FD is registered.
+    - Issue #20577: Configuration of the max line length for the
+      FormatParagraph extension has been moved from the General tab of the
+      Idle preferences dialog to the FormatParagraph tab of the Config
+      Extensions dialog.
+    - Issue #16893: Update Idle doc chapter to match current Idle and add new
+      information.
+    - Issue #23180: Rename IDLE "Windows" menu item to "Window".
+    - Issue #19548: Added some additional checks to test_codecs to ensure that
+      statements in the updated documentation remain accurate.
+    - Issue #15506: Use standard PKG_PROG_PKG_CONFIG autoconf macro in the
+      configure script.
+    - Issue #22935: Allow the ssl module to be compiled if openssl doesn't
+      support SSL 3.
+    - Issue #22079: PyType_Ready() now checks that statically allocated type
+      has no dynamically allocated bases.
+    - Issue #19548: Update the codecs module documentation to better cover the
+      distinction between text encodings and other codecs, together with other
+      clarifications.
+    - Issue #22914: Update the Python 2/3 porting HOWTO to describe a more
+      automated approach.
+    - Issue #22735: Fix many edge cases (including crashes) involving custom
+      mro() implementations.
+    - Issue #23399: pyvenv creates relative symlinks where possible.
+    - Issue #23392: Added tests for marshal C API that works with FILE*.
+    - Issue #18982: Add tests for CLI of the calendar module.
+    - Issue #23345: Prevent test_ssl failures with large OpenSSL patch level
+      values (like 0.9.8zc).
+  * Remove LTO sections from the static libraries.
+
+ -- Matthias Klose <doko@debian.org>  Thu, 26 Feb 2015 10:07:08 +0100
+
+python3.4 (3.4.2-4) unstable; urgency=medium
+
+  * Fix issue #22935: Fix ssl module when SSLv3 protocol is not supported.
+  * Fix issue #16043: Add a default limit for the amount of data
+    xmlrpclib.gzip_decode will return. CVE-2013-1753. Closes: #742927.
+  * Disable ensurepip for the system installation, only enable it for virtual
+    environments. Closes: #772730.
+
+ -- Matthias Klose <doko@debian.org>  Sat, 27 Dec 2014 12:23:33 +0100
+
+python3.4 (3.4.2-3) unstable; urgency=medium
+
+  * Update to 20141202 from the 3.4 branch.
+    - Issue #20335: bytes constructor now raises TypeError when encoding or
+      errors is specified with non-string argument.
+    - Issue #21971: Update turtledemo doc and add module to the index.
+    - Issue #21032. Fixed socket leak if HTTPConnection.getresponse() fails.
+    - Issue #22960: Add a context argument to xmlrpclib.ServerProxy constructor.
+    - Issue #22915: SAX parser now supports files opened with file descriptor
+      or bytes path.
+    - Issue #22609: Constructors and update methods of mapping classes in the
+      collections module now accept the self keyword argument.
+    - Issue #22788: Add *context* parameter to logging.handlers.HTTPHandler.
+    - Issue #22921: Allow SSLContext to take the *hostname* parameter even if
+      OpenSSL doesn't support SNI.
+    - Issue #22894: TestCase.subTest() would cause the test suite to be stopped
+      when in failfast mode, even in the absence of failures.
+    - Issue #22638: SSLv3 is now disabled throughout the standard library.
+      It can still be enabled by instantiating a SSLContext manually.
+    - Issue #22370: Windows detection in pathlib is now more robust.
+    - Issue #22841: Reject coroutines in asyncio add_signal_handler().
+    - Issue #22838: All test_re tests now work with unittest test discovery.
+    - Issue #21514: The documentation of the json module now refers to new
+      JSON RFC 7159 instead of obsoleted RFC 4627.
+    - Issue #22314: pydoc now works when the LINES environment variable is set.
+    - IDLE updates.
+  * Fix byte-code removal for the __phello__ module (mismatching source
+    and byte-code file name). Closes: #769769.
+  * Let ensurepip use a temporary location for the copy of the wheels.
+    Remove the ad-hoc /usr/lib/python-wheels location on package purge.
+    Let python3.4-venv break python3-pip (<< 1.5.6-4).  Closes: #769449.
+  * Don't pass default compiler search directories in the pkgconfig file.
+    Closes: #770936.
+  * Don't run pyexpat.test_exception as an autopkg test, requires a source
+    file.
+  * Allow building and testing without SSLv3 support (Kurt Roeckx).
+    Addresses: #768611.
+  * Fix issue 22966, when byte compiling, keep the base name of a file
+    containing dots. Closes: #769769.
+
+ -- Matthias Klose <doko@debian.org>  Tue, 02 Dec 2014 14:39:00 +0100
+
+python3.4 (3.4.2-2) unstable; urgency=medium
+
+  * Repackage the upstream source without the bundled ensurepip wheels (using
+    package format 3.0 (quilt)).
+  * Update to 20141112 from the 3.4 branch.
+    - Issue #19524: Fixed resource leak in the HTTP connection when an invalid
+      response is received.
+    - Issue #22216: smtplib now resets its state more completely after a quit.
+      The most obvious consequence of the previous behavior was a STARTTLS
+      failure during a connect/starttls/quit/connect/starttls sequence.
+    - Issue #22185: Fix an occasional RuntimeError in threading.Condition.wait()
+      caused by mutation of the waiters queue without holding the lock.
+    - Issue #22182: Use e.args to unpack exceptions correctly in
+      distutils.file_util.move_file.
+    - The webbrowser module now uses subprocess's start_new_session=True rather
+      than a potentially risky preexec_fn=os.setsid call.
+    - Issue #22191: Fix warnings.__all__.
+    - Issue #8797: Raise HTTPError on failed Basic Authentication immediately.
+    - Issue #21166: Prevent possible segfaults and other random failures of
+      python --generate-posix-vars in pybuilddir.txt build target.
+    - Idle changes:
+      - Issue #17390: Adjust Editor window title; remove 'Python',
+        move version to end.
+      - Issue #14105: Idle debugger breakpoints no longer disappear
+        when inseting or deleting lines.
+      - Issue #17172: Turtledemo can now be run from Idle.
+      - Issue #22236: Tkinter tests now don't reuse default root window.
+        New root window is created for every test class.
+    - Tk changes:
+      - Issue #22226: First letter no longer is stripped from the "status" key
+        in the result of Treeview.heading().
+      - Issue #22051: turtledemo no longer reloads examples to re-run them.
+        Initialization of variables and gui setup should be done in main(),
+        which is called each time a demo is run, but not on import.
+      - Issue #21933: Turtledemo users can change the code font size with a
+        menu selection or control(command) '-' or '+' or control-mousewheel.
+      - Issue #21597: The separator between the turtledemo text pane and the
+        drawing canvas can now be grabbed and dragged with a mouse.  The code
+        text pane can be widened to easily view or copy the full width of the
+        text.
+        The canvas can be widened on small screens.
+      - Issue #18132: Turtledemo buttons no longer disappear when the window
+        is shrunk.
+      - Issue #22236: Fixed Tkinter images copying operations in NoDefaultRoot
+        mode.
+  * Fix maintainer scripts for byte-code removal. Closes: #769079.
+
+ -- Matthias Klose <doko@debian.org>  Thu, 13 Nov 2014 04:33:52 +0100
+
+python3.4 (3.4.2-1) unstable; urgency=medium
+
+  * Python 3.4.2 release.
+  * Refresh patches.
+  * Bump standards version to 3.9.6.
+
+ -- Matthias Klose <doko@debian.org>  Wed, 08 Oct 2014 11:25:34 +0200
+
+python3.4 (3.4.2~rc1-1) unstable; urgency=medium
+
+  * Python 3.4.2 release candidate 1.
+  * Update to 20140930 from the 3.4 branch.
+
+ -- Matthias Klose <doko@debian.org>  Tue, 30 Sep 2014 01:51:50 +0200
+
+python3.4 (3.4.1-11) unstable; urgency=medium
+
+  * Update to 20140910 from the 3.4 branch.
+
+ -- Matthias Klose <doko@debian.org>  Wed, 10 Sep 2014 20:21:04 +0200
+
+python3.4 (3.4.1-10) unstable; urgency=medium
+
+  * Update to 20140818 from the 3.4 branch.
+  * Build-depend on dpkg-dev (>= 1.17.11).
+
+ -- Matthias Klose <doko@debian.org>  Mon, 18 Aug 2014 10:00:55 +0200
+
+python3.4 (3.4.1-9) unstable; urgency=medium
+
+  * Update to 20140810 from the 3.4 branch.
+
+ -- Matthias Klose <doko@debian.org>  Sun, 10 Aug 2014 14:53:46 +0200
+
+python3.4 (3.4.1-8) unstable; urgency=medium
+
+  * Update to 20140726 from the 3.4 branch.
+  * Move turtledemo from libpython3.4-testsuite to python3.4-examples.
+  * Call dpkg -L in the maintainer scripts with an architecture qualifier
+    for M-A: same packages. Closes: #754914.
+
+ -- Matthias Klose <doko@debian.org>  Sat, 26 Jul 2014 14:16:56 +0200
+
+python3.4 (3.4.1-7) unstable; urgency=medium
+
+  * Update to 20140706 from the 3.4 branch.
+
+ -- Matthias Klose <doko@debian.org>  Sun, 06 Jul 2014 21:37:36 +0200
+
+python3.4 (3.4.1-6) unstable; urgency=medium
+
+  * Fix logic to disable running the pystone benchmark on KFreeBSD (Steven
+    Chamberlain).
+
+ -- Matthias Klose <doko@ubuntu.com>  Mon, 09 Jun 2014 12:06:18 +0200
+
+python3.4 (3.4.1-5) unstable; urgency=medium
+
+  * Update to 20140608 from the 3.4 branch.
+  * Disable running the pystone benchmark on KFreeBSD.
+
+ -- Matthias Klose <doko@debian.org>  Sun, 08 Jun 2014 11:43:44 +0200
+
+python3.4 (3.4.1-4) unstable; urgency=medium
+
+  * Disable running the pybench benchmark on KFreeBSD.
+
+ -- Matthias Klose <doko@debian.org>  Sat, 07 Jun 2014 14:01:35 +0200
+
+python3.4 (3.4.1-3) unstable; urgency=medium
+
+  * Update to 20140605 from the 3.4 branch.
+    - pull in pyvenv changes.
+  * Update the ensurepip-wheels patch (Barry Warsaw).
+  * Fix python3.4-venv package removal.
+
+ -- Matthias Klose <doko@debian.org>  Thu, 05 Jun 2014 11:57:51 +0200
+
+python3.4 (3.4.1-2) unstable; urgency=medium
+
+  * Update to 20140603 from the 3.4 branch.
+  * Remove the __pycache__ directories on libpython3.4-testsuite package
+    removal. Closes: #749999.
+  * In the autopkg tests, set HOME to the temporary home directory after
+    the su call.
+  * In the autopkg tests, make $ADTTMP accessible to the su user, and
+    re-enable the test_site autopkg test.
+  * Don't try to access the pip module in ensurepip, when the wheels
+    are not available.
+
+ -- Matthias Klose <doko@debian.org>  Tue, 03 Jun 2014 23:58:48 +0200
+
+python3.4 (3.4.1-1) unstable; urgency=medium
+
+  * Python 3.4.1 release.
+  * Set a temporary home directory for the build and the autopkg tests.
+  * Fix issue #17752, test_distutils failures in the installed location.
+  * Update pydoc_data/topics.py, broken in the release candidate.
+  * Run again the test_code_module test in the autopkg tests.
+  * Fix issue #21264, test_compileall test failures in the installed
+    location. Re-enable in autopkg tests. LP: #1264554.
+  * ensurepip and pyvenv:
+    - Split out a python3.4-venv package, include the pyvenv-3.4 binary
+      and the ensurepip package.
+    - Adjust the ensurepip patch so that the wheels are installed from
+      the universal wheel packages (Barry Warsaw).
+    - Let ensurepip read wheel dependencies from a file shipped in the
+      -whl packages.
+    - Remove any version check on required pip and setuptools versions.
+      These are handled within these packages if necessary.
+  * Re-enable the pgo build.
+
+ -- Matthias Klose <doko@debian.org>  Wed, 21 May 2014 22:17:32 +0200
+
+python3.4 (3.4.1~rc1-1) unstable; urgency=medium
+
+  * Python 3.4.1 release candidate 1.
+  * Don't run test_code_module in the autopkg test environment, fails there
+    but succeeds during the build. See issue #17756. Applied workaround
+    for the test case.
+
+ -- Matthias Klose <doko@debian.org>  Mon, 05 May 2014 16:10:23 +0200
+
+python3.4 (3.4.0+20140427-1) unstable; urgency=medium
+
+  * Update to 20140427 from the 3.4 branch.
+  * Fix dependency for the -testsuite package: Closes: #745879.
+
+ -- Matthias Klose <doko@debian.org>  Sun, 27 Apr 2014 18:48:54 +0200
+
+python3.4 (3.4.0+20140425-1) unstable; urgency=medium
+
+  * Update to 20140425 from the 3.4 branch.
+  * Don't try to byte-compile bad syntax files in the testsuite.
+
+ -- Matthias Klose <doko@debian.org>  Fri, 25 Apr 2014 13:52:11 +0200
+
+python3.4 (3.4.0+20140417-1) unstable; urgency=medium
+
+  * Update to 20140417 from the 3.4 branch.
+    - Fix the test_site test failure.
+  * Repackage as a new tarball and remove the wheels shipped with ensurepip.
+  * Re-enable running some tests, disable some tests:
+    - Re-enable test_platform, test_subprocess, test_code_module, test_pydoc,
+    - Fix a distutils test error, skip a Solaris distutils test error.
+    - Skip the test_platform encoding test, failing with the lsb-release patch.
+    - Skip tests which are failing with python3.4.zip removed from sys.path.
+      Tracked in issue #21249.
+  * Byte-compile the files in the libpython3.4-testsuite package.
+  * d/p/distutils-install-layout.diff, d/p/site-locations.diff: Adjust the
+    "am I in a virtual environment" tests to include checking
+    sys.base_prefix != sys.prefix.  This is the definitive such test for
+    pyvenv created virtual environments (Barry Warsaw).
+  * Disallow running ensurepip with the system python, when not used in
+    a virtual environment (Barry Warsaw).
+  * Don't yet install the ensurepip module, requires further work.
+    ensurepip wants to install bundled modules setuptools and python-pip,
+    which should be built from the distro packages instead of using the
+    bundled code.
+  * python3.4-dbg: Add a python3.4-dbg.py symlink.
+  * Remove the linecache patch, not needed anymore in 3.4.
+  * Remove the disable-utimes patch, not needed anymore since glibc-2.4.
+  * Remove the statvfs-f_flag-constants, avoid-rpath, hurd-path_max,
+    kfreebsd-xattrs, freebsd-testsuite and ncurses-configure patches
+    applied upstream.
+  * Don't add runtime paths for libraries found in multiarch locations.
+
+ -- Matthias Klose <doko@debian.org>  Thu, 17 Apr 2014 21:05:04 +0200
+
+python3.4 (3.4.0-2) unstable; urgency=medium
+
+  * Update to 20140407 from the 3.4 branch.
+    - Issue #21134: Fix segfault when str is called on an uninitialized
+      UnicodeEncodeError, UnicodeDecodeError, or UnicodeTranslateError object.
+    - Issue #19537: Fix PyUnicode_DATA() alignment under m68k.
+    - Issue #21155: asyncio.EventLoop.create_unix_server() now raises
+      a ValueError if path and sock are specified at the same time.
+    - Issue #21149: Improved thread-safety in logging cleanup during
+      interpreter shutdown.
+    - Issue #20145: `assertRaisesRegex` and `assertWarnsRegex` now raise a
+      TypeError if the second argument is not a string or compiled regex.
+    - Issue #21058: Fix a leak of file descriptor in
+      :func:`tempfile.NamedTemporaryFile`, close the file descriptor if
+      :func:`io.open` fails.
+    - Issue #21013: Enhance ssl.create_default_context() when used for server
+      side sockets to provide better security by default.
+    - Issue #20633: Replace relative import by absolute import.
+    - Issue #20980: Stop wrapping exception when using ThreadPool.
+    - Issue #21082: In os.makedirs, do not set the process-wide umask.
+      Note this changes behavior of makedirs when exist_ok=True.
+    - Issue #20990: Fix issues found by pyflakes for multiprocessing.
+    - Issue #21015: SSL contexts will now automatically select an elliptic
+      curve for ECDH key exchange on OpenSSL 1.0.2 and later, and otherwise
+      default to "prime256v1".
+    - Issue #20816: Fix inspect.getcallargs() to raise correct TypeError for
+      missing keyword-only arguments.
+    - Issue #20817: Fix inspect.getcallargs() to fail correctly if more
+      than 3 arguments are missing.
+    - Issue #6676: Ensure a meaningful exception is raised when attempting
+      to parse more than one XML document per pyexpat xmlparser instance.
+    - Issue #20942: PyImport_ImportFrozenModuleObject() no longer sets __file__
+      to match what importlib does; this affects _frozen_importlib as well as
+      any module loaded using imp.init_frozen().
+    - Documentation, tools, demo and test updates.
+  * Depend on the python3-tk packages in the autopkg tests.
+  * Fix LTO builds with GCC 4.9.
+
+ -- Matthias Klose <doko@debian.org>  Mon, 07 Apr 2014 11:46:02 +0200
+
+python3.4 (3.4.0-1) unstable; urgency=medium
+
+  * Python 3.4.0 release.
+  * Update to 20140322 from the 3.4 branch.
+
+  * Build without ffi on or1k. Addresses: #738519.
+  * Update autopkg tests (Martin Pitt):
+    - Don't fail if apport is not installed.
+    - Call su with explicit shell, as nobody has nologin as default shell now.
+    - Only use $SUDO_USER if that user actually exists in the testbed.
+    - Drop obsolete chowning of $TMPDIR and $ADTTMP; with current autopkgtest
+      $TMPDIR has appropriate permissions, and $ADTTMP is not being used.
+
+ -- Matthias Klose <doko@debian.org>  Sat, 22 Mar 2014 13:39:34 +0100
+
+python3.4 (3.4~rc2-1) unstable; urgency=medium
+
+  * Python 3.4 release candidate 2.
+
+ -- Matthias Klose <doko@debian.org>  Mon, 24 Feb 2014 10:40:55 +0100
+
+python3.4 (3.4~rc1-1) unstable; urgency=medium
+
+  * Python 3.4 release candidate 1.
+
+ -- Matthias Klose <doko@debian.org>  Tue, 11 Feb 2014 13:38:50 +0100
+
+python3.4 (3.4~b3-1) unstable; urgency=medium
+
+  * Python 3.4 beta 3.
+
+ -- Matthias Klose <doko@debian.org>  Mon, 27 Jan 2014 10:54:10 +0000
+
+python3.4 (3.4~b2-1) unstable; urgency=medium
+
+  * Python 3.4 beta 2.
+  * Configure --with-system-libmpdec.
+
+ -- Matthias Klose <doko@debian.org>  Sun, 05 Jan 2014 23:34:17 +0100
+
+python3.4 (3.4~b1-5ubuntu2) trusty; urgency=medium
+
+  * Disable the test_dbm autopkg test, failing from time to time ...
+
+ -- Matthias Klose <doko@ubuntu.com>  Fri, 03 Jan 2014 02:25:31 +0100
+
+python3.4 (3.4~b1-5ubuntu1) trusty; urgency=medium
+
+  * Build for Tcl/Tk 8.6.
+
+ -- Matthias Klose <doko@ubuntu.com>  Thu, 02 Jan 2014 18:05:27 +0100
+
+python3.4 (3.4~b1-5) unstable; urgency=medium
+
+  * Update to 20131231 from the trunk.
+    - Fix issue #20070, don't run test_urllib2net when network resources
+      are not enabled.
+  * Move the _sitebuiltins module into libpython3.4-minimal.
+  * distutils: On installation with --install-layout=deb, rename extensions
+    to include the multiarch tag.
+    Renaming of extensions for python3.4 is currently not done by dh-python.
+    See Debian #733128.
+  * autopkg tests:
+    - Update debian/tests/control to refer to python3.4.
+    - Generate locales for running the autopkg tests.
+    - Disable some currently failing autopkg tests. LP: #1264554.
+    - Disable test_compileall for the autopkg tests, fails only there.
+  * Don't run test_faulthandler on Aarch64, hangs on the buildds.
+    See LP: #1264354.
+
+ -- Matthias Klose <doko@debian.org>  Tue, 31 Dec 2013 13:29:08 +0100
+
+python3.4 (3.4~b1-4) unstable; urgency=medium
+
+  * Update to 20131225 from the trunk.
+  * Fix python3.4--config --configdir. Closes: #733050.
+
+ -- Matthias Klose <doko@debian.org>  Wed, 25 Dec 2013 21:56:04 +0100
+
+python3.4 (3.4~b1-3) experimental; urgency=medium
+
+  * Update to 20131221 from the trunk.
+
+ -- Matthias Klose <doko@debian.org>  Sat, 21 Dec 2013 15:20:38 +0100
+
+python3.4 (3.4~b1-2) experimental; urgency=low
+
+  * Update to 20131202 from the trunk.
+  * Fix dbg symbols file for i386.
+  * Don't provide python3.4-dbm, available in a separate package.
+  * (Build-)depend on net-tools, test_uuid requires ifconfig.
+  * Fix distutils.sysconfig.get_makefile_filename().
+  * Move operator module to the -minimal package. Closes: #731100.
+
+ -- Matthias Klose <doko@debian.org>  Mon, 02 Dec 2013 14:36:44 +0100
+
+python3.4 (3.4~b1-1) experimental; urgency=low
+
+  * Python 3.4 beta 1.
+
+ -- Matthias Klose <doko@debian.org>  Sun, 24 Nov 2013 23:21:49 +0100
+
+python3.3 (3.3.3-2) unstable; urgency=low
+
+  * Update to 20131123 from the 3.3 branch.
+  * Update hurd-path_max.diff.
+
+ -- Matthias Klose <doko@debian.org>  Sat, 23 Nov 2013 08:57:21 +0100
+
+python3.3 (3.3.3-1) unstable; urgency=low
+
+  * Python 3.3.3 release.
+  * Update to 20131119 from the 3.3 branch.
+  * Regenerate the patches.
+  * Update the symbols files.
+  * Fix test support when the running kernel doesn't handle port reuse.
+  * libpython3.3-minimal replaces libpython3.3-stdlib (<< 3.2.3-7).
+    Closes: #725240.
+
+ -- Matthias Klose <doko@debian.org>  Tue, 19 Nov 2013 08:46:55 +0100
+
+python3.3 (3.3.2-7) unstable; urgency=low
+
+  * Update to 20130918 from the 3.3 branch.
+  * Update symbols file.
+  * Fail the build if extensions for the minimal package are not in
+    the libpython-minimal package. Closes: #723624.
+  * Fix indentation in regenerated platform-lsbrelease.diff (Dmitry Shachnev).
+    LP: #1220508.
+  * Point to the python3-tk (instead of the python-tk) package when missing.
+    LP: #1184082.
+
+ -- Matthias Klose <doko@debian.org>  Wed, 18 Sep 2013 12:19:47 +0200
+
+python3.3 (3.3.2-6) unstable; urgency=medium
+
+  * Update to 20130917 from the 3.3 branch.
+    - Fix SSL module to handle NULL bytes inside subjectAltNames general
+      names (CVE-2013-4238). Closes: #719567.
+  * Don't run the curses autopkg test.
+  * Set Multi-Arch attributes for binary packages.
+  * Fix multiarch include header for sparc64. Closes: #714802.
+
+ -- Matthias Klose <doko@debian.org>  Tue, 17 Sep 2013 15:12:00 +0200
+
+python3.3 (3.3.2-5) unstable; urgency=low
+
+  * Update to 20130803 from the 3.3 branch.
+    - Fix fcntl test case on KFreeBSD (Petr Salinger).
+  * Disable some socket tests on KFreeBSD (Petr Salinger).
+  * Fix multiarch include header for sparc64. Closes: #714802.
+  * Update package descriptions (Filipus Klutiero). Closes: #715801.
+
+ -- Matthias Klose <doko@debian.org>  Sun, 04 Aug 2013 17:38:35 +0200
+
+python3.3 (3.3.2-4) unstable; urgency=low
+
+  * Update to 20130612 from the 3.3 branch.
+  * Refresh patches.
+  * Don't run consistency check for cross builds.
+  * Really skip byte compile of non-existing sitecustomize.py.
+  * Fix the multiarch header file for mips64 (YunQiang Su). Closes: #710374.
+
+ -- Matthias Klose <doko@debian.org>  Wed, 12 Jun 2013 22:55:02 +0200
+
+python3.3 (3.3.2-3) unstable; urgency=low
+
+  * Update to 20130527 from the 3.3 branch.
+    - Fix #17980, possible abuse of ssl.match_hostname() for denial of service
+      using certificates with many wildcards (CVE-2013-2099). Closes: #708530.
+  * Disable the test_io test on armel, armhf, mips, mipsel. Hangs the
+    buildds.
+  * Don't try to byte-compile sitecustomize.py if the target of the
+    symlink doesn't exist anymore. Addresses: #709157.
+  * Fix directory removal in maintainer scripts. Closes: #709963.
+  * Handle byte compilation in python3.3{-minimal,}, byte removal in
+    libpython3.3{-minimal,-stdlib}.
+  * Backport patch to fix issue #13146, possible race conditions when writing
+    .pyc/.pyo files in py_compile.py (Barry Warsaw). LP: #1058884.
+  * Mark all _Py_dg_* symbols as optional on m68k. Closes: #709888.
+
+ -- Matthias Klose <doko@debian.org>  Mon, 27 May 2013 20:44:03 +0200
+
+python3.3 (3.3.2-2) unstable; urgency=high
+
+  * Fix the multiarch header file for ppc64. Closes: #708646.
+  * Disable running the tests on kfreebsd and the hurd.  Please
+    follow-up in #708652 and #708653.
+
+ -- Matthias Klose <doko@debian.org>  Fri, 17 May 2013 23:16:04 +0200
+
+python3.3 (3.3.2-1) unstable; urgency=low
+
+  * Python 3.3.2 release.
+  * Fix sysconfig.get_makefile_name() for the multiarch location.
+  * Set the platinclude dir back to the non-multiarch include path,
+    where the multiarch pyconfig.h compatibility header is found.
+  * Remove obsolete profile-doc patch.
+  * Run the pgo profile task in batches to avoid crashes during the
+    pgo profile run.
+  * Don't set yet any Multi-Arch: attributes in Debian.
+  * Build a libpython3.3-testsuite package.
+  * Add autopkg tests to run the installed testsuite in normal and debug
+    mode.
+  * Re-enable running the tests during the build.
+  * Add pyconfig.h compatibility headers.
+
+ -- Matthias Klose <doko@debian.org>  Wed, 15 May 2013 19:41:15 +0200
+
+python3.3 (3.3.1-1ubuntu5) raring; urgency=low
+
+  * Remove obsolete profile-doc patch.
+  * Run the pgo profile task in batches to avoid crashes during the
+    pgo profile run.
+  * Disable the lto build on armhf for now.
+  * Final (?) set of autopkg test fixes.
+  * Issue #17012: shutil.which() no longer fallbacks to the PATH environment.
+    variable if empty path argument is specified.
+  * Issue #17782: Fix undefined behaviour on platforms where
+    ``struct timespec``'s "tv_nsec" member is not a C long.
+
+ -- Matthias Klose <doko@ubuntu.com>  Wed, 17 Apr 2013 23:35:49 +0200
+
+python3.3 (3.3.1-1ubuntu4) raring; urgency=low
+
+  * Don't run the test suite in random order.
+  * More autopkg test fixes.
+
+ -- Matthias Klose <doko@ubuntu.com>  Wed, 17 Apr 2013 13:33:00 +0200
+
+python3.3 (3.3.1-1ubuntu3) raring; urgency=low
+
+  * Fix sysconfig.get_makefile_name() for the multiarch location.
+  * Set the platinclude dir back to the non-multiarch include path,
+    where the multiarch pyconfig.h compatibility header is found.
+  * Fix autopkg tests.
+  * More autopkgtest fixes (Jean-Baptiste Lallement):
+    - redirect stderr of command 'stop apport' to /dev/null. output to stderr
+      is an error for adt.
+    - script.py waits for child to exit and exit with child's return code.
+    - xpickle is not a valid value for option -u of regrtest.py. Removed it
+      LP: #1169150.
+  * Issue #17754, setting LANG and LC_ALL for the compiler call in ctypes/util.
+  * Issue #17761, platform._parse_release_file doesn't close the
+    /etc/lsb-release file, and doesn't know about 'Ubuntu'.
+
+ -- Matthias Klose <doko@ubuntu.com>  Tue, 16 Apr 2013 17:33:35 +0200
+
+python3.3 (3.3.1-1ubuntu2) raring; urgency=low
+
+  * Idle updates:
+    - Issue #17657: Show full Tk version in IDLE's about dialog.
+    - Issue #17613: Prevent traceback when removing syntax colorizer.
+    - Issue #1207589: Backwards-compatibility patch for right-click menu.
+    - Issue #16887: Now accepts Cancel in tabify/untabify dialog box.
+    - Issue #17625: Close the replace dialog after it is used.
+    - Issue #14254: Now handles readline correctly across shell restarts.
+    - Issue #17614: No longer raises exception when quickly closing a file.
+    - Issue #6698: Now opens just an editor window when configured to do so.
+    - Issue #8900: Using keyboard shortcuts in IDLE to open a file no longer
+      raises an exception.
+    - Issue #6649: Fixed missing exit status.
+  * Build a libpython3.3-testsuite package. LP: #301629.
+  * Add autopkg tests to run the installed testsuite in normal and debug
+    mode.
+  * Re-enable running the tests during the build.
+  * Add pyconfig.h compatibility headers. LP: #1094246.
+
+ -- Matthias Klose <doko@ubuntu.com>  Wed, 10 Apr 2013 23:05:23 +0200
+
+python3.3 (3.3.1-1ubuntu1) raring; urgency=low
+
+  * Merge with Debian; remaining changes:
+    - Build-depend on python3:any instead of python3.
+
+ -- Matthias Klose <doko@ubuntu.com>  Sat, 06 Apr 2013 16:21:34 +0200
+
+python3.3 (3.3.1-1) unstable; urgency=low
+
+  * Python 3.3.1 release.
+  * Call python with -E -S for the byte compilation.
+
+ -- Matthias Klose <doko@debian.org>  Sat, 06 Apr 2013 15:12:07 +0200
+
+python3.3 (3.3.1~rc1-2) experimental; urgency=low
+
+  * Fix byte-compiliation/-removal for the split-out library packages.
+    LP: #1160944.
+
+ -- Matthias Klose <doko@debian.org>  Sat, 30 Mar 2013 13:36:40 +0100
+
+python3.3 (3.3.1~rc1-1) experimental; urgency=low
+
+  * Python 3.3.1 release candidate 1.
+
+ -- Matthias Klose <doko@debian.org>  Tue, 26 Mar 2013 10:45:37 +0100
+
+python3.3 (3.3.0-12) experimental; urgency=low
+
+  * Update to 20130306 from the 3.3 branch.
+  * Remove the HAVE_FSYNC configure workaround, not needed for 3.3.
+  * Remove the python3 manual symlink (now shipped upstream by default).
+    Closes: #701051.
+
+ -- Matthias Klose <doko@debian.org>  Wed, 06 Mar 2013 16:38:41 +0800
+
+python3.3 (3.3.0-11) experimental; urgency=low
+
+  * Update to 20130220 from the 3.3 branch.
+
+ -- Matthias Klose <doko@debian.org>  Wed, 20 Feb 2013 15:40:05 +0100
+
+python3.3 (3.3.0-10) experimental; urgency=low
+
+  * Update to 20130126 from the 3.3 branch.
+  * Update hurd patches.
+  * python3.3-dbg, libpython3.3-dbg: Drop dependency on python.
+  * python3.3-dbg: Make gdb (not gdb-minimal) a recommendation.
+  * Git rid of build-dependency on python.
+  * Add site-packages in virtual environments created by pyvenv.
+    Closes: #698777.
+
+ -- Matthias Klose <doko@debian.org>  Sat, 26 Jan 2013 12:17:05 +0100
+
+python3.3 (3.3.0-9) experimental; urgency=low
+
+  * Update to 20130125 from the 3.3 branch.
+  * Update cross build patches, and allow the package to cross build.
+
+ -- Matthias Klose <doko@debian.org>  Fri, 25 Jan 2013 17:06:25 +0100
+
+python3.3 (3.3.0-8) experimental; urgency=low
+
+  * Update to 20130105 from the 3.3 branch.
+  * python-config --help returns with an exit value 0. LP: #1093860.
+  * Update package description for the -dbg packages. Closes: #696616.
+
+ -- Matthias Klose <doko@debian.org>  Sat, 05 Jan 2013 18:39:32 +0100
+
+python3.3 (3.3.0-7) experimental; urgency=low
+
+  * Update to 20121220 from the 3.3 branch.
+  * debian/patches/sys-multiarch.diff: Expose multiarch triplet value
+    as sys.implementation._multiarch (Barry Warsaw).  Closes: #695959.
+    Note: Usage of sysconfig.get_config_var('MULTIARCH') is preferred.
+  * Set the install schema to `unix_prefix', if a virtual environment
+    is detected (VIRTUAL_ENV env var present). Closes: #695758.
+  * python3.3-dev, libpython3.3-dev: Drop the dependency on libssl-dev.
+
+ -- Matthias Klose <doko@debian.org>  Fri, 21 Dec 2012 07:24:41 +0100
+
+python3.3 (3.3.0-6) experimental; urgency=low
+
+  * Don't use xattrs on kfreebsd and the Hurd.
+
+ -- Matthias Klose <doko@debian.org>  Tue, 04 Dec 2012 04:36:42 +0100
+
+python3.3 (3.3.0-5) experimental; urgency=low
+
+  * Update to 20121203 from the 3.3 branch.
+  * Make python3.3, python3.3-{minimal,dev,dbg} Multi-Arch: allowed.
+  * Use a shell implementation for the python-config script.
+
+ -- Matthias Klose <doko@debian.org>  Mon, 03 Dec 2012 21:52:33 +0100
+
+python3.3 (3.3.0-4) experimental; urgency=low
+
+  * Update to 20121128 from the 3.3 branch.
+  * Don't link extensions with the shared libpython library.
+  * Override pointless lintian warning `hardening-no-fortify-functions'
+    for binaries built without optimization.
+
+ -- Matthias Klose <doko@debian.org>  Wed, 28 Nov 2012 13:47:16 +0100
+
+python3.3 (3.3.0-3) experimental; urgency=low
+
+  * Update to 20121106 from the 3.3 branch.
+  * Filter-out cflags for profiled builds from _sysconfigdata.
+  * Fix multiarch plat-linux installation. LP: #1075891.
+  * Install _sysconfigdata.py from the shared builds. LP: #1075903.
+
+ -- Matthias Klose <doko@debian.org>  Wed, 07 Nov 2012 14:31:02 +0100
+
+python3.3 (3.3.0-2) experimental; urgency=low
+
+  * Update to 20121021 from the 3.3 branch.
+  * Fix the interpreter name for the python3.3-dbg-config script.
+
+ -- Matthias Klose <doko@debian.org>  Sun, 21 Oct 2012 09:51:05 +0200
+
+python3.3 (3.3.0-1) experimental; urgency=low
+
+  * Python 3.3.0 release.
+
+ -- Matthias Klose <doko@debian.org>  Sat, 29 Sep 2012 12:59:24 +0200
+
+python3.3 (3.3.0~rc3-1) experimental; urgency=low
+
+  * Python 3.3.0 release candidate 3.
+  * Don't try to write lib2to3's pickled grammar files. Closes: #687200.
+  * Fix python-config manpage symlink. Closes: #687201.
+
+ -- Matthias Klose <doko@ubuntu.com>  Mon, 24 Sep 2012 16:22:17 +0200
+
+python3.3 (3.3.0~rc2-2ubuntu1) quantal; urgency=low
+
+  * Encode the version in the devhelp documentation name. LP: #787039.
+
+ -- Matthias Klose <doko@debian.org>  Mon, 10 Sep 2012 12:56:13 +0200
+
+python3.3 (3.3.0~rc2-2) experimental; urgency=low
+
+  * Fix typo fixing the pkgconfig file.
+
+ -- Matthias Klose <doko@debian.org>  Mon, 10 Sep 2012 11:13:51 +0200
+
+python3.3 (3.3.0~rc2-1) experimental; urgency=low
+
+  * Python 3.3.0 release candidate 2.
+  * Add the platform include dir to pkgconfig's CFlags.
+  * Hint on installing the python-gdbm package on failing _gdbm import.
+    LP: #995616.
+  * libpython3.3: Fix libpython3.3.so symlink. Closes: #686377.
+  * Don't use `-n' anymore to start idle in the desktop/menu files.
+
+ -- Matthias Klose <doko@debian.org>  Sun, 09 Sep 2012 13:38:55 +0200
+
+python3.3 (3.3.0~rc1-2) experimental; urgency=low
+
+  * distutils: Add the multiarch python path to the include directories.
+    Closes: #685041.
+  * Remove /etc/python3.3 in libpython3.3-minimal instead of python3.3-minimal.
+    Closes: #681979.
+  * Remove /etc/python/sysconfig.cfg, not available anymore in python3.3.
+    Closes: #685016.
+  * Don't ship the _gdbm and _tkinter extensions in the -dbg package.
+    Closes: #685261.
+  * Fix verbose parallel builds for the sharedmods target.
+  * Don't install the pickled lib2to3 grammar files. Closes: #685214.
+  * Build extensions with fortify flags.
+  * Overwrite arch-dependent-file-not-in-arch-specific-directory warnings.
+
+ -- Matthias Klose <doko@debian.org>  Tue, 28 Aug 2012 19:47:58 +0200
+
+python3.3 (3.3.0~rc1-1) experimental; urgency=low
+
+  * Python 3.3.0 release candidate 1.
+
+ -- Matthias Klose <doko@debian.org>  Sun, 26 Aug 2012 23:15:00 +0200
+
+python3.3 (3.3.0~b2-1) experimental; urgency=low
+
+  * Python 3.3.0 beta2 release.
+  * Fix removal of the _tkinter and dbm extensions for multiarch builds.
+    Closes: #684461.
+  * Use _sysconfigdata.py in distutils to initialize distutils.
+    Closes: #682475.
+  * Fix symlink for static libpython. Closes: #684608.
+
+ -- Matthias Klose <doko@debian.org>  Mon, 13 Aug 2012 11:05:00 +0200
+
+python3.3 (3.3.0~b1-3) experimental; urgency=low
+
+  * Update to 20120712 from the trunk.
+  * Install separate _sysconfigdata.py for normal and debug builds.
+  * Install into multiarch locations.
+  * Split out multiarch packages libpython3.3-{minimal,stdlib,dev,dbg}.
+
+ -- Matthias Klose <doko@debian.org>  Fri, 13 Jul 2012 00:43:42 +0200
+
+python3.3 (3.3.0~b1-2) experimental; urgency=low
+
+   * Update to 20120701 from the trunk.
+
+ -- Matthias Klose <doko@debian.org>  Sun, 01 Jul 2012 11:45:12 +0200
+
+python3.3 (3.3.0~b1-1) experimental; urgency=low
+
+  * Python 3.3.0 beta1 release.
+  * Fix symlink for the -gdb.py file.
+  * debian/copyright: Add libmpdec license.
+  * Enable fortified build.
+
+ -- Matthias Klose <doko@debian.org>  Wed, 27 Jun 2012 08:44:56 +0200
+
+python3.3 (3.3.0~a4-1) experimental; urgency=low
+
+  * Python 3.3.0 alpha4 release.
+  * Update to 20120620 from the trunk.
+  * Build _ctypes as an extension, not a builtin.
+  * Mark symbols defined in the _ctypes extension as optional.
+  * Remove references to the removed pyton3.3-documenting file.
+  * The wininst-* files cannot be built within Debian from the included
+    sources, needing a zlib mingw build, which the zlib maintainer isn't
+    going to provide.
+  * Use the underscore.js file provided by the libjs-underscore package.
+  * Let pydoc handle dist-packages the same as site-packages.
+  * Avoid runtime path for the sqlite extension.
+
+ -- Matthias Klose <doko@debian.org>  Wed, 20 Jun 2012 13:09:19 +0200
+
+python3.3 (3.3.0~a3-1) experimental; urgency=low
+
+  * Python 3.3.0 alpha3 release.
+  * Build the dbm extension using db5.3.
+  * Update symbols file for a3.
+
+ -- Matthias Klose <doko@debian.org>  Wed, 02 May 2012 23:28:46 +0200
+
+python3.3 (3.3.0~a2-1) experimental; urgency=low
+
+  * Python 3.3.0 alpha2 release.
+  * Update to 20120404 from the trunk.
+  * Build-depend on expat (>= 2.1).
+
+ -- Matthias Klose <doko@debian.org>  Wed, 04 Apr 2012 16:31:34 +0200
+
+python3.3 (3.3.0~a1-1) experimental; urgency=low
+
+  * Python 3.3.0 alpha1 release.
+  * Update to 20120321 from the trunk.
+  * Update debian/copyright.
+  * Build-depend on expat (>= 2.1~).
+
+ -- Matthias Klose <doko@debian.org>  Thu, 22 Mar 2012 06:14:01 +0100
+
+python3.3 (3.3~20120109-1) experimental; urgency=low
+
+  * 3.3 20120109 snapshot from the trunk.
+  * Merge packaging from python3.2 3.2.2-4.
+
+ -- Matthias Klose <doko@debian.org>  Sun, 08 Jan 2012 09:44:33 +0100
+
+python3.3 (3.3~20110523-1) experimental; urgency=low
+
+  * Initial Python 3.3 packaging.
+
+ -- Matthias Klose <doko@debian.org>  Mon, 23 May 2011 09:20:52 +0200
+
+python3.2 (3.2.2-4) unstable; urgency=low
+
+  * The static library belongs into the -dev package.
+  * Remove obsolete attributes in the control file.
+
+ -- Matthias Klose <doko@debian.org>  Sat, 07 Jan 2012 20:46:39 +0100
+
+python3.2 (3.2.2-3) unstable; urgency=low
+
+  * Update to 20120106 from the 3.2 branch.
+  * Install manual pages for 2to3 and python-config.
+  * Fix file permission of token.py module.
+  * Add the ability to build an python3.x udeb, as copy of the
+    python3.x-minimal package (Colin Watson).
+  * Overwrite some lintian warnings:
+    - The -dbg interpreters are not unusual.
+    - The -gdb.py files don't need a python dependency.
+    - lintian can't handle a whatis entry starting with one word on the line.
+  * Fix test failures related to distutils debian installation layout.
+  * Update symbols files.
+  * Add build-arch/build-indep targets.
+  * Regenerate Setup and Makefiles after correcting Setup.local.
+  * profiled-build.diff: Pass PY_CFLAGS instead of CFLAGS for the profiled
+    build.
+  * Pass dpkg-buildflags to the build process, and build third party
+    extensions with these flags.
+  * Add support to build using -flto (and -g1) on some architectures.
+  * Disable pgo builds for some architectures (for now, keep just
+    amd64 armel armhf i386 powerpc ppc64).
+  * Build-depend on libgdbm-dev to build and run the gdbm tests.
+  * Build-depend on xvfb to run the tkinter tests.
+
+ -- Matthias Klose <doko@debian.org>  Fri, 06 Jan 2012 20:10:13 +0100
+
+python3.2 (3.2.2-2) unstable; urgency=low
+
+  * Update platform patches (alpha, hppa, mips, sparc).
+
+ -- Matthias Klose <doko@debian.org>  Fri, 02 Dec 2011 10:24:05 +0100
+
+python3.2 (3.2.2-1) unstable; urgency=low
+
+  * Python 3.2.2 release.
+  * Update to 20111201 from the 3.2 branch.
+  * Search headers in /usr/include/ncursesw for the curses/panel extensions.
+  * New patch, ctypes-arm, allow for ",hard-float" after libc6 in ldconfig -p
+    output (Loic Minier). LP: #898172.
+
+ -- Matthias Klose <doko@debian.org>  Thu, 01 Dec 2011 13:19:16 +0100
+
+python3.2 (3.2.2~rc1-1) unstable; urgency=low
+
+  * Python 3.2.2 release candidate 1.
+
+ -- Matthias Klose <doko@debian.org>  Sun, 14 Aug 2011 20:25:35 +0200
+
+python3.2 (3.2.1-2) unstable; urgency=low
+
+  * Update to 20110803 from the 3.2 branch.
+  * Revert previous change to treat Linux 3.x as Linux 2. Use the
+    plat-linux3 directory instead.
+  * Use linux-any for some build dependencies. Closes: #634310.
+
+ -- Matthias Klose <doko@debian.org>  Wed, 03 Aug 2011 15:16:05 +0200
+
+python3.2 (3.2.1-1) unstable; urgency=medium
+
+  * Python 3.2.1 release.
+  * Update lib-argparse patch (Pino Toscano). Closes: #631635.
+  * Treat Linux 3.x as Linux 2. Closes: #633015.
+
+ -- Matthias Klose <doko@debian.org>  Sun, 10 Jul 2011 21:46:36 +0200
+
+python3.2 (3.2.1~rc2-1) unstable; urgency=low
+
+  * Python 3.2.1 release candidate 2.
+  * Add profile/pstats to the python3.2 package, update debian copyright.
+  * Don't run the benchmark on hurd-i386.
+  * Disable threading tests on hurd-i386. Closes: #631634.
+  * Don't add the bsddb multilib path, if already in the standard lib path.
+
+ -- Matthias Klose <doko@debian.org>  Mon, 04 Jul 2011 20:27:52 +0200
+
+python3.2 (3.2.1~rc1-1) unstable; urgency=low
+
+  * Python 3.2.1 release candidate 1.
+  * Only enable sphinx-0.x patches when building with sphinx-0.x.
+
+ -- Matthias Klose <doko@debian.org>  Wed, 18 May 2011 12:15:47 +0200
+
+python3.2 (3.2-4) unstable; urgency=low
+
+  * Update to 20110504 from the 3.2 branch.
+  * Disable the profiled build on ia64 and m68k.
+  * Update symbols file for m68k (Thorsten Glaser).
+
+ -- Matthias Klose <doko@debian.org>  Wed, 04 May 2011 21:32:08 +0200
+
+python3.2 (3.2-3) unstable; urgency=low
+
+  * Update to 20110427 from the 3.2 branch.
+    - Fix argparse import. Closes: #624277.
+  * Keep the ssl.PROTOCOL_SSLv2 module constant , just raise an exception
+    when trying to create a PySSL object. #624127.
+  * Don't depend on the locale and specific awk implementations in prerm.
+    Closes: #623466, #620836.
+  * Remove the old local site directory. Closes: #623057.
+
+ -- Matthias Klose <doko@debian.org>  Wed, 27 Apr 2011 20:40:29 +0200
+
+python3.2 (3.2-2) unstable; urgency=low
+
+  * Update to 20110419 from the 3.2 branch.
+  * Re-enable profile-guided builds.
+  * Build without OpenSSL v2 support. Closes: #622004.
+  * Force linking the curses module against libncursesw. Closes: #622064.
+  * Re-enable running the testsuite during the build.
+
+ -- Matthias Klose <doko@debian.org>  Tue, 19 Apr 2011 17:54:36 +0200
+
+python3.2 (3.2-1) unstable; urgency=low
+
+  * Python 3.2 final release.
+
+ -- Matthias Klose <doko@debian.org>  Sun, 20 Feb 2011 19:22:24 +0100
+
+python3.2 (3.2~rc3-1) experimental; urgency=low
+
+  * Python 3.2 release candidate 3.
+
+ -- Matthias Klose <doko@debian.org>  Mon, 14 Feb 2011 16:12:14 +0100
+
+python3.2 (3.2~rc1-2) experimental; urgency=low
+
+  * Fix upgrade of the python3.2-dev package. Closes: #610370.
+
+ -- Matthias Klose <doko@debian.org>  Wed, 19 Jan 2011 02:21:19 +0100
+
+python3.2 (3.2~rc1-1) experimental; urgency=low
+
+  * Python 3.2 release candidate 1.
+
+ -- Matthias Klose <doko@debian.org>  Sun, 16 Jan 2011 22:17:09 +0100
+
+python3.2 (3.2~b2-1) experimental; urgency=low
+
+  * Python 3.2 beta2 release.
+  * Fix FTBFS on hurd-i386 (Pino Toscano). Closes: #606152).
+
+ -- Matthias Klose <doko@debian.org>  Tue, 21 Dec 2010 21:23:21 +0100
+
+python3.2 (3.2~b1-1) experimental; urgency=low
+
+  * Python 3.2 beta1 release.
+  * Configure with --enable-loadable-sqlite-extensions.
+
+ -- Matthias Klose <doko@debian.org>  Mon, 06 Dec 2010 12:19:09 +0100
+
+python3.2 (3.2~a4-2) experimental; urgency=low
+
+  * Fix build failure on the hurd.
+
+ -- Matthias Klose <doko@debian.org>  Fri, 26 Nov 2010 06:38:41 +0100
+
+python3.2 (3.2~a4-1) experimental; urgency=low
+
+  * Python 3.2 alpha4 release.
+  * Update to the py3k branch (20101124).
+  * Move the Makefile into the -min package, required by sysconfig.
+    Addresses: #603237.
+
+ -- Matthias Klose <doko@debian.org>  Wed, 24 Nov 2010 22:20:32 +0100
+
+python3.2 (3.2~a3-2) experimental; urgency=low
+
+  * Update to the py3k branch (20101018).
+    - Issue #10094: Use versioned .so files on GNU/kfreeBSD and the GNU Hurd.
+      Closes: #600183.
+
+ -- Matthias Klose <doko@debian.org>  Mon, 18 Oct 2010 19:34:39 +0200
+
+python3.2 (3.2~a3-1) experimental; urgency=low
+
+  * Python 3.2 alpha3 release.
+  * Make Lib/plat-gnukfreebsd[78] ready for python3. Closes: #597874.
+
+ -- Matthias Klose <doko@debian.org>  Tue, 12 Oct 2010 16:13:15 +0200
+
+python3.2 (3.2~a2-7) experimental; urgency=low
+
+  * Update to the py3k branch (20100926).
+
+ -- Matthias Klose <doko@debian.org>  Sun, 26 Sep 2010 14:41:18 +0200
+
+python3.2 (3.2~a2-6) experimental; urgency=low
+
+  * Update to the py3k branch (20100919).
+  * Update GNU/Hurd patches (Pino Toscano). Closes: #597320.
+
+ -- Matthias Klose <doko@debian.org>  Sun, 19 Sep 2010 12:45:14 +0200
+
+python3.2 (3.2~a2-5) experimental; urgency=low
+
+  * Update to the py3k branch (20100916).
+  * Provide Lib/plat-gnukfreebsd[78] (Jakub Wilk). Addresses: #593818.
+  * Assume working semaphores, don't rely on running kernel for the check.
+    LP: #630511.
+
+ -- Matthias Klose <doko@debian.org>  Thu, 16 Sep 2010 14:41:58 +0200
+
+python3.2 (3.2~a2-4) experimental; urgency=low
+
+  * Update to the py3k branch (20100911).
+  * Add the sysconfig module to python3.2-minimal.
+  * Remove dist-packages/README.
+  * Make xargs --show-limits in the maintainer scripts independent from
+    the locale.
+
+ -- Matthias Klose <doko@debian.org>  Sat, 11 Sep 2010 20:59:47 +0200
+
+python3.2 (3.2~a2-3) experimental; urgency=low
+
+  * Update to the py3k branch (20100910).
+  * Disable profile feedback based optimization on armel.
+  * Add copyright information for expat, libffi and zlib. Sources
+    for the wininst-* files are in PC/bdist_wininst. Closes: #596276.
+  * Run the testsuite in parallel, when parallel= is set in DEB_BUILD_OPTIONS.
+
+ -- Matthias Klose <doko@debian.org>  Fri, 10 Sep 2010 20:28:16 +0200
+
+python3.2 (3.2~a2-2) experimental; urgency=low
+
+  * Fix distutils.sysconfig.get_makefile_name for debug builds.
+
+ -- Matthias Klose <doko@debian.org>  Thu, 09 Sep 2010 02:40:11 +0200
+
+python3.2 (3.2~a2-1) experimental; urgency=low
+
+  * Python 3.2 alpha2 release.
+  * Update to the py3k branch (20100908).
+  * Provide /usr/lib/python3/dist-packages as location for public python
+    packages.
+
+ -- Matthias Klose <doko@debian.org>  Wed, 08 Sep 2010 17:36:06 +0200
+
+python3.2 (3.2~a1-1) experimental; urgency=low
+
+  * Python 3.2 alpha1 release.
+    - Files removed: Lib/profile.py, Lib/pstats.py, PC/icons/source.xar.
+  * Update to the py3k branch (20100827).
+  * Fix detection of ffi.h header file. Closes: #591408.
+  * python3.1-dev: Depend on libssl-dev. LP: #611845.
+
+ -- Matthias Klose <doko@debian.org>  Fri, 27 Aug 2010 21:40:31 +0200
+
+python3.2 (3.2~~20100707-0ubuntu1) maverick; urgency=low
+
+  * Move the pkgconfig file into the -dev package.
+  * Update preremoval scripts for __pycache__ layout.
+  * Run hooks from /usr/share/python3/runtime.d/
+  * Update distutils-install-layout and debug-build patches.
+
+ -- Matthias Klose <doko@ubuntu.com>  Wed, 07 Jul 2010 12:38:52 +0200
+
+python3.2 (3.2~~20100706-0ubuntu1) maverick; urgency=low
+
+  * Test build, taken from the py3k branch (20100706).
+  * Merge with the python3.1 packaging.
+
+ -- Matthias Klose <doko@ubuntu.com>  Tue, 06 Jul 2010 17:10:51 +0200
+
+python3.2 (3.2~~20100704-0ubuntu1) maverick; urgency=low
+
+  * Test build, taken from the py3k branch (20100704).
+
+ -- Matthias Klose <doko@ubuntu.com>  Sun, 04 Jul 2010 16:04:45 +0200
+
+python3.2 (3.2~~20100421-0ubuntu1) lucid; urgency=low
+
+  * Test build, taken from the py3k branch (20100421).
+
+ -- Matthias Klose <doko@ubuntu.com>  Wed, 21 Apr 2010 22:04:14 +0200
+
+python3.1 (3.1.2+20100703-1) unstable; urgency=low
+
+  * Update to the 3.1 release branch, 20100703.
+  * Convert internal dpatch system to quilt.
+  * Update module list for python3-minimal.
+
+ -- Matthias Klose <doko@debian.org>  Sat, 03 Jul 2010 14:18:18 +0200
+
+python3.1 (3.1.2-3) unstable; urgency=low
+
+  * Update to the 3.1 release branch, 20100508.
+  * Fix backport of issue #8140. Closes: #578896.
+
+ -- Matthias Klose <doko@debian.org>  Sat, 08 May 2010 15:37:35 +0200
+
+python3.1 (3.1.2-2) unstable; urgency=low
+
+  * Update to the 3.1 release branch, 20100421.
+  * Update patch for issue #8032, gdb7 hooks for debugging.
+  * Fix issue #8233: When run as a script, py_compile.py optionally
+    takes a single argument `-`.
+  * Don't build-depend on locales on avr32.
+
+ -- Matthias Klose <doko@debian.org>  Wed, 21 Apr 2010 21:12:37 +0200
+
+python3.1 (3.1.2-1) unstable; urgency=low
+
+  * Python 3.1.2 release.
+  * Fix issue #4961: Inconsistent/wrong result of askyesno function in
+    tkMessageBox with Tcl8.5. LP: #462950.
+  * Don't complain when /usr/local is not writable on installation.
+  * Apply proposed patch for issue #8032, gdb7 hooks for debugging.
+
+ -- Matthias Klose <doko@debian.org>  Sun, 21 Mar 2010 17:59:49 +0100
+
+python3.1 (3.1.2~rc1-2) unstable; urgency=low
+
+  * Update to the 3.1 release branch, 20100316.
+  * Backport issue #8140: Extend compileall to compile single files.
+    Add -i option.
+
+ -- Matthias Klose <doko@debian.org>  Tue, 16 Mar 2010 02:38:45 +0100
+
+python3.1 (3.1.2~rc1-1) unstable; urgency=low
+
+  * Python 3.1.2 release candidate 1.
+    - Replace the Monty Python audio test file. Closes: #568676.
+  * Build using libdb4.8-dev. Only used for the dbm extension; the bsddb3
+    extension isn't built from the core packages anymore.
+
+ -- Matthias Klose <doko@debian.org>  Thu, 11 Mar 2010 17:26:17 +0100
+
+python3.1 (3.1.1-3) unstable; urgency=low
+
+  * Update to the 3.1 release branch, 20100119.
+  * Hurd fixes (Pino Toscano):
+    - hurd-broken-poll.dpatch: ported from 2.5.
+    - hurd-disable-nonworking-constants.dpatch: disable a few constants from
+      the public API whose C counterparts are not implemented, so using them
+      either always blocks or always fails (caused issues in the test suite).
+    - hurd-path_max.dpatch (hurd only): change few PATH_MAX occurrences to
+      MAXPATHLEN (which is defined by the python lib if not defined by the OS).
+    - cthreads.dpatch: Refresh.
+    - Exclude the profiled build for hurd.
+    - Disable six blocking tests from the test suite.
+  * Don't run the testsuite on armel and hppa until someone figures out
+    the blocking tests.
+
+ -- Matthias Klose <doko@debian.org>  Tue, 19 Jan 2010 22:02:14 +0100
+
+python3.1 (3.1.1-2) unstable; urgency=low
+
+  * Update to the 3.1 release branch, 20100116.
+  * Fix bashism in makesetup shell script. Closes: #530170, #530171.
+  * Fix build issues on avr (Bradley Smith). Closes: #528439.
+    - Configure --without-ffi.
+    - Don't run lengthly tests.
+
+ -- Matthias Klose <doko@debian.org>  Sat, 16 Jan 2010 23:28:05 +0100
+
+python3.1 (3.1.1-1) experimental; urgency=low
+
+  * Python 3.1.1 final release.
+  * Update to the 3.1 release branch, 20091011.
+  * Remove /usr/local/lib/python3.1 on package removal, if empty.
+  * Build _hashlib as a builtin. LP: #445530.
+  * python3.1-doc: Don't compress the sphinx inventory.
+  * python3.1-doc: Fix jquery.js symlink. LP: #447370.
+  * Run the benchmark with -C 2 -n 5 -w 4 on all architectures.
+  * python3.1-dbg: Don't create debug subdirectory in /usr/local. No
+    separate debug directory needed anymore.
+  * Fix title of devhelp document. LP: #423551.
+
+ -- Matthias Klose <doko@debian.org>  Sun, 11 Oct 2009 22:01:57 +0200
+
+python3.1 (3.1-1) experimental; urgency=low
+
+  * Python 3.1 final release.
+  * Update to the 3.1 release branch, 20090723.
+  * Add explicit build dependency on tk8.5-dev.
+
+ -- Matthias Klose <doko@ubuntu.com>  Thu, 23 Jul 2009 15:20:35 +0200
+
+python3.1 (3.1-0ubuntu2) karmic; urgency=low
+
+  * Disable profile feedback based optimization on amd64 (GCC
+    PR gcov-profile/38292).
+
+ -- Matthias Klose <doko@ubuntu.com>  Fri, 24 Jul 2009 16:27:22 +0200
+
+python3.1 (3.1-0ubuntu1) karmic; urgency=low
+
+  * Python 3.1 final release.
+  * Update to the 3.1 release branch, 20090723.
+  * Add explicit build dependency on tk8.5-dev.
+
+ -- Matthias Klose <doko@ubuntu.com>  Thu, 23 Jul 2009 18:52:17 +0200
+
+python3.1 (3.1~rc2+20090622-1) experimental; urgency=low
+
+  [Matthias Klose]
+  * Python 3.1 rc2 release. Closes: #529320.
+  * Update to the trunk, 20090622, remove patches integrated upstream.
+  * Configure with --with-fpectl --with-dbmliborder=bdb --with-wide-unicode.
+    NOTE: The --with-wide-unicode configuration will break most extensions
+    built with 3.1~a1, but is consistent with python2.x configurations.
+  * Add symbols files for libpython3.1 and python3.1-dbg, don't include symbols
+    from builtins, which can either be built as builtins or extensions.
+  * Keep an empty lib-dynload in python3.1-minimal to avoid a warning on
+    startup.
+  * python3.1-doc: Depend on libjs-jquery, use jquery.js from this package.
+    Closes: #523485.
+  * Do not add /usr/lib/pythonXY.zip on sys.path.
+  * Add symbols files for libpython3.1 and python3.1-dbg, don't include symbols
+    from builtins, which can either be built as builtins or extensions.
+  * Keep an empty lib-dynload in python3.1-minimal to avoid a warning on
+    startup.
+  * Fix some lintian warnings.
+  * Use the information in /etc/lsb-release for platform.dist(). LP: #196526.
+  * Move the bdist_wininst files into the -dev package (only needed to build
+    windows installers).
+  * Document changes to the site directory name in the installation manual.
+  * Don't build a profiled binary. Closes: #521811.
+
+  * Address issues when working with PYTHONUSERBASE and non standard prefix
+    (pointed out by Larry Hastings):
+    - distutils.sysconfig.get_python_lib(): Only return ".../dist-packages" if
+      prefix is the default prefix and if PYTHONUSERBASE is not set in the
+      environment.
+    - site.addusersitepackages(): Add USER_BASE/.../dist-packages to sys.path.
+  * Always use the `unix_prefix' scheme for setup.py install in a virtualenv
+    setup. LP: #339904.
+  * Don't make the setup.py install options --install-layout=deb and --prefix
+    conflict with each other.
+  * distutils: Always install into `/usr/local/lib/python3.1/dist-packages'
+    if an option `--prefix=/usr/local' is present (except for virtualenv
+    and PYTHONUSERBASE installations). LP: #362570.
+  * Always use `site-packages' as site directory name in virtualenv.
+
+  [Marc Deslauriers]
+  * debian/pyhtml2devhelp.py: update for sphinx generated documentation.
+  * debian/rules: re-enable documentation files for devhelp.
+
+ -- Matthias Klose <doko@debian.org>  Mon, 22 Jun 2009 16:18:39 +0200
+
+python3.1 (3.1~a1+20090322-1) experimental; urgency=low
+
+  * Python 3.1 alpha1 release.
+  * Update to the trunk, 20090322.
+  * Update installation schemes: LP: #338395.
+    - When the --prefix option is used for setup.py install, Use the
+      `unix_prefix' scheme.
+    - Use the `deb_system' scheme if --install-layout=deb is specified.
+    - Use the the `unix_local' scheme if neither --install-layout=deb
+      nor --prefix is specified.
+  * Use the information in /etc/lsb-release for platform.dist(). LP: #196526.
+  * pydoc: Fix detection of local documentation files.
+  * Build a shared library configured --with-pydebug. LP: #322580.
+  * Fix some lintian warnings.
+
+ -- Matthias Klose <doko@debian.org>  Mon, 23 Mar 2009 00:01:27 +0100
+
+python3.1 (3.1~~20090226-1) experimental; urgency=low
+
+  * Python-3.1 snapshot (20090226), upload to experimental.
+
+ -- Matthias Klose <doko@debian.org>  Thu, 26 Feb 2009 16:18:41 +0100
+
+python3.1 (3.1~~20090222-0ubuntu1) jaunty; urgency=low
+
+  * Python-3.1 snapshot (20090222).
+  * Build the _dbm extension using the Berkeley DB backend.
+
+ -- Matthias Klose <doko@ubuntu.com>  Sun, 22 Feb 2009 12:58:58 +0100
+
+python3.0 (3.0.1-0ubuntu4) jaunty; urgency=low
+
+  * Don't build-depend on locales on sparc. Currently not installable.
+
+ -- Matthias Klose <doko@ubuntu.com>  Sun, 22 Feb 2009 12:48:38 +0100
+
+python3.0 (3.0.1-0ubuntu3) jaunty; urgency=low
+
+  * Update to 20090222 from the release30-maint branch.
+
+ -- Matthias Klose <doko@ubuntu.com>  Sun, 22 Feb 2009 11:09:58 +0100
+
+python3.0 (3.0.1-0ubuntu2) jaunty; urgency=low
+
+  * Allow docs to be built with Sphinx 0.5.x.
+
+ -- Matthias Klose <doko@ubuntu.com>  Tue, 17 Feb 2009 12:58:02 +0100
+
+python3.0 (3.0.1-0ubuntu1) jaunty; urgency=low
+
+  * New upstream version.
+
+ -- Matthias Klose <doko@ubuntu.com>  Mon, 16 Feb 2009 17:18:23 +0100
+
+python3.0 (3.0-0ubuntu2) jaunty; urgency=low
+
+  * Update to 20090213 from the release30-maint branch.
+
+ -- Matthias Klose <doko@ubuntu.com>  Fri, 13 Feb 2009 15:49:12 +0100
+
+python3.0 (3.0-0ubuntu1) jaunty; urgency=low
+
+  * Final Python-3.0 release.
+
+ -- Matthias Klose <doko@ubuntu.com>  Thu, 04 Dec 2008 09:00:09 +0100
+
+python3.0 (3.0~rc3-0ubuntu4) jaunty; urgency=low
+
+  * Update to 20081127 from the py3k branch.
+  * Ensure that all extensions from the -minimal package are statically
+    linked into the interpreter. LP: #301597.
+  * Include expat, _elementtree, datetime in -minimal to link
+    these extensions statically.
+
+ -- Matthias Klose <doko@ubuntu.com>  Thu, 27 Nov 2008 08:49:02 +0100
+
+python3.0 (3.0~rc3-0ubuntu3) jaunty; urgency=low
+
+  * Ignore errors when running the profile task.
+
+ -- Matthias Klose <doko@ubuntu.com>  Sun, 23 Nov 2008 15:50:17 +0100
+
+python3.0 (3.0~rc3-0ubuntu2) jaunty; urgency=low
+
+  * Don't run test_ioctl on the buildd, before the buildd chroot is fixed:
+    Unable to open /dev/tty.
+
+ -- Matthias Klose <doko@ubuntu.com>  Sun, 23 Nov 2008 15:28:02 +0100
+
+python3.0 (3.0~rc3-0ubuntu1) jaunty; urgency=low
+
+  * Update to the python-3.0 release candidate 3.
+
+ -- Matthias Klose <doko@ubuntu.com>  Sun, 23 Nov 2008 13:14:20 +0100
+
+python3.0 (3.0~rc1+20081027-0ubuntu1) intrepid; urgency=low
+
+  * Update to 20081027 from the py3k branch. LP: #279227.
+  * Fix typos and section names in doc-base files. LP: #273344.
+  * Build a new package libpython3.0.
+  * For locally installed packages, create a directory
+    /usr/local/lib/python3.0/dist-packages. This is the default for
+    installations done with distutils and setuptools. Third party stuff
+    packaged within the distribution goes to /usr/lib/python3.0/dist-packages.
+    There is no /usr/lib/python3.0/site-packages in the file system and
+    on sys.path. No package within the distribution must not install
+    anything in this location.
+  * distutils: Add an option --install-layout=deb, which
+    - installs into $prefix/dist-packages instead of $prefix/site-packages.
+    - doesn't encode the python version into the egg name.
+
+ -- Matthias Klose <doko@ubuntu.com>  Mon, 27 Oct 2008 23:38:42 +0100
+
+python3.0 (3.0~b3+20080915-0ubuntu1) intrepid; urgency=low
+
+  * Update to 20080915 from the py3k branch.
+  * Build gdbm
+
+ -- Matthias Klose <doko@ubuntu.com>  Mon, 15 Sep 2008 23:56:44 +0200
+
+python3.0 (3.0~b3-0ubuntu1~ppa1) intrepid; urgency=low
+
+  * Python 3.0 beta3 release.
+
+ -- Matthias Klose <doko@ubuntu.com>  Sun, 24 Aug 2008 03:49:26 +0200
+
+python3.0 (3.0~b2-0ubuntu1~ppa1) intrepid; urgency=low
+
+  * Python 3.0 beta2 release.
+
+ -- Matthias Klose <doko@ubuntu.com>  Thu, 07 Aug 2008 14:57:02 +0000
+
+python3.0 (3.0~b1-0ubuntu1~ppa1) intrepid; urgency=low
+
+  * Python 3.0 beta1 release.
+
+ -- Matthias Klose <doko@ubuntu.com>  Tue, 15 Jul 2008 16:10:52 +0200
+
+python3.0 (3.0~a5+0530-0ubuntu1) intrepid; urgency=low
+
+  * Update to snapshot taken from the py3k branch.
+
+ -- Matthias Klose <doko@ubuntu.com>  Thu, 29 May 2008 15:50:55 +0200
+
+python3.0 (3.0~a1-0ubuntu2) gutsy; urgency=low
+
+  * Disable running the benchmark.
+
+ -- Matthias Klose <doko@ubuntu.com>  Fri, 31 Aug 2007 23:22:34 +0000
+
+python3.0 (3.0~a1-0ubuntu1) gutsy; urgency=low
+
+  * First Python-3.0 alpha release.
+
+ -- Matthias Klose <doko@ubuntu.com>  Fri, 31 Aug 2007 21:26:21 +0200
+
+python2.6 (2.6~alpha~pre1-~0ubuntu1~ppa1) gutsy; urgency=low
+
+  * Snapshot build, an "how to use tilde in version numbers" upload.
+  * SVN 20070831.
+
+ -- Matthias Klose <doko@ubuntu.com>  Fri, 31 Aug 2007 15:56:09 +0200
+
+python2.5 (2.5.2-4) unstable; urgency=low
+
+  * Update to 20080427, taken from the 2.5 release branch.
+    - Fix issues #2670, #2682.
+  * Disable running pybench on the hppa buildd (ftbfs).
+  * Allow setting BASECFLAGS, OPT and EXTRA_LDFLAGS (like, CC, CXX, CPP,
+    CFLAGS, CPPFLAGS, CCSHARED, LDSHARED) from the environment.
+  * Support parallel=<n> in DEB_BUILD_OPTIONS (see #209008).
+
+ -- Matthias Klose <doko@debian.org>  Sun, 27 Apr 2008 10:40:51 +0200
+
+python2.5 (2.5.2-3) unstable; urgency=medium
+
+  * Update to 20080416, taken from the 2.5 release branch.
+    - Fix CVE-2008-1721, integer signedness error in the zlib extension module.
+    - Fix urllib2 file descriptor happens byte-at-a-time, reverting
+      a fix for excessively large memory allocations when calling .read()
+      on a socket object wrapped with makefile(). 
+  * Disable some regression tests on some architectures:
+    - arm: test_compiler, test_ctypes.
+    - armel: test_compiler.
+    - hppa: test_fork1, test_wait3.
+    - m68k: test_bsddb3, test_compiler.
+  * Build-depend on libffi-dev instead of libffi4-dev.
+  * Fix CVE-2008-1679, integer overflows in the imageop module.
+
+ -- Matthias Klose <doko@debian.org>  Wed, 16 Apr 2008 23:37:46 +0200
+
+python2.5 (2.5.2-2) unstable; urgency=low
+
+  * Use site.addsitedir() to add directories in /usr/local to sys.path.
+    Addresses: #469157, #469818.
+
+ -- Matthias Klose <doko@debian.org>  Sat, 08 Mar 2008 16:11:23 +0100
+
+python2.5 (2.5.2-1) unstable; urgency=low
+
+  * Python 2.5.2 release.
+  * Merge from Ubuntu:
+    - Move site customization into sitecustomize.py, don't make site.py
+      a config file. Addresses: #309719, #413172, #457361.
+    - Move site.py to python2.4-minimal, remove `addbuilddir' from site.py,
+      which is unnecessary for installed builds.
+    - python2.5-dev: Recommend libc-dev instead of suggesting it. LP: #164909.
+    - Fix issue 961805, Tk Text.edit_modified() fails. LP: #84720.
+
+ -- Matthias Klose <doko@debian.org>  Thu, 28 Feb 2008 23:18:52 +0100
+
+python2.5 (2.5.1-7) unstable; urgency=low
+
+  * Update to 20080209, taken from the 2.5 release branch.
+  * Build the _bsddb extension with db-4.5 again; 4.6 is seriously
+    broken when used with the _bsddb extension.
+  * Do not run pybench on arm and armel.
+  * python2.5: Provide python2.5-wsgiref.
+  * Fix a pseudo RC report with duplicated attributes in the control
+    file. Closes: #464307.
+
+ -- Matthias Klose <doko@debian.org>  Sun, 10 Feb 2008 00:22:57 +0100
+
+python2.5 (2.5.1-6) unstable; urgency=low
+
+  * Update to 20080102, taken from the 2.5 release branch.
+    - Only define _BSD_SOURCE on OpenBSD systems. Closes: #455400.
+  * Fix handling of packages in linecache.py (Kevin Goodsell). LP: #70902.
+  * Bump debhelper to v5.
+  * Register binfmt for .py[co] files.
+  * Use absolute paths when byte-compiling files. Addresses: #453346.
+    Closes: #413566, LP: #177722.
+  * CVE-2007-4965, http://bugs.python.org/issue1179:
+    Multiple integer overflows in the imageop module in Python 2.5.1 and
+    earlier allow context-dependent attackers to cause a denial of service
+    (application crash) and possibly obtain sensitive information (memory
+    contents) via crafted arguments to (1) the tovideo method, and unspecified
+    other vectors related to (2) imageop.c, (3) rbgimgmodule.c, and other
+    files, which trigger heap-based buffer overflows.
+    Patch prepared by Stephan Herrmann. Closes: #443333, LP: #163845.
+  * Register info docs when doing source only uploads. LP: #174786.
+  * Remove deprecated value from categories in desktop file. LP: #172874.
+  * python2.5-dbg: Don't include the gdbm and _tkinter extensions, now provided
+    in separate packages.
+  * Provide a symlink changelog -> NEWS. Closes: #439271.
+  * Fix build failure on hurd, working around poll() on systems on which it
+    returns an error on invalid FDs. Closes: #438914.
+  * Configure --with-system-ffi on all architectures. Closes: #448520.
+  * Fix version numbers in copyright and README files (Dan O'Huiginn).
+    Closes: #446682.
+  * Move some documents from python2.5 to python2.5-dev.
+
+ -- Matthias Klose <doko@debian.org>  Wed, 02 Jan 2008 22:22:19 +0100
+
+python2.5 (2.5.1-5) unstable; urgency=low
+
+  * Build the _bsddb extension with db-4.6.
+
+ -- Matthias Klose <doko@debian.org>  Fri, 17 Aug 2007 00:39:35 +0200
+
+python2.5 (2.5.1-4) unstable; urgency=low
+
+  * Update to 20070813, taken from the 2.5 release branch.
+  * Include plat-mac/plistlib.py (plat-mac is not in sys.path by default.
+    Closes: #435826.
+  * Use emacs22 to build the documentation in info format. Closes: #434969.
+  * Build-depend on db-dev (>= 4.6). Closes: #434965.
+
+ -- Matthias Klose <doko@debian.org>  Mon, 13 Aug 2007 22:22:44 +0200
+
+python2.5 (2.5.1-3) unstable; urgency=high
+
+  * Support mixed-endian IEEE floating point, as found in the ARM old-ABI
+    (Aurelien Jarno). Closes: #434905.
+
+ -- Matthias Klose <doko@debian.org>  Fri, 27 Jul 2007 20:01:35 +0200
+
+python2.5 (2.5.1-2) unstable; urgency=low
+
+  * Update to 20070717, taken from the 2.5 release branch.
+  * Fix reference count for sys.pydebug variable. Addresses: #431393.
+  * Build depend on libbluetooth-dev instead of libbluetooth2-dev.
+
+ -- Matthias Klose <doko@debian.org>  Tue, 17 Jul 2007 14:09:47 +0200
+
+python2.5 (2.5.1-1) unstable; urgency=low
+
+  * Python-2.5.1 release.
+  * Build-depend on gcc-4.1 (>= 4.1.2-4) on alpha, powerpc, s390, sparc.
+  * Merge from Ubuntu:
+    - Add debian/patches/subprocess-eintr-safety.dpatch (LP: #87292):
+      - Create and use wrappers around read(), write(), and os.waitpid() in the
+        subprocess module which retry the operation on an EINTR (which happens
+        if e. g. an alarm was raised while the system call was in progress).
+        It is incredibly hard and inconvenient to sensibly handle this in
+        applications, so let's fix this at the right level.
+      - Patch based on original proposal of Peter <C3><85>strand
+        in http://python.org/sf/1068268.
+      - Add two test cases.
+    - Change the interpreter to build and install python extensions
+      built with the python-dbg interpreter with a different name into
+      the same path (by appending `_d' to the extension name). The debug build
+      of the interpreter tries to first load a foo_d.so or foomodule_d.so
+      extension, then tries again with the normal name.
+    - When trying to import the profile and pstats modules, don't
+      exit, add a hint to the exception pointing to the python-profiler
+      package, don't exit.
+    - Keep the module version in the .egg-info name, only remove the
+      python version.
+    - python2.5-dbg: Install Misc/SpecialBuilds.txt, document the
+      debug changes in README.debug.
+  * Update to 20070425, taken from the 2.5 release branch.
+
+ -- Matthias Klose <doko@debian.org>  Wed, 25 Apr 2007 22:12:50 +0200
+
+python2.5 (2.5-6) unstable; urgency=medium
+
+  * webbrowser.py: Recognize other browsers: www-browser, x-www-browser,
+    iceweasel, iceape.
+  * Move pyconfig.h from the python2.5-dev into the python2.5 package;
+    required by builds for pure python modules without having python2.5-dev
+    installed (matching the functionality in python2.4).
+  * Move the unicodedata module into python2.5-minimal; allows byte compilation
+    of UTF8 encoded files.
+  * Do not install anymore outdated debhelper sample scripts.
+  * Install Misc/SpecialBuilds.txt as python2.5-dbg document.
+
+ -- Matthias Klose <doko@debian.org>  Wed, 21 Feb 2007 01:17:12 +0100
+
+python2.5 (2.5-5) unstable; urgency=high
+
+  * Do not run the python benchmark on m68k. Timer problems.
+    Fixes FTBFS on m68k.
+  * Update to 20061209, taken from the 2.5 release branch.
+    -  Fixes building the library reference in info format.
+
+ -- Matthias Klose <doko@debian.org>  Sat,  9 Dec 2006 13:40:48 +0100
+
+python2.5 (2.5-4) unstable; urgency=medium
+
+  * Update to 20061203, taken from the 2.5 release branch.
+    - Fixes build failures on knetfreebsd and the hurd. Closes: #397000.
+  * Clarify README about distutils. Closes: #396394.
+  * Move python2.5-config to python2.5-dev. Closes: #401451.
+  * Cleanup build-conflicts. Addresses: #394512.
+
+ -- Matthias Klose <doko@debian.org>  Sun,  3 Dec 2006 18:22:49 +0100
+
+python2.5 (2.5-3.1) unstable; urgency=low
+
+  * Non-maintainer upload.
+  * python2.5-minimal depends on python-minimal (>= 2.4.4-1) because it's the
+    first version which lists python2.5 as an unsupported runtime (ie a
+    runtime that is available but for which modules are not auto-compiled).
+    And being listed there is required for python-central to accept the
+    installation of python2.5-minimal. Closes: #397006
+
+ -- Raphael Hertzog <hertzog@debian.org>  Wed, 22 Nov 2006 15:41:06 +0100
+
+python2.5 (2.5-3) unstable; urgency=medium
+
+  * Update to 20061029 (2.4.4 was released on 20061019), taken from
+    the 2.5 release branch. We do not want to have regressions in
+    2.5 compared to the 2.4.4 release.
+  * Don't run pybench on m68k, fails in the calibration loop. Closes: #391030.
+  * Run the installation/removal hooks. Closes: #383292, #391036.
+
+ -- Matthias Klose <doko@debian.org>  Sun, 29 Oct 2006 11:35:19 +0100
+
+python2.5 (2.5-2) unstable; urgency=medium
+
+  * Update to 20061003, taken from the 2.5 release branch.
+  * On arm and m68k, don't run the pybench in debug mode.
+  * Fix building the source within exec_prefix (Alexander Wirt).
+    Closes: #385336.
+
+ -- Matthias Klose <doko@debian.org>  Tue,  3 Oct 2006 10:08:36 +0200
+
+python2.5 (2.5-1) unstable; urgency=low
+
+  * Python 2.5 release.
+  * Update to 20060926, taken from the 2.5 release branch.
+  * Run the Python benchmark during the build, compare the results
+    of the static and shared builds.
+  * Fix invalid html in python2.5.devhelp.gz.
+  * Add a python2.5 console entry to the menu (hidden by default).
+  * python2.5: Suggest python-profiler.
+
+ -- Matthias Klose <doko@debian.org>  Tue, 26 Sep 2006 02:36:11 +0200
+
+python2.5 (2.5~c1-1) unstable; urgency=low
+
+  * Python 2.5 release candidate 1.
+  * Update to trunk 20060818.
+
+ -- Matthias Klose <doko@debian.org>  Sat, 19 Aug 2006 19:21:05 +0200
+
+python2.5 (2.5~b3-1) unstable; urgency=low
+
+  * Build the _ctypes module for m68k-linux.
+
+ -- Matthias Klose <doko@debian.org>  Fri, 11 Aug 2006 18:19:19 +0000
+
+python2.5 (2.5~b3-0ubuntu1) edgy; urgency=low
+
+  * Python 2.5 beta3 release.
+  * Update to trunk 20060811.
+  * Rebuild the documentation.
+  * Fix value of sys.exec_prefix in the debug build.
+  * Do not build the library reference in info format; fails to build.
+  * Link the interpreter against the shared runtime library. With
+    gcc-4.1 the difference in the pystones benchmark dropped from about
+    12% to about 6%.
+  * Install the statically linked version of the interpreter as
+    python2.5-static for now.
+  * Link the shared libpython with -O1.
+
+ -- Matthias Klose <doko@ubuntu.com>  Thu, 10 Aug 2006 14:04:48 +0000
+
+python2.5 (2.4.3+2.5b2-3) unstable; urgency=low
+
+  * Disable the testsuite on s390; don't care about "minimally configured"
+    buildd's.
+
+ -- Matthias Klose <doko@debian.org>  Sun, 23 Jul 2006 11:45:03 +0200
+
+python2.5 (2.4.3+2.5b2-2) unstable; urgency=low
+
+  * Update to trunk 20060722.
+  * Merge idle-lib from idle-python2.5 into python2.5.
+  * Merge lib-tk from python-tk into python2.5.
+  * Tkinter.py: Suggest installation of python-tk package on failed
+    import of the _tkinter extension.
+  * Don't run the testsuite for the debug build on alpha.
+  * Don't run the test_compiler test on m68k. Just takes too long.
+  * Disable building ctypes on m68k (requires support for closures).
+
+ -- Matthias Klose <doko@debian.org>  Sat, 22 Jul 2006 22:26:42 +0200
+
+python2.5 (2.4.3+2.5b2-1) unstable; urgency=low
+
+  * Python 2.5 beta2 release.
+  * Update to trunk 20060716.
+  * When built on a buildd, do not run the following test which try to
+    access the network: test_codecmaps_cn, test_codecmaps_hk, test_codecmaps_jp,
+    test_codecmaps_kr, test_codecmaps_tw, test_normalization.
+  * When built on a buildd, do not run tests requiring missing write permissions:
+    test_ossaudiodev.
+
+ -- Matthias Klose <doko@debian.org>  Sun, 16 Jul 2006 02:53:50 +0000
+
+python2.5 (2.4.3+2.5b2-0ubuntu1) edgy; urgency=low
+
+  * Python 2.5 beta2 release.
+
+ -- Matthias Klose <doko@ubuntu.com>  Thu, 13 Jul 2006 17:16:52 +0000
+
+python2.5 (2.4.3+2.5b1-1ubuntu2) edgy; urgency=low
+
+  * Fix python-dev dependencies.
+  * Update to trunk 20060709.
+
+ -- Matthias Klose <doko@ubuntu.com>  Sun,  9 Jul 2006 18:50:32 +0200
+
+python2.5 (2.4.3+2.5b1-1ubuntu1) edgy; urgency=low
+
+  * Python 2.5 beta1 release.
+  * Update to trunk 20060623.
+  * Merge changes from the python2.4 packages.
+  * python2.5-minimal: Add _struct.
+
+ -- Matthias Klose <doko@ubuntu.com>  Fri, 23 Jun 2006 16:04:46 +0200
+
+python2.5 (2.4.3+2.5a1-1) experimental; urgency=low
+
+  * Update to trunk 20060409.
+  * Run testsuite for debug build as well.
+  * Build-depend on gcc-4.1.
+
+ -- Matthias Klose <doko@debian.org>  Sun,  9 Apr 2006 22:27:05 +0200
+
+python2.5 (2.4.3+2.5a1-0ubuntu1) dapper; urgency=low
+
+  * Python 2.5 alpha1 release.
+  * Drop integrated patches.
+  * Add build dependencies on libsqlite3-dev and libffi4-dev.
+  * Add (build-)dependency on mime-support, libgpmg1 (test suite).
+  * Build using the system FFI.
+  * python2.5 provides python2.5-ctypes and python2.5-pysqlite2,
+    python2.5-elementtree.
+  * Move hashlib.py to python-minimal.
+  * Lib/hotshot/pstats.py: Error out on missing profile/pstats modules.
+
+ -- Matthias Klose <doko@ubuntu.com>  Wed,  5 Apr 2006 14:56:15 +0200
+
+python2.4 (2.4.3-8ubuntu1) edgy; urgency=low
+
+  * Resynchronize with Debian unstable. Remaining changes:
+    - Apply langpack-gettext patch.
+    - diff.gz contains pregenerated html and info docs.
+    - Build the -doc package from this source.
+
+ -- Matthias Klose <doko@ubuntu.com>  Thu, 22 Jun 2006 18:39:57 +0200
+
+python2.4 (2.4.3-8) unstable; urgency=low
+
+  * Remove python2.4's dependency on python-central. On installation of
+    the runtime, call hooks /usr/share/python/runtime.d/*.rtinstall.
+    On removal, call hooks /usr/share/python/runtime.d/*.rtremove.
+    Addresses: #372658.
+  * Call the rtinstall hooks only, if it's a new installation, or the first
+    installation using the hooks. Adresses: #373677.
+
+ -- Matthias Klose <doko@debian.org>  Sun, 18 Jun 2006 00:56:13 +0200
+
+python2.4 (2.4.3-7) unstable; urgency=medium
+
+  * Reupload, depend on python-central (>= 0.4.15).
+  * Add build-conflict on python-xml.
+
+ -- Matthias Klose <doko@debian.org>  Wed, 14 Jun 2006 18:56:57 +0200
+
+python2.4 (2.4.3-6) medium; urgency=low
+
+  * idle-python2.4: Remove the old postinst and prerm scripts.
+  * Name the runtime correctly in python2.4-minimal's installation
+    scripts.
+
+ -- Matthias Klose <doko@debian.org>  Mon, 12 Jun 2006 17:39:56 +0000
+
+python2.4 (2.4.3-5) unstable; urgency=low
+
+  * python2.4-prerm: Handle the case, when python-central is not installed.
+  * idle-python2.4: Depend on python-tk instead of python2.4-tk.
+
+ -- Matthias Klose <doko@debian.org>  Fri,  9 Jun 2006 05:17:17 +0200
+
+python2.4 (2.4.3-4) unstable; urgency=low
+
+  * SVN update up to 2006-06-07
+  * Use python-central.
+  * Don't build the -tk and -gdbm packages from this source; now built
+    from the python-stdlib-extensions source.
+  * Remove leftover build dependency on libgmp3-dev.
+  * Do not build-depend on libbluetooth1-dev and libgpmg1-dev on
+    hurd-i386, kfreebsd-i386, kfreebsd-amd64. Closes: #365830.
+  * Do not run the test_tcl test; hangs for unknown reasons on at least
+    the following buildds: vivaldi(m68k), goedel (alpha), mayer (mipsel).
+    And no virtual package to file bug reports for the buildds ...
+    Closes: #364419.
+  * Move the Makefile from python2.4-dev to python2.4. Closes: #366473.
+  * Fix typo in pdb(1). Closes: #365772.
+  * New autoconf likes the mandir in /usr/share instead of /usr; work
+    with both locations. Closes: #367618.
+	
+ -- Matthias Klose <doko@debian.org>  Wed,  7 Jun 2006 21:37:20 +0200
+
+python2.4 (2.4.3-3) unstable; urgency=low
+
+  * SVN update up to 2006-04-21
+  * Update locale aliases from /usr/share/X11/locale/locale.alias.
+  * Start idle with option -n from the desktop menu, so that the program
+    can be started in parallel.
+  * Testsuite related changes only:
+    - Add build dependencies mime-support, libgpmg1 (needed by test cases).
+    - Run the testsuite with bsddb, audio and curses resources enabled.
+    - Re-run the failed tests in verbose mode.
+    - Run the test suite for the debug build as well.
+    - Build depend on netbase, needed by test_socketmodule.
+    - Build depend on libgpmg1, needed by test_curses.
+    - On the buildds do not run the tests needing the network resource.
+  * Update python logo.
+  * Check for the availability of the profile and pstats modules when
+    importing hotshot.pstats. Closes: #334067.
+  * Don't build the -doc package from the python2.4 source.
+  * Set OPT in the installed Makefile to -O2.
+
+ -- Matthias Klose <doko@debian.org>  Fri, 21 Apr 2006 19:58:43 +0200
+
+python2.4 (2.4.3-2) unstable; urgency=low
+
+  * Add (build-)dependency on mime-support.
+
+ -- Matthias Klose <doko@ubuntu.com>  Tue,  4 Apr 2006 22:21:41 +0200
+
+python2.4 (2.4.3-1) unstable; urgency=low
+
+  * Python 2.4.3 release.
+
+ -- Matthias Klose <doko@debian.org>  Thu, 30 Mar 2006 23:42:37 +0200
+
+python2.4 (2.4.3-0ubuntu1) dapper; urgency=low
+
+  * Python 2.4.3 release.
+    - Fixed a bug that the gb18030 codec raises RuntimeError on encoding
+      surrogate pair area on UCS4 build. Ubuntu: #29289.
+
+ -- Matthias Klose <doko@ubuntu.com>  Thu, 30 Mar 2006 10:57:32 +0200
+
+python2.4 (2.4.2+2.4.3c1-0ubuntu1) dapper; urgency=low
+
+  * SVN update up to 2006-03-25 (2.4.3 candidate 1).
+    - Regenerate the documentation.
+
+ -- Matthias Klose <doko@ubuntu.com>  Mon, 27 Mar 2006 12:03:05 +0000
+
+python2.4 (2.4.2-1ubuntu3) dapper; urgency=low
+
+  * SVN update up to 2006-03-04
+    - Regenerate the documentation.
+    - map.mmap(-1, size, ...) can return anonymous memory again on Unix.
+      Ubuntu #26201.
+  * Build-depend on libncursesw5-dev, ncursesw5 is preferred for linking.
+    Provides UTF-8 compliant curses bindings.
+  * Fix difflib where certain patterns of differences were making difflib
+    touch the recursion limit.
+
+ -- Matthias Klose <doko@ubuntu.com>  Sat,  4 Mar 2006 21:38:24 +0000
+
+python2.4 (2.4.2-1ubuntu2) dapper; urgency=low
+
+  * SVN update up to 2006-01-17
+    - pwd is now a builtin module, remove it from python-minimal.
+    - Regenerate the documentation.
+  * python2.4-tk: Suggest tix instead of tix8.1.
+  * Move config/Makefile from the -dev package into the runtime package
+    to be able to use the bdist_wininst distutils command. Closes: #348335.
+
+ -- Matthias Klose <doko@ubuntu.com>  Tue, 17 Jan 2006 11:02:24 +0000
+
+python2.4 (2.4.2-1ubuntu1) dapper; urgency=low
+
+  * Temporarily remove build dependency on lsb-release.
+
+ -- Matthias Klose <doko@ubuntu.com>  Sun, 20 Nov 2005 17:40:18 +0100
+
+python2.4 (2.4.2-1build1) dapper; urgency=low
+
+  * Rebuild (openssl-0.9.8).
+
+ -- Matthias Klose <doko@ubuntu.com>  Sun, 20 Nov 2005 15:27:24 +0000
+
+python2.4 (2.4.2-1) unstable; urgency=low
+
+  * Python 2.4.2 release.
+
+ -- Matthias Klose <doko@debian.org>  Thu, 29 Sep 2005 01:49:28 +0200
+
+python2.4 (2.4.1+2.4.2rc1-1) unstable; urgency=low
+
+  * Python 2.4.2 release candidate 1.
+  * Fix "Fatal Python error" from cStringIO's writelines.
+    Patch by Andrew Bennetts.
+
+ -- Matthias Klose <doko@debian.org>  Thu, 22 Sep 2005 10:33:22 +0200
+
+python2.4 (2.4.1-5) unstable; urgency=low
+
+  * CVS update up to 2005-09-14
+    - Regenerate the html and info docs.
+  * Add some more locale aliases.
+  * Fix substitution pf python version in README.python2.4-minimal.
+    Closes: #327487.
+  * On m68k, build using -O2 (closes: #326903).
+  * On Debian, don't configure --with-fpectl, which stopped working with
+    glibc-2.3.5.
+
+ -- Matthias Klose <doko@debian.org>  Wed, 14 Sep 2005 17:32:56 +0200
+
+python2.4 (2.4.1-4) unstable; urgency=low
+
+  * CVS update up to 2005-09-04
+    - teTeX 3.0 related fixes (closes: #322407).
+    - Regenerate the html and info docs.
+  * Add entry for IDLE in the Gnome menus.
+  * Don't build-depend on libbluetooth-dev on the Hurd (closes: #307037).
+  * Reenable the cthreads patch for the Hurd (closes: #307052).
+
+ -- Matthias Klose <doko@debian.org>  Sun,  4 Sep 2005 18:31:42 +0200
+
+python2.4 (2.4.1-3) unstable; urgency=low
+
+  * Synchronise with Ubuntu:
+    - Build a python2.4-minimal package.
+
+ -- Matthias Klose <doko@debian.org>  Tue, 12 Jul 2005 00:23:10 +0000
+
+python2.4 (2.4.1-2ubuntu3) breezy; urgency=low
+
+  * CVS update up to 2005-07-07
+  * Regenerate the documentation.
+
+ -- Matthias Klose <doko@ubuntu.com>  Thu,  7 Jul 2005 09:21:28 +0200
+
+python2.4 (2.4.1-2ubuntu2) breezy; urgency=low
+
+  * CVS update up to 2005-06-15
+  * Regenerate the documentation.
+  * Synchronize with Debian. Ubuntu 10485.
+  * idle-python2.4 enhances python2.4. Ubuntu 11562.
+  * README.Debian: Fix reference to the doc directory (closes: #311677).
+
+ -- Matthias Klose <doko@debian.org>  Wed, 15 Jun 2005 08:56:57 +0200
+
+python2.4 (2.4.1-2ubuntu1) breezy; urgency=low
+
+  * Update build dependencies:
+      db4.2-dev -> db4.3-dev,
+      libreadline4-dev -> libreadline5-dev.
+  * python2.4-dev: Add missing templates to generate HTML docs. Ubuntu 11531.
+
+ -- Matthias Klose <doko@ubuntu.com>  Sun, 29 May 2005 00:01:05 +0200
+
+python2.4 (2.4.1-2) unstable; urgency=low
+
+  * Add the debug symbols for the python2.4, python2.4-gdbm
+    and python2.4-tk packages to the python2.4-dbg package.
+  * Add gdbinit example to doc directory.
+
+ -- Matthias Klose <doko@debian.org>  Thu,  5 May 2005 11:12:32 +0200
+
+python2.4 (2.4.1-1ubuntu2) breezy; urgency=low
+
+  * Add the debug symbols for the python2.4, python2.4-minimal, python2.4-gdbm
+    and python2.4-tk packages to the python2.4-dbg package. Ubuntu 10261, 
+  * Add gdbinit example to doc directory.
+  * For os.utime, use utimes(2), correctly working with glibc-2.3.5.
+    Ubuntu 10294.
+
+ -- Matthias Klose <doko@ubuntu.com>  Thu,  5 May 2005 09:06:07 +0200
+
+python2.4 (2.4.1-1ubuntu1) breezy; urgency=low
+
+  * Reupload as 2.4.1-1ubuntu1.
+
+ -- Matthias Klose <doko@ubuntu.com>  Thu, 14 Apr 2005 10:46:32 +0200
+
+python2.4 (2.4.1-1) unstable; urgency=low
+
+  * Python 2.4.1 release.
+  * Fix noise in python-doc installation/removal.
+  * New Python section for the info docs.
+
+ -- Matthias Klose <doko@debian.org>  Wed, 30 Mar 2005 19:42:03 +0200
+
+python2.4 (2.4.1-0) hoary; urgency=low
+
+  * Python 2.4.1 release.
+  * Fix noise in python-doc installation/removal.
+  * New Python section for the info docs.
+
+ -- Matthias Klose <doko@ubuntu.com>  Wed, 30 Mar 2005 16:35:34 +0200
+
+python2.4 (2.4+2.4.1rc2-2) unstable; urgency=low
+
+  * Add the valgrind support file to /etc/python2.4
+  * Build the -dbg package with -DPy_USING_MEMORY_DEBUGGER.
+  * Lib/locale.py:
+    - correctly parse LANGUAGE as a colon separated list of languages.
+    - prefer LC_ALL, LC_CTYPE and LANG over LANGUAGE to get the correct
+      encoding.
+    - Don't map 'utf8', 'utf-8' to 'utf', which is not a known encoding
+      for glibc.
+  * Fix two typos in python(1). Addresses: #300124.
+
+ -- Matthias Klose <doko@debian.org>  Sat, 19 Mar 2005 21:50:14 +0100
+
+python2.4 (2.4+2.4.1rc2-1) unstable; urgency=low
+
+  * Python 2.4.1 release candidate 2.
+  * Build-depend on libbluetooth1-dev.
+
+ -- Matthias Klose <doko@debian.org>  Sat, 19 Mar 2005 00:57:14 +0100
+
+python2.4 (2.4dfsg-2) unstable; urgency=low
+
+  * CVS update up to 2005-03-03
+
+ -- Matthias Klose <doko@debian.org>  Thu,  3 Mar 2005 22:22:16 +0100
+
+python2.4 (2.4dfsg-1ubuntu4) hoary; urgency=medium
+
+  * Move exception finalisation later in the shutdown process - this
+    fixes the crash seen in bug #1165761, taken from CVS.
+  * codecs.StreamReader: Reset codec when seeking. Ubuntu #6972.
+  * Apply fix for SF1124295, fixing an obscure bit of Zope's security machinery.
+  * distutils: Don't add standard library dirs to library_dirs
+    and runtime_library_dirs. On amd64, runtime paths pointing to /usr/lib64
+    aren't recognized by dpkg-shlibdeps, and the packages containing these
+    libraries aren't added to ${shlibs:Depends}.
+  * Lib/locale.py:
+    - correctly parse LANGUAGE as a colon separated list of languages.
+    - prefer LC_ALL, LC_CTYPE and LANG over LANGUAGE to get the correct
+      encoding.
+    - Don't map 'utf8', 'utf-8' to 'utf', which is not a known encoding
+      for glibc.
+  * os.py: Avoid using items() in environ.update(). Fixes #1124513.
+  * Python/pythonrun.c: 
+  * Build depend on locales, generate the locales needed for the
+    testsuite.
+  * Add build dependency on libbluetooth1-dev, adding some bluetooth
+    functionality to the socket module.
+  * Lib/test/test_sundry.py: Don't fail on import of profile & pstats,
+    which are separated out to the python-profiler package.
+  * Fix typos in manpage.
+
+ -- Matthias Klose <doko@ubuntu.com>  Tue, 29 Mar 2005 13:35:53 +0200
+
+
+python2.4 (2.4dfsg-1ubuntu3) hoary; urgency=low
+
+  * debian/patches/langpack-gettext.dpatch:
+    - langpack support for python-gettext added
+
+ -- Michael Vogt <michael.vogt@ubuntu.com>  Tue,  1 Mar 2005 13:13:36 +0100
+
+python2.4 (2.4dfsg-1ubuntu2) hoary; urgency=low
+
+  * Revert 'essential' status on python2.4-minimal. This status on
+    on python-minimal is sufficient (Ubuntu #6392).
+
+ -- Matthias Klose <doko@ubuntu.com>  Wed,  9 Feb 2005 23:09:42 +0100
+
+python2.4 (2.4dfsg-1ubuntu1) hoary; urgency=low
+
+  * Resyncronise with Debian.
+  * Mark the python2.4-minimal package as 'essential'.
+
+ -- Matthias Klose <doko@ubuntu.com>  Wed,  9 Feb 2005 13:31:09 +0100
+
+python2.4 (2.4dfsg-1) unstable; urgency=medium
+
+  * Add licenses and acknowledgements for incorporated software in the
+    debian/copyright file (addresses: #293932).
+  * Replace md5 implementation with one having a DFSG conforming license.
+  * Remove the profile.py and pstats.py modules from the source package,
+    not having a DFSG conforming license. The modules can be found in
+    the python2.x-profile package in the non-free section.
+    Addresses: #293932.
+  * Add missing norwegian locales (Tollef Fog Heen).
+  * CVS updates of the release24-maint branch upto 2005-02-08 (date of
+    the Python 2.3.5 release).
+
+ -- Matthias Klose <doko@debian.org>  Tue,  8 Feb 2005 19:13:10 +0100
+
+python2.4 (2.4-7ubuntu1) hoary; urgency=low
+
+  * Fix the name of the python-dbg man page.
+  * Resyncronise with Debian.
+  * Move more modules to -minimal (new code in copy.py requires these):
+    dis, inspect, opcode, token, tokenize.
+
+ -- Matthias Klose <doko@ubuntu.com>  Tue,  8 Feb 2005 19:13:10 +0100
+
+python2.4 (2.4-7) unstable; urgency=medium
+
+  * Add licenses and acknowledgements for incorporated software in the
+    debian/copyright file (addresses: #293932).
+  * Replace md5 implementation with one having a DFSG conforming license.
+  * Add missing norwegian locales (Tollef Fog Heen).
+  * CVS updates of the release24-maint branch upto 2005-02-08 (date of
+    the Python 2.3.5 release).
+
+ -- Matthias Klose <doko@debian.org>  Tue,  8 Feb 2005 19:13:10 +0100
+
+python2.4 (2.4-6) unstable; urgency=low
+
+  * Build a python2.4-dbg package using --with-pydebug. Add a debug
+    directory <prefix>/lib-dynload/debug to sys.path instead of
+    <prefix>/lib-dynload und install the extension modules of the
+    debug build in this directory.
+    Change the module load path to load extension modules from other
+    site-packages/debug directories (for further details see the
+    README in the python2.4-dbg package).  Closes: #5415.
+  * Apply the pydebug-path patch. The package was already built in -5.
+
+ -- Matthias Klose <doko@debian.org>  Fri,  4 Feb 2005 22:15:13 +0100
+
+python2.4 (2.4-5) unstable; urgency=high
+
+  * Fix a flaw in SimpleXMLRPCServerthat can affect any XML-RPC servers.  
+    This affects any programs have been written that allow remote 
+    untrusted users to do unrestricted traversal and can allow them to
+    access or change function internals using the im_* and func_* attributes.
+    References: CAN-2005-0089.
+  * CVS updates of the release24-maint branch upto 2005-02-04.
+
+ -- Matthias Klose <doko@debian.org>  Fri,  4 Feb 2005 08:12:10 +0100
+
+python2.4 (2.4-4) unstable; urgency=medium
+
+  * Update debian/copyright to the 2.4 license text (closes: #290898).
+  * Remove /usr/bin/smtpd.py (closes: #291049).
+
+ -- Matthias Klose <doko@debian.org>  Mon, 17 Jan 2005 23:54:37 +0100
+
+python2.4 (2.4-3ubuntu6) hoary; urgency=low
+
+  * Use old-style dpatches instead of dpatch-run.
+
+ -- Tollef Fog Heen <tfheen@canonical.com>  Mon,  7 Feb 2005 15:58:05 +0100
+
+python2.4 (2.4-3ubuntu5) hoary; urgency=low
+
+  * Actually apply the patch as well (add to list of patches in
+    debian/rules)
+
+ -- Tollef Fog Heen <tfheen@canonical.com>  Sun,  6 Feb 2005 15:12:58 +0100
+
+python2.4 (2.4-3ubuntu4) hoary; urgency=low
+
+  * Add nb_NO and nn_NO locales to Lib/locale.py
+
+ -- Tollef Fog Heen <tfheen@canonical.com>  Sun,  6 Feb 2005 14:33:05 +0100
+
+python2.4 (2.4-3ubuntu3) hoary; urgency=low
+
+  * Fix a flaw in SimpleXMLRPCServerthat can affect any XML-RPC servers.
+    This affects any programs have been written that allow remote
+    untrusted users to do unrestricted traversal and can allow them to
+    access or change function internals using the im_* and func_* attributes.
+    References: CAN-2005-0089.
+
+ -- Matthias Klose <doko@ubuntu.com>  Wed,  2 Feb 2005 09:08:20 +0000
+
+python2.4 (2.4-3ubuntu2) hoary; urgency=low
+
+  * Build a python2.4-dbg package using --with-pydebug. Add a debug
+    directory <prefix>/lib-dynload/debug to sys.path instead of
+    <prefix>/lib-dynload und install the extension modules of the
+    debug build in this directory.
+    Change the module load path to load extension modules from other
+    site-packages/debug directories (for further details see the
+    README in the python2.4-dbg package).  Closes: #5415.
+  * Update debian/copyright to the 2.4 license text (closes: #290898).
+  * Add operator and copy to the -minimal package.
+
+ -- Matthias Klose <m@klose.in-berlin.de>  Mon, 17 Jan 2005 23:19:47 +0100
+
+python2.4 (2.4-3ubuntu1) hoary; urgency=low
+
+  * Resynchronise with Debian.
+  * python2.4: Depend on the very same version of python2.4-minimal.
+  * Docment, that time.strptime currently cannot be used, if the
+    python-minimal package is installed without the python package.
+
+ -- Matthias Klose <m@klose.in-berlin.de>  Sun,  9 Jan 2005 19:35:48 +0100
+
+python2.4 (2.4-3) unstable; urgency=medium
+
+  * Build the fpectl module.
+  * Updated to CVS release24-maint 20050107.
+
+ -- Matthias Klose <doko@debian.org>  Sat,  8 Jan 2005 19:05:21 +0100
+
+python2.4 (2.4-2ubuntu5) hoary; urgency=low
+
+  * Updated to CVS release24-maint 20050102.
+  * python-minimal:
+    - os.py: Use dict instead of UserDict, remove UserDict from -minimal.
+    - add pickle, threading, needed for subprocess module.
+    - optparse.py: conditionally import gettext, if not available,
+      define _ as the identity function. Patch taken from the trunk.
+      Avoids import of _locale, locale, gettext, copy, repr, itertools,
+      collections, token, tokenize.
+    - Add a build check to make sure that the minimal module list is
+      closed under dependency.
+  * Fix lintian warnings.
+
+ -- Matthias Klose <m@klose.in-berlin.de>  Sun,  2 Jan 2005 22:00:14 +0100
+
+python2.4 (2.4-2ubuntu4) hoary; urgency=low
+
+  * Add UserDict.py to the -minimal package, since os.py needs it.
+
+ -- Colin Watson <cjwatson@canonical.com>  Thu, 30 Dec 2004 20:41:28 +0000
+
+python2.4 (2.4-2ubuntu3) hoary; urgency=low
+
+  * Add os.py and traceback.py to the -minimal package, get the list
+    of modules from the README.
+
+ -- Matthias Klose <m@klose.in-berlin.de>  Mon, 27 Dec 2004 08:20:45 +0100
+
+python2.4 (2.4-2ubuntu2) hoary; urgency=low
+
+  * Add compileall.py and py_compile.py to the -minimal package, not
+    just to the README ...
+
+ -- Matthias Klose <m@klose.in-berlin.de>  Sat, 25 Dec 2004 22:24:56 +0100
+
+python2.4 (2.4-2ubuntu1) hoary; urgency=low
+
+  * Separate the interpreter and a minimal subset of modules into
+    a python2.4-minimal package. See the README.Debian.gz in this
+    package.
+  * Move site.py to python2.4-minimal as well.
+  * Add documentation files for devhelp.
+
+ -- Matthias Klose <m@klose.in-berlin.de>  Sun, 19 Dec 2004 22:47:32 +0100
+
+python2.4 (2.4-2) unstable; urgency=medium
+
+  * Updated patch for #283108. Thanks to Jim Meyering.
+
+ -- Matthias Klose <doko@debian.org>  Fri,  3 Dec 2004 17:00:16 +0100
+
+python2.4 (2.4-1) unstable; urgency=low
+
+  * Final 2.4 release.
+  * Flush stdout/stderr if closed (SF #1074011).
+
+ -- Matthias Klose <doko@debian.org>  Wed,  1 Dec 2004 07:54:34 +0100
+
+python2.4 (2.3.97-2) unstable; urgency=low
+
+  * Don't run test_tcl, hanging on the buildds.
+
+ -- Matthias Klose <doko@debian.org>  Fri, 19 Nov 2004 23:48:42 +0100
+
+python2.4 (2.3.97-1) unstable; urgency=low
+
+  * Python 2.4 Release Candidate 1.
+
+ -- Matthias Klose <doko@debian.org>  Fri, 19 Nov 2004 21:27:02 +0100
+
+python2.4 (2.3.96-1) experimental; urgency=low
+
+  * Updated to CVS release24-maint 20041113.
+  * Build the docs in info format again.
+
+ -- Matthias Klose <doko@debian.org>  Sat, 13 Nov 2004 21:21:10 +0100
+
+python2.4 (2.3.95-2) experimental; urgency=low
+
+  * Move distutils package from the python2.4-dev into the python2.4
+    package.
+
+ -- Matthias Klose <doko@debian.org>  Thu, 11 Nov 2004 22:56:14 +0100
+
+python2.4 (2.3.95-1) experimental; urgency=low
+
+  * Python 2.4 beta2 release.
+
+ -- Matthias Klose <doko@debian.org>  Thu,  4 Nov 2004 23:43:47 +0100
+
+python2.4 (2.3.94-1) experimental; urgency=low
+
+  * Python 2.4 beta1 release.
+
+ -- Matthias Klose <doko@debian.org>  Sat, 16 Oct 2004 08:33:57 +0200
+
+python2.4 (2.3.93-1) experimental; urgency=low
+
+  * Python 2.4 alpha3 release.
+
+ -- Matthias Klose <doko@debian.org>  Fri,  3 Sep 2004 21:53:47 +0200
+
+python2.4 (2.3.92-1) experimental; urgency=low
+
+  * Python 2.4 alpha2 release.
+
+ -- Matthias Klose <doko@debian.org>  Thu,  5 Aug 2004 23:53:18 +0200
+
+python2.4 (2.3.91-1) experimental; urgency=low
+
+  * Python 2.4 alpha1 release.
+    Highlights: http://www.python.org/2.4/highlights.html
+
+ -- Matthias Klose <doko@debian.org>  Fri,  9 Jul 2004 17:38:54 +0200
+
+python2.4 (2.3.90-1) experimental; urgency=low
+
+  * Package HEAD branch (pre alpha ..).
+
+ -- Matthias Klose <doko@debian.org>  Mon, 14 Jun 2004 23:19:57 +0200
+
+python2.3 (2.3.4-1) unstable; urgency=medium
+
+  * Final Python 2.3.4 Release.
+  * In the API docs, fix signature of PyModule_AddIntConstant (closes: #250826).
+  * locale.getdefaultlocale: don't fail with empty environment variables.
+    Closes: #249816.
+  * Include distutils/command/wininst.exe in -dev package (closes: #249006).
+  * Disable cthreads on the Hurd (Michael Banck). Closes: #247211.
+  * Add a note to pygettext(1), that this program is deprecated in favour
+    of xgettext, which now includes support for Python as well.
+    Closes: #246332.
+
+ -- Matthias Klose <doko@debian.org>  Fri, 28 May 2004 22:59:42 +0200
+
+python2.3 (2.3.3.91-1) unstable; urgency=low
+
+  * Python 2.3.4 Release Candidate 1.
+  * Do not use the default namespace for attributes. Patch taken from the
+    2.3 maintenance branch.
+    The xmllib module is obsolete.  Use xml.sax instead.
+  * http://python.org/sf/945642 - fix nonblocking i/o with ssl socket.
+
+ -- Matthias Klose <doko@debian.org>  Thu, 13 May 2004 21:24:52 +0200
+
+python2.3 (2.3.3-7) unstable; urgency=low
+
+  * Add a workaround for GNU libc nl_langinfo()'s returning NULL.
+    Closes: #239237.
+    Patch taken from 2.3 maintenance branch.
+  * threading.py: Remove calls to currentThread() in _Condition methods that
+    were side-effect. Side-effects were deemed unnecessary and were causing
+    problems at shutdown time when threads were catching exceptions at start
+    time and then triggering exceptions trying to call currentThread() after
+    gc'ed.  Masked the initial exception which was deemed bad.
+    Closes: #195812.
+  * Properly support normalization of empty unicode strings. Closes: #239986.
+    Patch taken from 2.3 maintenance branch.
+  * README.maintainers: Add section where to find the documentation tools.
+  * Fix crash in pyexpat module (closes: #229281).
+  * For the Hurd, set the interpreters recursion limit to 930.
+  * Do not try to byte-compile the test files on installation; this
+    currently breaks the Hurd install.
+
+ -- Matthias Klose <doko@debian.org>  Sat,  1 May 2004 07:50:46 +0200
+
+python2.3 (2.3.3-6) unstable; urgency=low
+
+  * Don't build the unversioned python{,-*} packages anymore. Now
+    built from the python-defaults package.
+  * Update to the proposed python-policy: byte-compile using -E.
+  * Remove python-elisp's dependency on emacs20 (closes: #232785).
+  * Don't build python-elisp from the python2.3 source anymore,
+    get it from python-mode.sf.net as a separate source package.
+  * python2.3-dev suggests libc-dev (closes: #231091).
+  * get LDSHARED and CCSHARED (like, CC, CXX, CPP, CFLAGS) from 
+    the environment
+  * Set CXX in installed config/Makefile (closes: #230273).
+
+ -- Matthias Klose <doko@debian.org>  Tue, 24 Feb 2004 07:07:51 +0100
+
+python2.3 (2.3.3-5) unstable; urgency=low
+
+  * Build-depend on libdb4.2-dev, instead of libdb4.1-dev. According
+    to the docs the file format is compatible.
+
+ -- Matthias Klose <doko@debian.org>  Mon, 12 Jan 2004 10:37:45 +0100
+
+python2.3 (2.3.3-4) unstable; urgency=low
+
+  * Fix broken _bsddb module. setup.py picked up the wrong library.
+
+ -- Matthias Klose <doko@debian.org>  Sun,  4 Jan 2004 11:30:00 +0100
+
+python2.3 (2.3.3-3) unstable; urgency=low
+
+  * Fix typo in patch (closes: #224797, #226064).
+
+ -- Matthias Klose <doko@debian.org>  Sun,  4 Jan 2004 09:23:21 +0100
+
+python2.3 (2.3.3-2) unstable; urgency=medium
+
+  * Lib/email/Charset: use locale unaware function to lower case of locale
+    name (closes: #224797).
+  * Update python-mode to version from python-mode.sf.net. Fixes highlighting
+    problems (closes: #223520).
+  * Backport from mainline: Add IPV6_ socket options from RFCs 3493 and 3542.
+
+ -- Matthias Klose <doko@debian.org>  Fri,  2 Jan 2004 14:03:26 +0100
+
+python2.3 (2.3.3-1) unstable; urgency=low
+
+  * New upstream release.
+  * Copy the templates, tools and scripts from the Doc dir in the source
+    to /usr/share/lib/python2.3/doc in the python2.3-dev package. Needed
+    for packages building documentation like python does (closes: #207337).
+
+ -- Matthias Klose <doko@debian.org>  Fri, 19 Dec 2003 10:57:39 +0100
+
+python2.3 (2.3.2.91-1) unstable; urgency=low
+
+  * New upstream version (2.3.3 release candidate).
+  * Update python-mode.el (closes: #158811, #159630).
+    Closing unreproducible report (closes: #159628).
+
+ -- Matthias Klose <doko@debian.org>  Sat,  6 Dec 2003 14:41:14 +0100
+
+python2.3 (2.3.2-7) unstable; urgency=low
+
+  * Put the conflict in the correct direction. python2.3 (2.3.2-6) doesn't
+    conflict with python (<= 2.3.2-5) but python (2.3.2-6) conflicts with
+    python2.3 (<= 2.3.2-5) (thanks to Brian May). Really closes #221791.
+
+ -- Matthias Klose <doko@debian.org>  Fri, 21 Nov 2003 00:20:02 +0100
+
+python2.3 (2.3.2-6) unstable; urgency=low
+
+  * Add conflicts with older python{,2.3} packages to fix overwrite
+    errors (closes: #221791).
+
+ -- Matthias Klose <doko@debian.org>  Thu, 20 Nov 2003 07:24:36 +0100
+
+python2.3 (2.3.2-5) unstable; urgency=low
+
+  * Updated to CVS release23-maint 20031119.
+  * Re-upgrade the dependency of python2.3 on python (>= 2.3) to
+    a dependency (closes: #221523).
+
+ -- Matthias Klose <doko@debian.org>  Wed, 19 Nov 2003 00:30:27 +0100
+
+python2.3 (2.3.2-4) unstable; urgency=low
+
+  * Don't build-depend on latex2html (moved to non-free), but keep
+    the prebuilt docs in debian/patches (closes: #221347).
+  * Fix typos in the library reference (closes: #220510, #220954).
+  * Fix typo in python-elisp's autoloading code (closes: #220308).
+  * Update proposed python policy: private modules can be installed
+    into /usr/lib/<module> (arch dependent) and into /usr/share/<module>
+    (arch independent).
+
+ -- Matthias Klose <doko@debian.org>  Tue, 18 Nov 2003 00:41:39 +0100
+
+python2.3 (2.3.2-3) unstable; urgency=low
+
+  * Downgrade the dependency of python2.3 on python (>= 2.3) to
+    a recommendation.
+  * Fix path to interpreter in binfmt file.
+  * Fix segfault in unicodedata module (closes: #218697).
+  * Adjust python-elisp autoload code (closes: #219821).
+
+ -- Matthias Klose <doko@debian.org>  Sun,  9 Nov 2003 19:43:37 +0100
+
+python2.3 (2.3.2-2) unstable; urgency=medium
+
+  * Fix broken doc link (closes: #214217).
+  * Disable wrongly detected large file support for GNU/Hurd.
+  * Really fix the  FTBFS for the binary-indep target (closes: #214303).
+
+ -- Matthias Klose <doko@debian.org>  Mon,  6 Oct 2003 07:54:58 +0200
+
+python2.3 (2.3.2-1) unstable; urgency=low
+
+  * New upstream version.
+  * Fix a FTBFS for the binary-indep target.
+
+ -- Matthias Klose <doko@debian.org>  Sat,  4 Oct 2003 10:20:15 +0200
+
+python2.3 (2.3.1-3) unstable; urgency=low
+
+  * Fix names of codec packages in recommends.
+  * On alpha compile using -mieee (see #212912).
+
+ -- Matthias Klose <doko@debian.org>  Sun, 28 Sep 2003 10:48:12 +0200
+
+python2.3 (2.3.1-2) unstable; urgency=low
+
+  * Update python policy draft (closes: #128911, #163785).
+  * Re-add os.fsync function (closes: #212672).
+  * Let python2.3-doc conflict with older python2.3 versions (closes: #211882).
+  * Add recommends for pythonX.Y-japanese-codecs, pythonX.Y-iconvcodec,
+    pythonX.Y-cjkcodecs, pythonX.Y-korean-codecs (closes: #207161).
+  * Generate binfmt file (closes: #208005).
+  * Add IPPROTO_IPV6 option to the socketmodule (closes: #206569).
+  * Bugs reported against python2.2 and fixed in python2.3:
+    - Crashes in idle (closes: #186887, #200084).
+
+ -- Matthias Klose <doko@debian.org>  Sat, 27 Sep 2003 11:21:47 +0200
+
+python2.3 (2.3.1-1) unstable; urgency=low
+
+  * New upstream version (bug fix release).
+
+ -- Matthias Klose <doko@debian.org>  Wed, 24 Sep 2003 11:27:43 +0200
+
+python2.3 (2.3-4) unstable; urgency=high
+
+  * Disable check for utimes function, which is broken in glibc-2.3.2.
+    Packages using distutils had '1970/01/01-01:00:01' timestamps in files.
+  * Bugs fixed by making python2.3 the default python version:
+    - Canvas.scan_dragto() takes a 3rd optional parmeter "gain".
+      Closes: #158168.
+    - New command line parsing module (closes: #38628).
+    - compileall.py allows compiling single files (closes: #139971).
+  * Bugs reported for 2.2 and fixed in 2.3:
+    - Idle does save files with ASCII characters (closes: #179313).
+    - imaplib support for prefix-quoted strings (closes: #150485).
+    - posixpath includes getctime (closes: #173827).
+    - pydoc has support for keywords (closes: #186775).
+  * Bugs reported for 2.1 and fixed in 2.3:
+    - Fix handling of "#anchor" URLs in urlparse (closes: #147844).
+    - Fix readline if C stdin is not a tty, even if sys.stdin is.
+      Closes: #131810.
+  * Updated to CVS release23-maint 20030810 (fixing memory leaks in
+    array and socket modules).
+  * pydoc's usage output uses the basename of the script.
+  * Don't explicitely remove /etc/python2.3 on purge (closes: #202864).
+  * python conflicts with python-xmlbase (closes: #204773).
+  * Add dependency python (>= 2.3) to python2.3, so make sure the
+    unversioned names can be used.
+
+ -- Matthias Klose <doko@debian.org>  Sun, 10 Aug 2003 09:27:52 +0200
+
+python2.3 (2.3-3) unstable; urgency=medium
+
+  * Fix shlibs file.
+
+ -- Matthias Klose <doko@debian.org>  Fri,  8 Aug 2003 08:45:12 +0200
+
+python2.3 (2.3-2) unstable; urgency=medium
+
+  * Make python2.3 the default python version.
+
+ -- Matthias Klose <doko@debian.org>  Tue,  5 Aug 2003 22:13:22 +0200
+
+python2.3 (2.3-1) unstable; urgency=low
+
+  * Python 2.3 final release.
+
+ -- Matthias Klose <doko@debian.org>  Wed, 30 Jul 2003 08:12:28 +0200
+
+python2.3 (2.2.107-1rc2) unstable; urgency=medium
+
+  * Python 2.3 release candidate 2.
+  * Don't compress .txt files referenced by the html docs (closes: #200298).
+  * Include the email/_compat* files (closes: #200349).
+
+ -- Matthias Klose <doko@debian.org>  Fri, 25 Jul 2003 07:08:09 +0200
+
+python2.3 (2.2.106-2beta2) unstable; urgency=medium
+
+  * Python 2.3 beta2 release, updated to CVS 20030704.
+    - Fixes AssertionError in httplib (closed: #192452).
+    - Fixes uncaught division by zero in difflib.py (closed: #199287).
+  * Detect presence of setgroups(2) at configure time (closes: #199839).
+  * Use default gcc on arm as well.
+
+ -- Matthias Klose <doko@debian.org>  Sat,  5 Jul 2003 10:21:33 +0200
+
+python2.3 (2.2.105-1beta2) unstable; urgency=low
+
+  * Python 2.3 beta2 release.
+    - Includes merged idle fork.
+    - Fixed socket.setdefaulttimeout(). Closes: #189380.
+    - socket.ssl works with _socketobj. Closes: #196082.
+  * Do not link libtix to the _tkinter module. It's loaded via
+   'package require tix' at runtime. python2.3-tkinter now
+    suggests tix8.1 instead.
+  * On arm, use gcc-3.2 to build.
+  * Add -fno-strict-aliasing rules to OPT to avoid warnings
+    "dereferencing type-punned pointer will break strict-aliasing rules",
+    when building with gcc-3.3.
+
+ -- Matthias Klose <doko@debian.org>  Mon, 30 Jun 2003 00:19:32 +0200
+
+python2.3 (2.2.104-1beta1.1) unstable; urgency=low
+
+  * Non-maintainer upload with maintainer consent.
+  * debian/control (Build-Depends): s/libgdbmg1-dev/libgdbm-dev/.
+
+ -- James Troup <james@nocrew.org>  Wed,  4 Jun 2003 02:24:27 +0100
+
+python2.3 (2.2.104-1beta1) unstable; urgency=low
+
+  * Python 2.3 beta1 release, updated to CVS 20030514.
+    - build the current documentation.
+  * Reenable Tix support.
+
+ -- Matthias Klose <doko@debian.org>  Wed, 14 May 2003 07:38:57 +0200
+
+python2.3 (2.2.103-1beta1) unstable; urgency=low
+
+  * Python 2.3 beta1 release, updated to CVS 20030506.
+    - updated due to build problems on mips/mipsel.
+    - keep the 2.3b1 documentation (doc build problems with cvs).
+
+ -- Matthias Klose <doko@debian.org>  Wed,  7 May 2003 06:26:39 +0200
+
+python2.3 (2.2.102-1beta1) unstable; urgency=low
+
+  * Python 2.3 beta1 release.
+
+ -- Matthias Klose <doko@debian.org>  Sat,  3 May 2003 22:45:16 +0200
+
+python2.3 (2.2.101-1exp1) unstable; urgency=medium
+
+  * Python 2.3 alpha2 release, updated to CVS 20030321.
+  * Tkinter: Catch exceptions thrown for undefined substitutions in
+    events (needed for tk 8.4.2).
+
+ -- Matthias Klose <doko@debian.org>  Fri, 21 Mar 2003 21:32:14 +0100
+
+python2.3 (2.2.100-1exp1) unstable; urgency=low
+
+  * Python 2.3 alpha2 release, updated to CVS 20030221.
+
+ -- Matthias Klose <doko@debian.org>  Fri, 21 Feb 2003 19:37:17 +0100
+
+python2.3 (2.2.99-1exp1) unstable; urgency=low
+
+  * Python 2.3 alpha1 release updated to CVS 20030123.
+    - should fix the testsuite (and package build) failure on alpha.
+  * Remove build dependency on libexpat1-dev. Merge the python2.3-xmlbase
+    package into python2.3 (closes: #177739).
+
+ -- Matthias Klose <doko@debian.org>  Thu, 23 Jan 2003 22:48:12 +0100
+
+python2.3 (2.2.98-1exp1) unstable; urgency=low
+
+  * Python 2.3 alpha1 release updated to CVS 20030117.
+  * Build using libdb4.1.
+
+ -- Matthias Klose <doko@debian.org>  Sat, 18 Jan 2003 00:14:01 +0100
+
+python2.3 (2.2.97-1exp1) unstable; urgency=low
+
+  * Python 2.3 alpha1 release updated to CVS 20030109.
+  * Build-Depend on g++ (>= 3:3.2).
+  * Python package maintainers: please wait uploading python dependent
+    packages until python2.2 and python2.1 are compiled using gcc-3.2.
+
+ -- Matthias Klose <doko@debian.org>  Thu,  9 Jan 2003 23:56:42 +0100
+
+python2.3 (2.2.96-1exp1) unstable; urgency=low
+
+  * Python 2.3 alpha1 release (not exactly the tarball, but taken from
+    CVS 20030101).
+    - Includes support for linking with threaded tk8.4 (closes: #172714).
+  * Install and register whatsnew document (closes: #173859).
+  * Properly unregister info documentation.
+
+ -- Matthias Klose <doko@debian.org>  Wed,  1 Jan 2003 17:38:54 +0100
+
+python2.3 (2.2.95-1exp1) unstable; urgency=low
+
+  * Experimental packages from CVS 021212.
+    - data in unicodedate module is up to date (closes: #171061).
+  * Fix idle packaging (closes: #170394).
+  * Configure using unicode UCS-4 (closes: #171062).
+    This change breaks compatibility with binary modules, but what do you
+    expect from experimental packages ... Please recompile dependent packages.
+  * Don't strip binaries for now.
+
+ -- Matthias Klose <doko@debian.org>  Thu, 12 Dec 2002 21:42:27 +0100
+
+python2.3 (2.2.94-1exp1) unstable; urgency=low
+
+  * Experimental packages from CVS 021120.
+  * Remove outdated README.dbm.
+  * Depend on tk8.4.
+  * python-elisp: Install emacsen install file with mode 644 (closes: #167718).
+
+ -- Matthias Klose <doko@debian.org>  Thu, 21 Nov 2002 01:04:51 +0100
+
+python2.3 (2.2.93-1exp1) unstable; urgency=medium
+
+  * Experimental packages from CVS 021015.
+  * Build a static library libpython2.3-pic.a.
+  * Enable large file support for the Hurd (closes: #164602).
+
+ -- Matthias Klose <doko@debian.org>  Tue, 15 Oct 2002 21:06:27 +0200
+
+python2.3 (2.2.92-1exp1) unstable; urgency=low
+
+  * Experimental packages from CVS 020922.
+  * Fix build error on ia64 (closes: #161234).
+  * Build depend on gcc-3.2-3.2.1-0pre2 to fix build error on arm.
+
+ -- Matthias Klose <doko@debian.org>  Sun, 22 Sep 2002 18:30:28 +0200
+
+python2.3 (2.2.91-1exp1) unstable; urgency=low
+
+  * Experimental packages from CVS 020906.
+  * idle-python2.3: Fix conflict (closes: #159267).
+  * Fix location of python-mode.el (closes: #159564, #159619).
+  * Use tix8.1.
+  * Apply fix for distutils/ccompiler problem (closes: #159288).
+
+ -- Matthias Klose <doko@debian.org>  Sat,  7 Sep 2002 09:55:07 +0200
+
+python2.3 (2.2.90-1exp1) unstable; urgency=low
+
+  * Experimental packages from CVS 020820.
+  * Don't build python2.3-elisp, but put the latest version into
+    python-elisp.
+
+ -- Matthias Klose <doko@debian.org>  Thu, 22 Aug 2002 21:52:04 +0200
+
+python2.2 (2.2.1-6) unstable; urgency=low
+
+  * CVS updates of the release22-maint branch upto 2002-07-23.
+  * Enable IPv6 support (closes: #152543).
+  * Add python2.2-tk suggestion for python2.2 (pydoc -g).
+  * Fix from SF patch #527518: proxy config with user+pass authentication.
+  * Point pydoc to the correct location of the docs (closes: #147579).
+  * Remove '*.py[co]' files, when removing the python package,
+    not when purging (closes: #147130).
+  * Update to new py2texi.el version (Milan Zamazal).
+
+ -- Matthias Klose <doko@debian.org>  Mon, 29 Jul 2002 23:11:32 +0200
+
+python2.2 (2.2.1-5) unstable; urgency=low
+
+  * CVS updates of the release22-maint branch upto 2002-05-03.
+  * Build the info docs (closes: #145653).
+
+ -- Matthias Klose <doko@debian.org>  Fri,  3 May 2002 22:35:46 +0200
+
+python2.2 (2.2.1-4) unstable; urgency=high
+
+  * Fix indentation errors introduced in last upload (closes: #143809).
+
+ -- Matthias Klose <doko@debian.org>  Sun, 21 Apr 2002 01:00:14 +0200
+
+python2.2 (2.2.1-3) unstable; urgency=high
+
+  * Add Build-Conflicts: tcl8.0-dev, tk8.0-dev, tcl8.2-dev, tk8.2-dev.
+    Closes: #143534 (build a working _tkinter module, on machines, where
+    8.0's tk.h gets included).
+  * CVS updates of the release22-maint branch upto 2002-04-20.
+
+ -- Matthias Klose <doko@debian.org>  Sat, 20 Apr 2002 09:22:37 +0200
+
+python2.2 (2.2.1-2) unstable; urgency=low
+
+  * Forgot to copy the dlmodule patch from the 2.1.3 package. Really
+    closes: #141681.
+
+ -- Matthias Klose <doko@debian.org>  Sat, 13 Apr 2002 01:28:05 +0200
+
+python2.2 (2.2.1-1) unstable; urgency=high
+
+  * Final 2.2.1 release.
+  * According to report #131813, the python interpreter is much faster on some
+    architectures, when beeing linked statically with the python library (25%).
+    Gregor and me tested on i386, m68k and alpha, but we could not reproduce
+    such a speedup (generally between 5% and 10%). But we are linking the
+    python executable now statically ...
+  * Build info docs from the tex source, merge the python-doc-info
+    package into the python-doc package.
+  * Always build the dl module. Failure in case of
+        sizeof(int)!=sizeof(long)!=sizeof(void*)
+    is delayed until dl.open is called. Closes: #141681.
+
+ -- Matthias Klose <doko@debian.org>  Thu, 11 Apr 2002 00:19:19 +0200
+
+python2.2 (2.2.0.92-0) unstable; urgency=low
+
+  * Package CVS sources, omit cvs-updates.dpatch (closes: #140977).
+
+ -- Matthias Klose <doko@debian.org>  Wed,  3 Apr 2002 08:20:52 +0200
+
+python2.2 (2.2-6) unstable; urgency=medium
+
+  * Update to python-2.2.1 release candidate 2 (final release scheduled
+    for April 10).
+  * Enable dl module (closes: #138992).
+  * Build doc files with python binary from package (closes: #139657).
+  * Build _tkinter module with BLT and Tix support.
+  * python2.2-elisp: Conflict with python2-elisp (closes: #138970).
+  * string.split docs updated in python-2.2.1 (closes: #129272).
+
+ -- Matthias Klose <doko@debian.org>  Mon,  1 Apr 2002 13:52:36 +0200
+
+python2.2 (2.2-5) unstable; urgency=low
+
+  * CVS updates of the release22-maint branch upto 20020310 (aproaching
+    the first 2.2.1 release candidate).
+  * Stolen from HEAD: check argument of locale.nl_langinfo (closes: #137371).
+
+ -- Matthias Klose <doko@debian.org>  Fri, 15 Mar 2002 01:05:59 +0100
+
+python2.2 (2.2-4) unstable; urgency=medium
+
+  * Include test/{__init__.py,README,pystone.py} in package (closes: #129013).
+  * Fix python-elisp conflict (closes: #129046).
+  * Don't compress stylesheets (closes: #133179).
+  * CVS updates of the release22-maint branch upto 20020310.
+
+ -- Matthias Klose <doko@debian.org>  Sun, 10 Mar 2002 23:32:28 +0100
+
+python2.2 (2.2-3) unstable; urgency=medium
+
+  * Updates from the CVS python22-maint branch up to 20020107.
+    webbrowser.py: properly escape url's.
+  * The Hurd does not have large file support: disabled.
+
+ -- Matthias Klose <doko@debian.org>  Mon,  7 Jan 2002 21:55:57 +0100
+
+python2.2 (2.2-2) unstable; urgency=medium
+
+  * CVS updates of the release22-maint branch upto 20011229. Fixes:
+    - Include TCP_CORK flag in plat-linux2 headers (fixes: #84340).
+    - Update CDROM.py module (fixes: #125785).
+  * Add missing chunk of the GNU/Hurd patch (therefore urgency medium).
+  * Send anonymous password when using anonftp (closes: #126814).
+
+ -- Matthias Klose <doko@debian.org>  Sat, 29 Dec 2001 20:18:26 +0100
+
+python2.2 (2.2-1) unstable; urgency=low
+
+  * New upstream version: 2.2.
+  * Bugs fixed upstream:
+    - Docs for os.kill reference the signal module for constants.
+    - Documentation strings in the tutorial end with a period (closes: #94770).
+    - Tk: grid_location method moved from Grid to Misc (closes: #98338).
+    - mhlib.SubMessage.getbodytext takes decode parameter (closes: #31876).
+    - Strings in modules are locale aware (closes: #51444).
+    - Printable 8-bit characters in strings are correctly printed
+      (closes: #64354).
+    - Dictionary can be updated with abstract mapping object (closes: #46566).
+  * Make site.py a config files.
+
+ -- Matthias Klose <doko@debian.org>  Sat, 22 Dec 2001 00:51:46 +0100
+
+python2.2 (2.1.99c1-1) unstable; urgency=low
+
+  * New upstream version: 2.2c1 (release candidate).
+  * Do not provide python2.2-base anymore.
+  * Install correct README.Debian for python2.2 package. Include hint
+    where to find Makefile.pre.in.
+  * Suggest installation of python-ssl.
+  * Remove idle config files on purge.
+  * Remove empty /usr/lib/python2.2 directory on purge.
+
+ -- Matthias Klose <doko@debian.org>  Sat, 15 Dec 2001 17:56:27 +0100
+
+python2.2 (2.1.99beta2-1) unstable; urgency=high
+
+  * debian/rules: Reflect removal of regrtest package (closes: #122278).
+    Resulted in build failures on all architectures.
+  * Build -doc package from source.
+
+ -- Matthias Klose <doko@debian.org>  Sat,  8 Dec 2001 00:38:41 +0100
+
+python2.2 (2.1.99beta2-0.1) unstable; urgency=low
+
+  * Non maintainer upload.
+  * New upstream version (this is 2.2beta2).
+  * Do not build the python-regrtest package anymore; keep the test framework
+    components test/regrtest.py and test/test_support.py in the python
+    package (closes: #119408).
+
+ -- Gregor Hoffleit <flight@debian.org>  Tue, 27 Nov 2001 09:53:26 +0100
+
+python2.2 (2.1.99beta1-4) unstable; urgency=low
+
+  * Configure with --with-fpectl (closes: #118125).
+  * setup.py: Remove broken check for _curses_panel module (#116081).
+  * idle: Move config-* files to /etc and mark as conffiles (#106390).
+  * Move idle packages to section `devel'.
+
+ -- Matthias Klose <doko@debian.org>  Wed, 31 Oct 2001 10:56:45 +0100
+
+python2.2 (2.1.99beta1-3) unstable; urgency=low
+
+  * Fix shlibs file (was still referring to 2.1). Closes: #116810.
+  * README.Debian: point to draft of python-policy in the python package.
+
+ -- Matthias Klose <doko@debian.org>  Wed, 31 Oct 2001 10:56:45 +0100
+
+python2.2 (2.1.99beta1-2) unstable; urgency=medium
+
+  * Fix shlibs file (was still referring to 2.1). Closes: #116810.
+  * Rename package python2.2-base to python2.2.
+
+ -- Matthias Klose <doko@debian.org>  Wed, 24 Oct 2001 23:00:50 +0200
+
+python2.2 (2.1.99beta1-1) unstable; urgency=low
+
+  * New upstream version (beta). Call the package version 2.1.99beta1-1.
+  * New maintainer until the final 2.2 release.
+  * Updated the debian patches.
+
+ -- Matthias Klose <doko@debian.org>  Sat, 20 Oct 2001 18:56:26 +0200
+
+python2.1 (2.1.1-1.2) unstable; urgency=low
+
+  * Really remove the python alternative.
+
+ -- Matthias Klose <doko@debian.org>  Sat, 20 Oct 2001 15:16:56 +0200
+
+python2.1 (2.1.1-1.1) unstable; urgency=low
+
+  * README FOR PACKAGE MAINTAINERS: It is planned to remove the python2-XXX
+    packages from unstable and move on to python2.1.
+    If you repackage/adapt your modules for python2.1, don't build
+    python2-XXX and python2.1-XXX packages from the same source package,
+    so that the python2-XXX package can be removed without influencing the
+    python2.1-XXX package.
+
+    See the debian-python mailing list at http://lists.debian.org/devel.html
+    for details and the current discussion and a draft for a debian-python
+    policy (August to October 2001).
+
+  * Remove alternative for /usr/bin/python. The python-base package now
+    provides the default python version.
+
+  * Regenerate control file to fix build dependencies (closes: #116190).
+  * Remove alternative for /usr/bin/{python,pydoc}.
+  * Provide a libpython2.1.so symlink in /usr/lib/python2.1/config,
+    so that the shared library is found when -L/usr/lib/python2.1/config
+    is specified.
+  * Conflict with old package versions, where /usr/bin/python is a real
+    program (closes: #115943).
+  * python2.1-elisp conflicts with python-elisp (closes: #115895).
+  * We now have 2.1 (closes: #96851, #107849, #110243).
+
+ -- Matthias Klose <doko@debian.org>  Fri, 19 Oct 2001 17:34:41 +0200
+
+python2.1 (2.1.1-1) unstable; urgency=low
+
+  * Incorporated Matthias' modifications.
+
+ -- Gregor Hoffleit <flight@debian.org>  Thu, 11 Oct 2001 00:16:42 +0200
+
+python2.1 (2.1.1-0.2) unstable; urgency=low
+
+  * New upstream 2.1.1.
+  * GPL compatible licence (fixes #84080, #102949, #110643).
+  * Fixed upstream (closes: #99692, #111340).
+  * Build in separate build directory.
+  * Split Debian patches into debian/patches directory.
+  * Build dependencies: Add libgmp3-dev, libexpat1-dev, tighten
+    debhelper dependency.
+  * debian/rules: Updated a "bit".
+  * python-elisp: Remove custom dependency (closes: #87783),
+    fix emacs path (closes: #89712), remove emacs19 dependency (#82694).
+  * Mention distutils in python-dev package description (closes: #108170).
+  * Update README.Debian (closes: #85430).
+  * Run versioned python in postinsts (closes: #113349).
+  * debian/sample.{postinst,prerm}: Change to version independent scripts.
+  * Use '/usr/bin/env python2.1' as interpreter for all python scripts.
+  * Add libssl-dev to Build-Conflicts.
+  * python-elisp: Add support for emacs21 (closes: #98635).
+  * Do not compress .py files in doc directories.
+  * Don't link explicitely with libc.
+
+ -- Matthias Klose <doko@debian.org>  Wed,  3 Oct 2001 09:53:08 +0200
+
+python2.1 (2.1.1-0.1) unstable; urgency=low
+
+  * New upstream version (CVS branch release21-maint, will become 2.1.1):
+    This CVS branch will be released as 2.1.1 under a GPL compatible
+    license.
+
+ -- Gregor Hoffleit <flight@debian.org>  Wed, 27 Jun 2001 22:47:58 +0200
+
+python2 (2.1-0.1) unstable; urgency=low
+
+  * Fixed Makefile.pre.in.
+  * Fixed the postinst files in order to use 2.1 (instead of 2.0).
+  * Mention the immanent release of 2.0.1 and 2.1.1, with a GPL
+    compatible license.
+
+ -- Gregor Hoffleit <flight@debian.org>  Sun, 17 Jun 2001 21:05:25 +0200
+
+python2 (2.1-0) unstable; urgency=low
+
+  * New upstream version.
+  * Experimental packages.
+
+ -- Gregor Hoffleit <flight@debian.org>  Thu, 10 May 2001 00:20:04 +0200
+
+python2 (2.0-7) unstable; urgency=low
+
+  * Rebuilt with recent tcl8.3-dev/tk8.3-dev in order to fix a
+    dependency problem with python2-tk (closes: #87793, #92962).
+  * Change postinst to create and update /usr/local/lib/python2.0 and
+    site-python with permissions and owner as mandated by policy:
+    2775 and root:staff (closes: #89047).
+  * Fix to compileall.py: A superfluous argument made compileall without
+    options fail (cf. #92990 for python).
+  * Move the distutils module into python2-dev. It needs Makefile.pre.in
+    in order to work (closes: #89900).
+  * Remove build-dependency on libgdbm2-dev (which isn't built anyway).
+  * Add a build-dependency on libdb2-dev (cf. #90220 for python).
+
+ -- Gregor Hoffleit <flight@debian.org>  Sat, 14 Apr 2001 21:07:51 +0200
+
+python2 (2.0-6) unstable; urgency=low
+
+  * Remove python-zlib package; merge it into python-base.
+  * Mark that README.python2 is not yet updated.
+
+ -- Gregor Hoffleit <flight@debian.org>  Wed, 21 Feb 2001 12:34:18 +0100
+
+python2 (2.0-5) unstable; urgency=low
+
+  * Recompile with tcl/tk8.3 (closes: #82088).
+  * Modifications to README.why-python2 (closes: #82116).
+  * Add menu hint to idle2 menu entry.
+  * idle2 is renamed idle-python2 and now build correctly (closes: #82218).
+  * Add build-dependency on autoconf (closes: #85339).
+  * Build bsddbmodule as shared module (Modules/Setup.config.in),
+    and link libpython2.so with -lm in Makefile (closes: #86027).
+  * various cleanups in debian/rules, e.g. removing dh_suidregister.
+  * Make pdb available as /usr/bin/pdb-python2 in python2-dev
+    (cf. #79870 in python-base).
+  * Remove libgmp3 from build-dependencies, since we currently can't
+    build the mpzmodule for Python2 due to license problems.
+
+ -- Gregor Hoffleit <flight@debian.org>  Sun, 18 Feb 2001 00:12:17 +0100
+
+python2 (2.0-4) unstable; urgency=low
+
+  * control: make python2-elisp conflict with python-elisp (it doesn't
+    make sense to have both of them installed, does it ?)
+  * include build-depend on libxmltok1-dev.
+  * again, build with tcl/tk8.0.
+
+ -- Gregor Hoffleit <flight@debian.org>  Wed, 10 Jan 2001 23:37:01 +0100
+
+python2 (2.0-3) unstable; urgency=low
+
+  * Modules/Setup.in: Added a missing \ that made _tkinter be built
+    incorrectly.
+  * rules: on the fly, change all '#!' python scripts to use python2.
+
+ -- Gregor Hoffleit <flight@debian.org>  Wed, 13 Dec 2000 20:07:24 +0100
+
+python2 (2.0-2) unstable; urgency=low
+
+  * Aaargh. Remove conflicts/provides/replaces on python-base to make
+    parallel installation of python-base and python2-base possible.
+  * Install examples into /usr/share/doc/python2 (not python) and fix
+    symlink to python2.0 (thanks to Rick Younie <younie@home.com> for
+    pointing out this).
+  * Rename man page to python2.1.
+
+ -- Gregor Hoffleit <flight@debian.org>  Wed, 13 Dec 2000 09:31:05 +0100
+
+python2 (2.0-1) unstable; urgency=low
+
+  * New upstream version. Initial release for python2.
+
+ -- Gregor Hoffleit <flight@debian.org>  Mon, 11 Dec 2000 22:39:46 +0100

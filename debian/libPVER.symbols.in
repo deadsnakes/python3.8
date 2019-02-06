@@ -1,0 +1,4 @@
+libpython@VER@m.so.1.0 libpython@VER@ #MINVER#
+#include "libpython.symbols"
+ PyModule_Create2@Base @SVER@
+ PyModule_FromDefAndSpec2@Base @SVER@

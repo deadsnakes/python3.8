@@ -1,0 +1,21 @@
+#! /bin/sh
+
+set -e
+
+if [ "$1" = "purge" ]; then
+    pc=$(dpkg-query -f '${db:Status-Abbrev} ${binary:Package}\n' -W lib@PVER@-minimal \
+	| grep -v '^.n' | wc -l)
+    if [ "$pc" -lt 1 ]; then
+	find /usr/lib/@PVER@ -depth -type d -name __pycache__ \
+	    | xargs -r rm -rf
+	rm -f /etc/@PVER@/sitecustomize.py
+	rm -rf /etc/@PVER@/__pycache__
+	if [ -d /etc/@PVER@ ]; then
+	    rmdir --ignore-fail-on-non-empty /etc/@PVER@
+	fi
+    fi
+fi
+
+#DEBHELPER#
+
+exit 0

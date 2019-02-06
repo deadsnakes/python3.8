@@ -1,0 +1,52 @@
+Contents of the @PVER@-dbg package
+-------------------------------------
+
+For debugging python and extension modules, you may want to add the contents
+of /usr/share/doc/@PVER@/gdbinit (found in the @PVER@-dev package) to your
+~/.gdbinit file.
+
+@PVER@-dbg contains two sets of packages:
+
+ - debugging symbols for the standard @PVER@ build. When this package
+   is installed, gdb will automatically load up the debugging symbols
+   from it when debugging @PVER@ or one of the included extension
+   modules.
+
+ - a separate @PVER@-dbg binary, configured --with-pydebug, enabling the
+   additional debugging code to help debug memory management problems.
+
+For the latter, all extension modules have to be recompiled to
+correctly load with an pydebug enabled build.
+
+
+Debian and Ubuntu specific changes to the debug interpreter
+-----------------------------------------------------------
+The python2.4 and python2.5 packages in Ubuntu feisty are modified to
+first look for extension modules under a different name.
+
+  normal build: foo.so
+  debug build:  foo_d.so foo.so
+
+This naming schema allows installation of the extension modules into
+the same path (The naming is directly taken from the Windows builds
+which already uses this naming scheme).
+
+See https://wiki.ubuntu.com/PyDbgBuilds for more information.
+
+
+Using the python-dbg builds
+---------------------------
+
+ * Call the python-dbg or the pythonX.Y-dbg binaries instead of the
+   python or pythonX.Y binaries.
+
+ * Properties of the debug build are described in
+   /usr/share/doc/@PVER@/SpecialBuilds.txt.gz.
+   The debug interpreter is built with Py_DEBUG defined.
+
+ * From SpecialBuilds.txt: This is what is generally meant by "a debug
+   build" of Python.  Py_DEBUG implies LLTRACE, Py_REF_DEBUG,
+   Py_TRACE_REFS, and PYMALLOC_DEBUG (if WITH_PYMALLOC is enabled).
+   In addition, C assert()s are enabled (via the C way: by not defining
+   NDEBUG), and some routines do additional sanity checks inside
+   "#ifdef Py_DEBUG" blocks.

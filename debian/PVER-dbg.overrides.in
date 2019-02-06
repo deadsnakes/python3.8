@@ -1,0 +1,7 @@
+# just the gdb debug file
+@PVER@-dbg binary: python-script-but-no-python-dep
+
+# pointless lintian ...
+@PVER@-dbg binary: hardening-no-fortify-functions
+
+@PVER@-dbg binary: command-with-path-in-maintainer-script

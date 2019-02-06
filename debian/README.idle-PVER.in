@@ -1,0 +1,14 @@
+
+  The Python IDLE package for Debian
+  ----------------------------------
+
+This package contains Python @VER@'s Integrated DeveLopment Environment, IDLE.
+
+IDLE is included in the Python @VER@ upstream distribution (Tools/idle) and
+depends on Tkinter (available as @PVER@-tk package).
+
+I have written a simple man page.
+
+
+    06/16/1999
+    Gregor Hoffleit <flight@debian.org>

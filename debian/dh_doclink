@@ -1,0 +1,28 @@
+#! /bin/sh
+
+pkg=`echo $1 | sed 's/^-p//'`
+target=$2
+
+ln -sf $target debian/$pkg/usr/share/doc/$pkg
+
+f=debian/$pkg.postinst.debhelper
+if [ ! -e $f ] || [ "`grep -c '^# dh_doclink' $f`" -eq 0 ]; then
+cat >> $f <<EOF
+# dh_doclink
+if [ "\$1" = "configure" ]; then
+  if [ -d /usr/doc -a ! -e /usr/doc/$pkg -a -d /usr/share/doc/$pkg ]; then
+    ln -sf ../share/doc/$pkg /usr/doc/$pkg
+  fi
+fi
+EOF
+fi
+
+f=debian/$pkg.prerm.debhelper
+if [ ! -e $f ] || [ "`grep -c '^# dh_doclink' $f`" -eq 0 ]; then
+cat >> $f <<EOF
+# dh_doclink
+if [ \( "\$1" = "upgrade" -o "\$1" = "remove" \) -a -L /usr/doc/$pkg ]; then
+  rm -f /usr/doc/$pkg
+fi
+EOF
+fi
