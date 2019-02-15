@@ -1,7 +1,15 @@
-# DP: Disable some failing tests we are not interested in
+From: Ubuntu Core Developers <ubuntu-devel-discuss@lists.ubuntu.com>
+Date: Thu, 14 Feb 2019 18:59:14 -0800
+Subject: disable-some-tests
 
-Index: b/Lib/distutils/tests/test_build_ext.py
-===================================================================
+# DP: Disable some failing tests we are not interested in
+# DP: Disable some failing tests we are not interested in
+---
+ Lib/distutils/tests/test_build_ext.py | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/Lib/distutils/tests/test_build_ext.py b/Lib/distutils/tests/test_build_ext.py
+index a722182..e3ac820 100644
 --- a/Lib/distutils/tests/test_build_ext.py
 +++ b/Lib/distutils/tests/test_build_ext.py
 @@ -102,6 +102,7 @@ class BuildExtTestCase(TempdirManager,

@@ -1,7 +1,15 @@
-# DP: Don't run the test suite in random order.
+From: Ubuntu Core Developers <ubuntu-devel-discuss@lists.ubuntu.com>
+Date: Thu, 14 Feb 2019 18:59:14 -0800
+Subject: test-no-random-order
 
-Index: b/Tools/scripts/run_tests.py
-===================================================================
+# DP: Don't run the test suite in random order.
+# DP: Don't run the test suite in random order.
+---
+ Tools/scripts/run_tests.py | 1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git a/Tools/scripts/run_tests.py b/Tools/scripts/run_tests.py
+index 3c1c3bd..b93b7ec 100644
 --- a/Tools/scripts/run_tests.py
 +++ b/Tools/scripts/run_tests.py
 @@ -31,7 +31,6 @@ def main(regrtest_args):

@@ -1,18 +1,27 @@
+From: Ubuntu Core Developers <ubuntu-devel-discuss@lists.ubuntu.com>
+Date: Thu, 14 Feb 2019 18:59:14 -0800
+Subject: bdist-wininst-notfound
+
 # DP: suggest installation of the pythonX.Y-dev package, if bdist_wininst
 # DP: cannot find the wininst-* files.
+# DP: suggest installation of the pythonX.Y-dev package, if bdist_wininst
+# DP: cannot find the wininst-* files.
+---
+ Lib/distutils/command/bdist_wininst.py | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-Index: b/Lib/distutils/command/bdist_wininst.py
-===================================================================
+diff --git a/Lib/distutils/command/bdist_wininst.py b/Lib/distutils/command/bdist_wininst.py
+index fde5675..ff4577a 100644
 --- a/Lib/distutils/command/bdist_wininst.py
 +++ b/Lib/distutils/command/bdist_wininst.py
-@@ -359,6 +359,10 @@ class bdist_wininst(Command):
+@@ -358,6 +358,10 @@ class bdist_wininst(Command):
+ 
          filename = os.path.join(directory, "wininst-%s%s.exe" % (bv, sfix))
          f = open(filename, "rb")
-         try:
++        try:
 +            f = open(filename, "rb")
 +        except IOError as e:
 +            raise DistutilsFileError(str(e) + ', %s not included in the Debian packages.' % filename)
-+        try:
+         try:
              return f.read()
          finally:
-             f.close()

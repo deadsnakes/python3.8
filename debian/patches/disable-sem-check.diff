@@ -1,5 +1,15 @@
-# DP: Assume working semaphores, don't rely on running kernel for the check.
+From: Ubuntu Core Developers <ubuntu-devel-discuss@lists.ubuntu.com>
+Date: Thu, 14 Feb 2019 18:59:14 -0800
+Subject: disable-sem-check
 
+# DP: Assume working semaphores, don't rely on running kernel for the check.
+# DP: Assume working semaphores, don't rely on running kernel for the check.
+---
+ configure.ac | 18 ++++++++++++++----
+ 1 file changed, 14 insertions(+), 4 deletions(-)
+
+diff --git a/configure.ac b/configure.ac
+index d712c75..a62616b 100644
 --- a/configure.ac
 +++ b/configure.ac
 @@ -4429,8 +4429,13 @@ int main(void) {

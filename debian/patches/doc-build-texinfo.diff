@@ -1,8 +1,15 @@
-Description: Add the option to build Texinfo-format documentation.
-Author: Benjamin Moody <benjamin@physionet.org>
+From: Benjamin Moody <benjamin@physionet.org>
+Date: Thu, 14 Feb 2019 18:59:15 -0800
+Subject: Add the option to build Texinfo-format documentation.
+
 Bug-Debian: https://bugs.debian.org/881959
 Last-Update: 2017-11-27
+---
+ Doc/Makefile | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
+diff --git a/Doc/Makefile b/Doc/Makefile
+index 4b85e9e..b7fef1b 100644
 --- a/Doc/Makefile
 +++ b/Doc/Makefile
 @@ -28,6 +28,7 @@ help:

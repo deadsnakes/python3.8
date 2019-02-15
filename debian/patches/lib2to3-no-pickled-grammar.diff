@@ -1,6 +1,17 @@
+From: Ubuntu Core Developers <ubuntu-devel-discuss@lists.ubuntu.com>
+Date: Thu, 14 Feb 2019 18:59:14 -0800
+Subject: lib2to3-no-pickled-grammar
+
+---
+ Lib/lib2to3/pgen2/driver.py      |  5 ++-
+ Lib/lib2to3/tests/test_parser.py | 77 ----------------------------------------
+ 2 files changed, 4 insertions(+), 78 deletions(-)
+
+diff --git a/Lib/lib2to3/pgen2/driver.py b/Lib/lib2to3/pgen2/driver.py
+index 6471635..957fb5a 100644
 --- a/Lib/lib2to3/pgen2/driver.py
 +++ b/Lib/lib2to3/pgen2/driver.py
-@@ -119,7 +119,10 @@ def load_grammar(gt="Grammar.txt", gp=No
+@@ -119,7 +119,10 @@ def load_grammar(gt="Grammar.txt", gp=None,
      if force or not _newer(gp, gt):
          logger.info("Generating grammar tables from %s", gt)
          g = pgen.generate_grammar(gt)
@@ -12,6 +23,8 @@
              logger.info("Writing grammar tables to %s", gp)
              try:
                  g.dump(gp)
+diff --git a/Lib/lib2to3/tests/test_parser.py b/Lib/lib2to3/tests/test_parser.py
+index 01b2b51..816d7f2 100644
 --- a/Lib/lib2to3/tests/test_parser.py
 +++ b/Lib/lib2to3/tests/test_parser.py
 @@ -38,83 +38,6 @@ class TestDriver(support.TestCase):

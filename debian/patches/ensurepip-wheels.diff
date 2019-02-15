@@ -1,3 +1,13 @@
+From: Ubuntu Core Developers <ubuntu-devel-discuss@lists.ubuntu.com>
+Date: Thu, 14 Feb 2019 18:59:15 -0800
+Subject: ensurepip-wheels
+
+---
+ Lib/ensurepip/__init__.py | 74 +++++++++++++++++++++++++++++++++--------------
+ 1 file changed, 52 insertions(+), 22 deletions(-)
+
+diff --git a/Lib/ensurepip/__init__.py b/Lib/ensurepip/__init__.py
+index 09c572d..d4d1276 100644
 --- a/Lib/ensurepip/__init__.py
 +++ b/Lib/ensurepip/__init__.py
 @@ -1,3 +1,4 @@
@@ -22,7 +32,7 @@
  ]
  
  
-@@ -24,15 +22,22 @@ def _run_pip(args, additional_paths=None
+@@ -24,15 +22,22 @@ def _run_pip(args, additional_paths=None):
          sys.path = additional_paths + sys.path
  
      # Install the bundled software
@@ -48,7 +58,7 @@
  
  def _disable_pip_configuration_settings():
      # We deliberately ignore all pip environment variables
-@@ -88,20 +93,44 @@ def _bootstrap(*, root=None, upgrade=Fal
+@@ -88,20 +93,44 @@ def _bootstrap(*, root=None, upgrade=False, user=False,
          # omit pip and easy_install
          os.environ["ENSUREPIP_OPTIONS"] = "install"
  
@@ -103,7 +113,7 @@
  
          # Construct the arguments to be passed to the pip command
          args = ["install", "--no-index", "--find-links", tmpdir]
-@@ -114,7 +143,7 @@ def _bootstrap(*, root=None, upgrade=Fal
+@@ -114,7 +143,7 @@ def _bootstrap(*, root=None, upgrade=False, user=False,
          if verbosity:
              args += ["-" + "v" * verbosity]
  

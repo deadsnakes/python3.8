@@ -1,3 +1,14 @@
+From: Ubuntu Core Developers <ubuntu-devel-discuss@lists.ubuntu.com>
+Date: Thu, 14 Feb 2019 18:59:15 -0800
+Subject: local-doc-references
+
+---
+ Doc/tools/templates/layout.html | 2 +-
+ Lib/idlelib/help.html           | 4 ++--
+ 2 files changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/Doc/tools/templates/layout.html b/Doc/tools/templates/layout.html
+index c399224..387e567 100644
 --- a/Doc/tools/templates/layout.html
 +++ b/Doc/tools/templates/layout.html
 @@ -14,7 +14,7 @@
@@ -9,6 +20,8 @@
      {% if builder != "htmlhelp" %}
        {% if switchers is defined and not embedded %}
        <script type="text/javascript" src="{{ pathto('_static/switchers.js', 1) }}"></script>{% endif %}
+diff --git a/Lib/idlelib/help.html b/Lib/idlelib/help.html
+index 80c87f6..29ea7eb 100644
 --- a/Lib/idlelib/help.html
 +++ b/Lib/idlelib/help.html
 @@ -14,7 +14,7 @@

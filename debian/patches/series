@@ -1,11 +1,9 @@
-#git-updates.diff
 deb-setup.diff
 deb-locations.diff
 distutils-install-layout.diff
 locale-module.diff
 distutils-link.diff
 distutils-sysconfig.diff
-#sysconfig-debian-schemes.diff
 tkinter-import.diff
 gdbm-import.diff
 link-opt.diff
@@ -16,8 +14,6 @@ langpack-gettext.diff
 disable-sem-check.diff
 lib-argparse.diff
 ctypes-arm.diff
-# link-timemodule.diff
-#lto-link-flags.diff
 multiarch.diff
 lib2to3-no-pickled-grammar.diff
 ext-no-libpython-link.diff

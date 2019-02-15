@@ -1,3 +1,29 @@
+From: Ubuntu Core Developers <ubuntu-devel-discuss@lists.ubuntu.com>
+Date: Thu, 14 Feb 2019 18:59:14 -0800
+Subject: multiarch
+
+---
+ Lib/distutils/sysconfig.py | 3 +++
+ Lib/sysconfig.py           | 6 ++++++
+ Makefile.pre.in            | 3 ++-
+ 3 files changed, 11 insertions(+), 1 deletion(-)
+
+diff --git a/Lib/distutils/sysconfig.py b/Lib/distutils/sysconfig.py
+index 98bab11..daa26e0 100644
+--- a/Lib/distutils/sysconfig.py
++++ b/Lib/distutils/sysconfig.py
+@@ -97,6 +97,9 @@ def get_python_inc(plat_specific=0, prefix=None):
+                 incdir = os.path.join(get_config_var('srcdir'), 'Include')
+                 return os.path.normpath(incdir)
+         python_dir = 'python' + get_python_version() + build_flags
++        if not python_build and plat_specific:
++            import sysconfig
++            return sysconfig.get_path('platinclude')
+         return os.path.join(prefix, "include", python_dir)
+     elif os.name == "nt":
+         return os.path.join(prefix, "include")
+diff --git a/Lib/sysconfig.py b/Lib/sysconfig.py
+index e0f9c18..6397a29 100644
 --- a/Lib/sysconfig.py
 +++ b/Lib/sysconfig.py
 @@ -551,6 +551,12 @@ def get_config_vars(*args):
@@ -13,21 +39,11 @@
          # Always convert srcdir to an absolute path
          srcdir = _CONFIG_VARS.get('srcdir', _PROJECT_BASE)
          if os.name == 'posix':
---- a/Lib/distutils/sysconfig.py
-+++ b/Lib/distutils/sysconfig.py
-@@ -97,6 +97,9 @@ def get_python_inc(plat_specific=0, pref
-                 incdir = os.path.join(get_config_var('srcdir'), 'Include')
-                 return os.path.normpath(incdir)
-         python_dir = 'python' + get_python_version() + build_flags
-+        if not python_build and plat_specific:
-+            import sysconfig
-+            return sysconfig.get_path('platinclude')
-         return os.path.join(prefix, "include", python_dir)
-     elif os.name == "nt":
-         return os.path.join(prefix, "include")
+diff --git a/Makefile.pre.in b/Makefile.pre.in
+index 0a5b235..93c1112 100644
 --- a/Makefile.pre.in
 +++ b/Makefile.pre.in
-@@ -795,6 +795,7 @@ Modules/signalmodule.o: $(srcdir)/Module
+@@ -795,6 +795,7 @@ Modules/signalmodule.o: $(srcdir)/Modules/signalmodule.c $(srcdir)/Modules/posix
  
  Python/dynload_shlib.o: $(srcdir)/Python/dynload_shlib.c Makefile
  	$(CC) -c $(PY_CORE_CFLAGS) \
