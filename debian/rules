@@ -144,11 +144,6 @@ endif
 
 CC=$(DEB_HOST_GNU_TYPE)-gcc
 CXX=$(DEB_HOST_GNU_TYPE)-g++
-ifneq (,$(filter $(distrelease),sid buster bionic cosmic))
-  CC=$(DEB_HOST_GNU_TYPE)-gcc-8
-  CXX=$(DEB_HOST_GNU_TYPE)-g++-8
-  bd_gcc = g++-8,
-endif
 
 AR=$(DEB_HOST_GNU_TYPE)-ar
 RANLIB=$(DEB_HOST_GNU_TYPE)-ranlib

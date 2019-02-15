@@ -16,7 +16,7 @@ Build-Depends: debhelper (>= 9), @bd_dpkgdev@
   libgpm2 [!hurd-i386 !kfreebsd-i386 !kfreebsd-amd64],
   mime-support, netbase, bzip2, time, python3@bd_qual@,
   net-tools, xvfb, xauth
-Build-Depends-Indep: python3-sphinx, python3-docs-theme, texinfo
+Build-Depends-Indep: python3-sphinx, texinfo
 Standards-Version: 4.3.0
 Vcs-Browser: https://salsa.debian.org/cpython-team/python3
 Vcs-Git: https://salsa.debian.org/cpython-team/python3.git

@@ -31,3 +31,4 @@ doc-build-texinfo.diff
 build-math-object.diff
 argparse-no-shutil.diff
 0033-older-sphinx.patch
+0034-disable-docs-theme.patch

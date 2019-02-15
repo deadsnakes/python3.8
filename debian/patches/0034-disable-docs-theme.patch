@@ -1,0 +1,32 @@
+From: Anthony Sottile <asottile@umich.edu>
+Date: Fri, 15 Feb 2019 13:47:26 -0800
+Subject: disable docs theme
+
+---
+ Doc/conf.py | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
+
+diff --git a/Doc/conf.py b/Doc/conf.py
+index 8396015..98ec175 100644
+--- a/Doc/conf.py
++++ b/Doc/conf.py
+@@ -60,13 +60,13 @@ master_doc = 'contents'
+ # -----------------------
+ 
+ # Use our custom theme.
+-html_theme = 'python_docs_theme'
++#html_theme = 'python_docs_theme'
+ html_theme_path = ['tools']
+-html_theme_options = {
+-    'collapsiblesidebar': True,
+-    'issues_url': 'https://docs.python.org/3/bugs.html',
+-    'root_include_title': False   # We use the version switcher instead.
+-}
++#html_theme_options = {
++#    'collapsiblesidebar': True,
++#    'issues_url': 'https://docs.python.org/3/bugs.html',
++#    'root_include_title': False   # We use the version switcher instead.
++#}
+ 
+ # Short title used e.g. for <title> HTML tags.
+ html_short_title = '%s Documentation' % release
