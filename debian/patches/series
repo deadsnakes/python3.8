@@ -21,8 +21,6 @@ test-no-random-order.diff
 multiarch-extname.diff
 tempfile-minimal.diff
 disable-some-tests.diff
-ensurepip-wheels.diff
-ensurepip-disabled.diff
 mangle-fstack-protector.diff
 reproducible-buildinfo.diff
 pydoc-use-pager.diff

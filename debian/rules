@@ -831,11 +831,6 @@ endif
 	rm -f $(d)/$(scriptdir)/lib2to3/*.pickle
 	rm -f $(d)/usr/share/man/man1/python3.1
 
-	if [ -d $(d)/$(scriptdir)/ensurepip/_bundled ]; then \
-	  echo "don't ship the prebuilt ensurepip/_bundled wheels."; \
-	  rm -rf $(d)/$(scriptdir)/ensurepip/_bundled; \
-	fi
-
 	: # cannot build it, zlib maintainer won't provide a mingw build
 	find $(d) -name 'wininst*.exe' | xargs -r rm -f
 
