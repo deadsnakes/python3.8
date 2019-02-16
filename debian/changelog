@@ -1,3 +1,10 @@
+python3.8 (3.8.0~a1-1+xenial1) xenial; urgency=medium
+
+  * Rebuild for xenial.
+  * Build with even older sphinx.
+
+ -- Anthony Sottile <asottile@umich.edu>  Sat, 16 Feb 2019 09:28:47 -0800
+
 python3.8 (3.8.0~a1-1+bionic1) bionic; urgency=medium
 
   * Remove apport support.
