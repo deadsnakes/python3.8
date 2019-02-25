@@ -157,10 +157,10 @@ index 0ddc736..0a71b61 100644
          self.outputs = [self.target]
  
 diff --git a/Lib/distutils/sysconfig.py b/Lib/distutils/sysconfig.py
-index b433fc8..5a05a16 100644
+index 40af493..2915549 100644
 --- a/Lib/distutils/sysconfig.py
 +++ b/Lib/distutils/sysconfig.py
-@@ -120,6 +120,7 @@ def get_python_lib(plat_specific=0, standard_lib=0, prefix=None):
+@@ -133,6 +133,7 @@ def get_python_lib(plat_specific=0, standard_lib=0, prefix=None):
      If 'prefix' is supplied, use it instead of sys.base_prefix or
      sys.base_exec_prefix -- i.e., ignore 'plat_specific'.
      """
@@ -168,7 +168,7 @@ index b433fc8..5a05a16 100644
      if prefix is None:
          if standard_lib:
              prefix = plat_specific and BASE_EXEC_PREFIX or BASE_PREFIX
-@@ -131,6 +132,12 @@ def get_python_lib(plat_specific=0, standard_lib=0, prefix=None):
+@@ -144,6 +145,12 @@ def get_python_lib(plat_specific=0, standard_lib=0, prefix=None):
                                   "lib", "python" + get_python_version())
          if standard_lib:
              return libpython
@@ -229,7 +229,7 @@ index d97c634..f61c0cc 100644
              object.__name__ not in ('xml.etree', 'test.pydoc_mod')):
              if docloc.startswith(("http://", "https://")):
 diff --git a/Lib/site.py b/Lib/site.py
-index ffd132b..d8445a7 100644
+index ad11463..4829f88 100644
 --- a/Lib/site.py
 +++ b/Lib/site.py
 @@ -7,12 +7,18 @@

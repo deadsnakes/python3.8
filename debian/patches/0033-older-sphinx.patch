@@ -3,22 +3,20 @@ Date: Fri, 15 Feb 2019 13:29:22 -0800
 Subject: older sphinx
 
 ---
- Doc/conf.py                        |  4 +-
+ Doc/conf.py                        |  2 +-
  Doc/library/turtle.rst             | 82 --------------------------------------
  Doc/tools/extensions/escape4chm.py |  2 +-
- 3 files changed, 3 insertions(+), 85 deletions(-)
+ 3 files changed, 2 insertions(+), 84 deletions(-)
 
 diff --git a/Doc/conf.py b/Doc/conf.py
-index a9dfe82..8396015 100644
+index afe6627..f58a3ea 100644
 --- a/Doc/conf.py
 +++ b/Doc/conf.py
-@@ -41,8 +41,8 @@ today_fmt = '%B %d, %Y'
- # By default, highlight as Python 3.
+@@ -42,7 +42,7 @@ today_fmt = '%B %d, %Y'
  highlight_language = 'python3'
  
--# Require Sphinx 1.7 for build.
--needs_sphinx = '1.7'
-+# Require Sphinx 1.6 for build.
+ # Minimum version of sphinx required
+-needs_sphinx = '1.8'
 +needs_sphinx = '1.6'
  
  # Ignore any .rst files in the venv/ directory.

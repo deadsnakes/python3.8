@@ -7,7 +7,7 @@ Subject: build-math-object
  1 file changed, 4 insertions(+), 2 deletions(-)
 
 diff --git a/Makefile.pre.in b/Makefile.pre.in
-index e4cc32b..aa5923e 100644
+index 9791dcb..1d81171 100644
 --- a/Makefile.pre.in
 +++ b/Makefile.pre.in
 @@ -22,7 +22,8 @@
