@@ -31,9 +31,7 @@ Depends: @PVER@-minimal (= ${binary:Version}),
  mime-support,
  ${shlibs:Depends}, ${misc:Depends}
 Suggests: @PVER@-venv, @PVER@-doc, binutils
-Breaks: python3-all (<< 3.6.5~rc1-1),
-  python3-dev (<< 3.6.5~rc1-1),
-  python3-venv (<< 3.6.5-2), ${python38:Breaks}
+Breaks: ${python38:Breaks}
 Description: Interactive high-level object-oriented language (version @VER@)
  Python is a high-level, interactive, object-oriented language. Its @VER@ version
  includes an extensive class library with lots of goodies for

@@ -31,9 +31,7 @@ Depends: python3.8-minimal (= ${binary:Version}),
  mime-support,
  ${shlibs:Depends}, ${misc:Depends}
 Suggests: python3.8-venv, python3.8-doc, binutils
-Breaks: python3-all (<< 3.6.5~rc1-1),
-  python3-dev (<< 3.6.5~rc1-1),
-  python3-venv (<< 3.6.5-2), ${python38:Breaks}
+Breaks: ${python38:Breaks}
 Description: Interactive high-level object-oriented language (version 3.8)
  Python is a high-level, interactive, object-oriented language. Its 3.8 version
  includes an extensive class library with lots of goodies for
