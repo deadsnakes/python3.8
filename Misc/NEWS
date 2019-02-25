@@ -2,6 +2,219 @@
 Python News
 +++++++++++
 
+What's New in Python 3.8.0 alpha 2?
+===================================
+
+*Release date: 2019-02-25*
+
+Core and Builtins
+-----------------
+
+- bpo-36052: Raise a :exc:`SyntaxError` when assigning a value to
+  `__debug__` with the Assignment Operator. Contributed by Stéphane Wirtel
+  and Pablo Galindo.
+
+- bpo-36012: Doubled the speed of class variable writes.  When a non-dunder
+  attribute was updated, there was an unnecessary call to update slots.
+
+- bpo-35942: The error message emmited when returning invalid types from
+  ``__fspath__`` in interfaces that allow passing :class:`~os.PathLike`
+  objects has been improved and now it does explain the origin of the error.
+
+- bpo-36016: ``gc.get_objects`` can now receive an optional parameter
+  indicating a generation to get objects from. Patch by Pablo Galindo.
+
+- bpo-1054041: When the main interpreter exits due to an uncaught
+  KeyboardInterrupt, the process now exits in the appropriate manner for its
+  parent process to detect that a SIGINT or ^C terminated the process.  This
+  allows shells and batch scripts to understand that the user has asked them
+  to stop.
+
+- bpo-35992: Fix ``__class_getitem__()`` not being called on a class with a
+  custom non-subscriptable metaclass.
+
+- bpo-35993: Fix a crash on fork when using subinterpreters. Contributed by
+  Stéphane Wirtel
+
+- bpo-35991: Fix a potential double free in Modules/_randommodule.c.
+
+- bpo-35961: Fix a crash in slice_richcompare(): use strong references
+  rather than stolen references for the two temporary internal tuples.
+
+- bpo-35911: Enable the creation of cell objects by adding a
+  ``cell.__new__`` method, and expose the type ``cell`` in ``Lib/types.py``
+  under the name CellType. Patch by Pierre Glaser.
+
+- bpo-12822: Use monotonic clock for ``pthread_cond_timedwait`` when
+  ``pthread_condattr_setclock`` and ``CLOCK_MONOTONIC`` are available.
+
+- bpo-15248: The compiler emits now syntax warnings in the case when a comma
+  is likely missed before tuple or list.
+
+- bpo-35886: The implementation of PyInterpreterState has been moved into
+  the internal header files (guarded by Py_BUILD_CORE).
+
+- bpo-31506: Clarify the errors reported when ``object.__new__`` and
+  ``object.__init__`` receive more than one argument. Contributed by Sanyam
+  Khurana.
+
+- bpo-35724: Signal-handling is now guaranteed to happen relative to the
+  main interpreter.
+
+- bpo-33608: We added a new internal _Py_AddPendingCall() that operates
+  relative to the provided interpreter.  This allows us to use the existing
+  implementation to ask another interpreter to do work that cannot be done
+  in the current interpreter, like decref an object the other interpreter
+  owns.  The existing Py_AddPendingCall() only operates relative to the main
+  interpreter.
+
+- bpo-33989: Fix a possible crash in :meth:`list.sort` when sorting objects
+  with ``ob_type->tp_richcompare == NULL``.  Patch by Zackery Spytz.
+
+Library
+-------
+
+- bpo-35512: :func:`unittest.mock.patch.dict` used as a decorator with
+  string target resolves the target during function call instead of during
+  decorator construction. Patch by Karthikeyan Singaravelan.
+
+- bpo-36018: Add statistics.NormalDist, a tool for creating and manipulating
+  normal distributions of random variable.  Features a composite class that
+  treats the mean and standard deviation of measurement data as single
+  entity.
+
+- bpo-35904: Added statistics.fmean() as a faster, floating point variant of
+  the existing mean() function.
+
+- bpo-35918: Removed broken ``has_key`` method from
+  multiprocessing.managers.SyncManager.dict. Contributed by Rémi Lapeyre.
+
+- bpo-18283: Add support for bytes to :func:`shutil.which`.
+
+- bpo-35960: Fix :func:`dataclasses.field` throwing away empty mapping
+  objects passed as metadata.
+
+- bpo-35500: Write expected and actual call parameters on separate lines in
+  :meth:`unittest.mock.Mock.assert_called_with` assertion errors.
+  Contributed by Susan Su.
+
+- bpo-35931: The :mod:`pdb` ``debug`` command now gracefully handles syntax
+  errors.
+
+- bpo-24209: In http.server script, rely on getaddrinfo to bind to preferred
+  address based on the bind parameter. Now default bind or binding to a name
+  may bind to IPv6 or dual-stack, depending on the environment.
+
+- bpo-35321: Set ``__spec__.origin`` of  ``_frozen_importlib`` to frozen so
+  that it matches the behavior of ``_frozen_importlib_external``.  Patch by
+  Nina Zakharenko.
+
+- bpo-35378: Fix a reference issue inside :class:`multiprocessing.Pool` that
+  caused the pool to remain alive if it was deleted without being closed or
+  terminated explicitly. A new strong reference is added to the pool
+  iterators to link the lifetime of the pool to the lifetime of its
+  iterators so the pool does not get destroyed if a pool iterator is still
+  alive.
+
+- bpo-34294: re module, fix wrong capturing groups in rare cases.
+  :func:`re.search`, :func:`re.findall`, :func:`re.sub` and other functions
+  that scan through string looking for a match, should reset capturing
+  groups between two match attempts. Patch by Ma Lin.
+
+- bpo-35615: :mod:`weakref`: Fix a RuntimeError when copying a
+  WeakKeyDictionary or a WeakValueDictionary, due to some keys or values
+  disappearing while iterating.
+
+- bpo-35606: Implement :func:`math.prod` as analogous function to
+  :func:`sum` that returns the product of a 'start' value (default: 1) times
+  an iterable of numbers. Patch by Pablo Galindo.
+
+- bpo-32417: Performing arithmetic between :class:`datetime.datetime`
+  subclasses and :class:`datetime.timedelta` now returns an object of the
+  same type as the :class:`datetime.datetime` subclass. As a result,
+  :meth:`datetime.datetime.astimezone` and alternate constructors like
+  :meth:`datetime.datetime.now` and :meth:`datetime.fromtimestamp` called
+  with a ``tz`` argument now *also* retain their subclass.
+
+- bpo-35153: Add *headers* optional keyword-only parameter to
+  :class:`xmlrpc.client.ServerProxy`, :class:`xmlrpc.client.Transport` and
+  :class:`xmlrpc.client.SafeTransport`.  Patch by Cédric Krier.
+
+- bpo-34572: Fix C implementation of pickle.loads to use importlib's locking
+  mechanisms, and thereby avoid using partially-loaded modules. Patch by Tim
+  Burgess.
+
+Documentation
+-------------
+
+- bpo-36083: Fix formatting of --check-hash-based-pycs options in the
+  manpage Synopsis.
+
+- bpo-36007: Bump minimum sphinx version to 1.8.  Patch by Anthony Sottile.
+
+- bpo-22062: Update documentation and docstrings for pathlib. Original patch
+  by Mike Short.
+
+Tests
+-----
+
+- bpo-27313: Avoid test_ttk_guionly ComboboxTest failure with macOS Cocoa
+  Tk.
+
+- bpo-36019: Add test.support.TEST_HTTP_URL and replace references of
+  http://www.example.com by this new constant. Contributed by Stéphane
+  Wirtel.
+
+- bpo-36037: Fix test_ssl for strict OpenSSL configuration like RHEL8 strict
+  crypto policy. Use older TLS version for minimum TLS version of the server
+  SSL context if needed, to test TLS version older than default minimum TLS
+  version.
+
+- bpo-35798: Added :func:`test.support.check_syntax_warning`.
+
+- bpo-35505: Make test_imap4_host_default_value independent on whether the
+  local IMAP server is running.
+
+- bpo-35917: multiprocessing: provide unit tests for SyncManager and
+  SharedMemoryManager classes + all the shareable types which are supposed
+  to be supported by them.  (patch by Giampaolo Rodola)
+
+- bpo-35704: Skip ``test_shutil.test_unpack_archive_xztar`` to prevent a
+  MemoryError on 32-bit AIX when MAXDATA setting is less than 0x20000000.
+
+  Patch by Michael Felt (aixtools)
+
+- bpo-34720: Assert m_state != NULL to mimic GC traversal functions that do
+  not correctly handle module creation when the module state has not been
+  created.
+
+Windows
+-------
+
+- bpo-35976: Added ARM build support to Windows build files in PCBuild.
+
+- bpo-35692: ``pathlib`` no longer raises when checking file and directory
+  existence on drives that are not ready
+
+- bpo-35872: Uses the base Python executable when invoking venv in a virtual
+  environment
+
+- bpo-35873: Prevents venv paths being inherited by child processes
+
+- bpo-35299: Fix sysconfig detection of the source directory and distutils
+  handling of pyconfig.h during PGO profiling
+
+IDLE
+----
+
+- bpo-24310: IDLE -- Document settings dialog font tab sample.
+
+- bpo-35833: Revise IDLE doc for control codes sent to Shell. Add a code
+  example block.
+
+- bpo-35689: Add docstrings and unittests for colorizer.py.
+
+
 What's New in Python 3.8.0 alpha 1?
 ===================================
 
@@ -13,6 +226,8 @@ Security
 - bpo-35746: [CVE-2019-5010] Fix a NULL pointer deref in ssl module. The
   cert parser did not handle CRL distribution points with empty DP or URI
   correctly. A malicious or buggy certificate can result into segfault.
+  Vulnerability (TALOS-2018-0758) reported by Colin Read and Nicolas Edet of
+  Cisco.
 
 - bpo-34812: The :option:`-I` command line option (run Python in isolated
   mode) is now also copied by the :mod:`multiprocessing` and
