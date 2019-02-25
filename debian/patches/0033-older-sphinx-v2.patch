@@ -4,10 +4,10 @@ Subject: older sphinx v2
 
 ---
  Doc/c-api/typeobj.rst              | 2 --
- Doc/conf.py                        | 4 ++--
+ Doc/conf.py                        | 2 +-
  Doc/tools/extensions/pyspecific.py | 3 +--
  Doc/tools/extensions/suspicious.py | 3 +--
- 4 files changed, 4 insertions(+), 8 deletions(-)
+ 4 files changed, 3 insertions(+), 7 deletions(-)
 
 diff --git a/Doc/c-api/typeobj.rst b/Doc/c-api/typeobj.rst
 index 5615f59..441d8b8 100644
@@ -30,16 +30,14 @@ index 5615f59..441d8b8 100644
     +---------------------------------------------------------+-----------------------------------+--------------+
     | Slot                                                    | :ref:`Type <slot-typedefs-table>` | special      |
 diff --git a/Doc/conf.py b/Doc/conf.py
-index 98ec175..1828497 100644
+index e0a873d..93df22d 100644
 --- a/Doc/conf.py
 +++ b/Doc/conf.py
-@@ -41,8 +41,8 @@ today_fmt = '%B %d, %Y'
- # By default, highlight as Python 3.
+@@ -42,7 +42,7 @@ today_fmt = '%B %d, %Y'
  highlight_language = 'python3'
  
--# Require Sphinx 1.6 for build.
+ # Minimum version of sphinx required
 -needs_sphinx = '1.6'
-+# Require Sphinx 1.3 for build.
 +needs_sphinx = '1.3'
  
  # Ignore any .rst files in the venv/ directory.
