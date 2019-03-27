@@ -1,3 +1,9 @@
+python3.8 (3.8.0~a3-1+bionic1) bionic; urgency=medium
+
+  * Python 3.8.0 alpha 3 release.
+
+ -- Anthony Sottile <asottile@umich.edu>  Tue, 26 Mar 2019 20:46:44 -0700
+
 python3.8 (3.8.0~a2-1+bionic1) bionic; urgency=medium
 
   * Python 3.8.0 alpha 2 release.
