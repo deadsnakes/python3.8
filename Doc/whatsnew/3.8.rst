@@ -157,6 +157,10 @@ Improved Modules
   to cast the result to the desired type: ``OrderedDict(nt._asdict())``.
   (Contributed by Raymond Hettinger in :issue:`35864`.)
 
+* The :mod:`unicodedata` module has been upgraded to use the `Unicode 12.0.0
+  <http://blog.unicode.org/2019/03/announcing-unicode-standard-version-120.html>`_
+  release.
+
 
 asyncio
 -------
@@ -232,6 +236,10 @@ now return ``False`` instead of raising :exc:`ValueError` or its subclasses
 characters or bytes unrepresentable at the OS level.
 (Contributed by Serhiy Storchaka in :issue:`33721`.)
 
+:func:`~os.path.expanduser` on Windows now prefers the :envvar:`USERPROFILE`
+environment variable and does not use :envvar:`HOME`, which is not normally set
+for regular user accounts.
+
 
 ncurses
 -------
@@ -278,6 +286,9 @@ Added :func:`statistics.fmean` as a faster, floating point variant of
 :func:`statistics.mean()`.  (Contributed by Raymond Hettinger and
 Steven D'Aprano in :issue:`35904`.)
 
+Added :func:`statistics.multimode` that returns a list of the most
+common values. (Contributed by Raymond Hettinger in :issue:`35892`.)
+
 Added :class:`statistics.NormalDist`, a tool for creating
 and manipulating normal distributions of a random variable.
 (Contributed by Raymond Hettinger in :issue:`36018`.)
@@ -303,6 +314,16 @@ and manipulating normal distributions of a random variable.
     NormalDist(mu=50.0, sigma=12.294144947901014)
     >>> temperature_feb.samples(3)        # Generate random samples
     [7.672102882379219, 12.000027119750287, 4.647488369766392]
+
+
+tarfile
+-------
+
+The :mod:`tarfile` module now defaults to the modern pax (POSIX.1-2001)
+format for new archives, instead of the previous GNU-specific one.
+This improves cross-platform portability with a consistent encoding (UTF-8)
+in a standardized and extensible format, and offers several other benefits.
+(Contributed by C.A.M. Gerlach in :issue:`36268`.)
 
 
 tokenize
@@ -431,6 +452,11 @@ Optimizations
   (Contributed by Stefan Behnel, Pablo Galindo Salgado, Raymond Hettinger,
   Neil Schemenauer, and Serhiy Storchaka in :issue:`36012`.)
 
+* Reduced an overhead of converting arguments passed to many builtin functions
+  and methods.  This sped up calling some simple builtin functions and
+  methods up to 20--50%.  (Contributed by Serhiy Storchaka in :issue:`23867`,
+  :issue:`35582` and :issue:`36127`.)
+
 
 Build and C API Changes
 =======================
@@ -458,6 +484,17 @@ Build and C API Changes
 
   (Contributed by Antoine Pitrou in :issue:`32430`.)
 
+* Functions that convert Python number to C integer like
+  :c:func:`PyLong_AsLong` and argument parsing functions like
+  :c:func:`PyArg_ParseTuple` with integer converting format units like ``'i'``
+  will now use the :meth:`~object.__index__` special method instead of
+  :meth:`~object.__int__`, if available.  The deprecation warning will be
+  emitted for objects with the ``__int__()`` method but without the
+  ``__index__()`` method (like :class:`~decimal.Decimal` and
+  :class:`~fractions.Fraction`).  :c:func:`PyNumber_Check` will now return
+  ``1`` for objects implementing ``__index__()``.
+  (Contributed by Serhiy Storchaka in :issue:`36048`.)
+
 
 Deprecated
 ==========
@@ -483,6 +520,10 @@ Deprecated
 
   (Contributed by Berker Peksag in :issue:`9372`.)
 
+* The :class:`typing.NamedTuple` class has deprecated the ``_field_types``
+  attribute in favor of the ``__annotations__`` attribute which has the same
+  information.  (Contributed by Raymond Hettinger in :issue:`36320`.)
+
 * :mod:`ast` classes ``Num``, ``Str``, ``Bytes``, ``NameConstant`` and
   ``Ellipsis`` are considered deprecated and will be removed in future Python
   versions. :class:`~ast.Constant` should be used instead.
@@ -507,6 +548,15 @@ Deprecated
 
 * The :meth:`~threading.Thread.isAlive()` method of :class:`threading.Thread` has been deprecated.
   (Contributed by Dong-hee Na in :issue:`35283`.)
+
+* Many builtin and extension functions that take integer arguments will
+  now emit a deprecation warning for :class:`~decimal.Decimal`\ s,
+  :class:`~fractions.Fraction`\ s and any other objects that can be converted
+  to integers only with a loss (e.g. that have the :meth:`~object.__int__`
+  method but do not have the :meth:`~object.__index__` method).  In future
+  version they will be errors.
+  (Contributed by Serhiy Storchaka in :issue:`36048`.)
+
 
 API and Feature Removals
 ========================
@@ -536,6 +586,9 @@ The following features and APIs have been removed from Python 3.8:
 
 * Removed the ``doctype()`` method of :class:`~xml.etree.ElementTree.XMLParser`.
   (Contributed by Serhiy Storchaka in :issue:`29209`.)
+
+* "unicode_internal" codec is removed.
+  (Contributed by Inada Naoki in :issue:`36297`.)
 
 
 Porting to Python 3.8
@@ -567,11 +620,21 @@ Changes in the Python API
 * The function :func:`platform.popen` has been removed, it was deprecated since
   Python 3.3: use :func:`os.popen` instead.
 
+* The :func:`statistics.mode` function no longer raises an exception
+  when given multimodal data.  Instead, it returns the first mode
+  encountered in the input data.  (Contributed by Raymond Hettinger
+  in :issue:`35892`.)
+
 * The :meth:`~tkinter.ttk.Treeview.selection` method of the
   :class:`tkinter.ttk.Treeview` class no longer takes arguments.  Using it with
   arguments for changing the selection was deprecated in Python 3.6.  Use
   specialized methods like :meth:`~tkinter.ttk.Treeview.selection_set` for
   changing the selection.  (Contributed by Serhiy Storchaka in :issue:`31508`.)
+
+* The :meth:`writexml`, :meth:`toxml` and :meth:`toprettyxml` methods of the
+  :mod:`xml.dom.minidom` module, and :mod:`xml.etree` now preserve the attribute
+  order specified by the user.
+  (Contributed by Diego Rojas and Raymond Hettinger in :issue:`34160`.)
 
 * A :mod:`dbm.dumb` database opened with flags ``'r'`` is now read-only.
   :func:`dbm.dumb.open` with flags ``'r'`` and ``'w'`` no longer creates
@@ -639,6 +702,20 @@ Changes in the Python API
   :mod:`dbm.gnu` or :mod:`dbm.ndbm`) raises :attr:`error` (:exc:`dbm.dumb.error`,
   :exc:`dbm.gnu.error` or :exc:`dbm.ndbm.error`) instead of :exc:`KeyError`.
   (Contributed by Xiang Zhang in :issue:`33106`.)
+
+* :func:`~os.path.expanduser` on Windows now prefers the :envvar:`USERPROFILE`
+  environment variable and does not use :envvar:`HOME`, which is not normally
+  set for regular user accounts.
+
+
+Changes in the C API
+--------------------
+
+* Use of ``#`` variants of formats in parsing or building value (e.g.
+  :c:func:`PyArg_ParseTuple`, :c:func:`Py_BuildValue`, :c:func:`PyObject_CallFunction`,
+  etc.) without ``PY_SSIZE_T_CLEAN`` defined raises ``DeprecationWarning`` now.
+  It will be removed in 3.10 or 4.0.  Read :ref:`arg-parsing` for detail.
+  (Contributed by Inada Naoki in :issue:`36381`.)
 
 
 CPython bytecode changes

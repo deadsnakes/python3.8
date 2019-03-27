@@ -321,6 +321,14 @@ class _CallList(list):
 
 
 def _check_and_set_parent(parent, value, name, new_name):
+    # function passed to create_autospec will have mock
+    # attribute attached to which parent must be set
+    if isinstance(value, FunctionTypes):
+        try:
+            value = value.mock
+        except AttributeError:
+            pass
+
     if not _is_instance_mock(value):
         return False
     if ((value._mock_name or value._mock_new_name) or
@@ -2126,6 +2134,22 @@ class _Call(tuple):
 
     def index(self, *args, **kwargs):
         return self.__getattr__('index')(*args, **kwargs)
+
+    def _get_call_arguments(self):
+        if len(self) == 2:
+            args, kwargs = self
+        else:
+            name, args, kwargs = self
+
+        return args, kwargs
+
+    @property
+    def args(self):
+        return self._get_call_arguments()[0]
+
+    @property
+    def kwargs(self):
+        return self._get_call_arguments()[1]
 
     def __repr__(self):
         if not self._mock_from_kall:
