@@ -9,7 +9,7 @@ Last-Update: 2017-11-27
  1 file changed, 6 insertions(+)
 
 diff --git a/Doc/Makefile b/Doc/Makefile
-index 4b85e9e..b7fef1b 100644
+index 53877e6..96b222b 100644
 --- a/Doc/Makefile
 +++ b/Doc/Makefile
 @@ -28,6 +28,7 @@ help:

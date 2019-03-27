@@ -9,7 +9,7 @@ Subject: distutils-link
  1 file changed, 11 insertions(+)
 
 diff --git a/Lib/distutils/unixccompiler.py b/Lib/distutils/unixccompiler.py
-index ab4d4de..a0438fe 100644
+index d10a78d..aa60e0b 100644
 --- a/Lib/distutils/unixccompiler.py
 +++ b/Lib/distutils/unixccompiler.py
 @@ -155,6 +155,17 @@ class UnixCCompiler(CCompiler):

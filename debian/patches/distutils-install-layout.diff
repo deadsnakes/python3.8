@@ -157,7 +157,7 @@ index 0ddc736..0a71b61 100644
          self.outputs = [self.target]
  
 diff --git a/Lib/distutils/sysconfig.py b/Lib/distutils/sysconfig.py
-index 40af493..2915549 100644
+index a349467..06a2284 100644
 --- a/Lib/distutils/sysconfig.py
 +++ b/Lib/distutils/sysconfig.py
 @@ -133,6 +133,7 @@ def get_python_lib(plat_specific=0, standard_lib=0, prefix=None):
@@ -217,10 +217,10 @@ index 287ab19..00e3f94 100644
  
      def test_debug_mode(self):
 diff --git a/Lib/pydoc.py b/Lib/pydoc.py
-index d97c634..f61c0cc 100644
+index 6a9a97a..d70ce1a 100644
 --- a/Lib/pydoc.py
 +++ b/Lib/pydoc.py
-@@ -412,6 +412,7 @@ class Doc:
+@@ -414,6 +414,7 @@ class Doc:
                                   'marshal', 'posix', 'signal', 'sys',
                                   '_thread', 'zipimport') or
               (file.startswith(basedir) and
@@ -276,10 +276,10 @@ index ad11463..4829f88 100644
              sitepackages.append(prefix)
              sitepackages.append(os.path.join(prefix, "lib", "site-packages"))
 diff --git a/Lib/test/test_site.py b/Lib/test/test_site.py
-index 735651e..2a77162 100644
+index 8643da0..7805302 100644
 --- a/Lib/test/test_site.py
 +++ b/Lib/test/test_site.py
-@@ -265,10 +265,10 @@ class HelperFunctionsTests(unittest.TestCase):
+@@ -266,10 +266,10 @@ class HelperFunctionsTests(unittest.TestCase):
          dirs = site.getsitepackages()
          if os.sep == '/':
              # OS X, Linux, FreeBSD, etc
