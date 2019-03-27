@@ -11,7 +11,7 @@ Subject: mangle-fstack-protector
  1 file changed, 5 insertions(+)
 
 diff --git a/Lib/distutils/sysconfig.py b/Lib/distutils/sysconfig.py
-index 1a975ee..df296b1 100644
+index e712579..50bc5ba 100644
 --- a/Lib/distutils/sysconfig.py
 +++ b/Lib/distutils/sysconfig.py
 @@ -13,6 +13,7 @@ import _imp
