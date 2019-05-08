@@ -333,7 +333,7 @@ stamps/stamp-build-shared: stamps/stamp-configure-shared
 	: # build a static library with PIC objects
 	$(MAKE) $(NJOBS) -C $(buildd_shared) \
 		EXTRA_CFLAGS="$(EXTRA_OPT_CFLAGS)" \
-		LIBRARY=libpython$(VER)m-pic.a libpython$(VER)m-pic.a
+		LIBRARY=libpython$(VER)-pic.a libpython$(VER)-pic.a
 	touch stamps/stamp-build-shared
 
 stamps/stamp-build-debug: stamps/stamp-configure-debug
@@ -797,26 +797,26 @@ ifeq ($(with_interp),static)
 	$(MAKE) -C $(buildd_static) install DESTDIR=$(CURDIR)/$(d)
 	ls -l $(d)/$(scriptdir)/_sysconfigdata*
 	sed $(sysconfig_substflags) \
-		$(buildd_shared)/$(shell cat $(buildd_shared)/pybuilddir.txt)/_sysconfigdata_m_$(PLAT)_$(DEB_HOST_MULTIARCH).py \
-		> $(d)/$(scriptdir)/_sysconfigdata_m_$(PLAT)_$(DEB_HOST_MULTIARCH).py
+		$(buildd_shared)/$(shell cat $(buildd_shared)/pybuilddir.txt)/_sysconfigdata__$(PLAT)_$(DEB_HOST_MULTIARCH).py \
+		> $(d)/$(scriptdir)/_sysconfigdata__$(PLAT)_$(DEB_HOST_MULTIARCH).py
 else
 	$(MAKE) -C $(buildd_shared) install DESTDIR=$(CURDIR)/$(d)
 endif
-	mkdir -p $(d)/usr/include/$(DEB_HOST_MULTIARCH)/$(PVER)m
-	mv $(d)/usr/include/$(PVER)m/pyconfig.h \
-		$(d)/usr/include/$(DEB_HOST_MULTIARCH)/$(PVER)m/.
+	mkdir -p $(d)/usr/include/$(DEB_HOST_MULTIARCH)/$(PVER)
+	mv $(d)/usr/include/$(PVER)/pyconfig.h \
+		$(d)/usr/include/$(DEB_HOST_MULTIARCH)/$(PVER)/.
 	rm -f $(d)/$(scriptdir)/lib-dynload/*.py
 	ls -l $(d)/$(scriptdir)/_sysconfigdata*
 	sed -i $(sysconfig_substflags) \
-		$(d)/$(scriptdir)/_sysconfigdata_m_$(PLAT)_$(DEB_HOST_MULTIARCH).py
+		$(d)/$(scriptdir)/_sysconfigdata__$(PLAT)_$(DEB_HOST_MULTIARCH).py
 
 	-find $(d)/usr/lib/python$(VER) -name '*_failed*.so'
 	find $(d)/usr/lib/python$(VER) -name '*_failed*.so' | xargs -r rm -f
 
 	for i in $(d)/$(scriptdir)/lib-dynload/*.so; do \
 	  case "$$i" in *$(DEB_HOST_MULTIARCH)*) continue; esac; \
-	  b=$$(basename $$i .cpython-$(EXT_VER)m.so); \
-	  d=$${b}.cpython-$(EXT_VER)m-$(DEB_HOST_MULTIARCH).so; \
+	  b=$$(basename $$i .cpython-$(EXT_VER).so); \
+	  d=$${b}.cpython-$(EXT_VER)-$(DEB_HOST_MULTIARCH).so; \
 	  mv $$i $(d)/$(scriptdir)/lib-dynload/$$d; \
 	done
 
@@ -848,7 +848,6 @@ endif
 
 	mkdir -p $(d)/usr/share/man/man1
 	cp -p Misc/python.man $(d)/usr/share/man/man1/python$(VER).1
-	ln -sf python$(VER).1 $(d)/usr/share/man/man1/python$(VER)m.1
 	cp -p debian/pydoc.1 $(d)/usr/share/man/man1/pydoc$(VER).1
 
 	: # Symlinks to /usr/bin for some tools
@@ -862,22 +861,22 @@ endif
 
 	dh_installdirs -p$(p_lib) \
 		usr/lib/$(DEB_HOST_MULTIARCH) \
-		$(scriptdir)/config-$(VER)m-$(DEB_HOST_MULTIARCH) \
+		$(scriptdir)/config-$(VER)-$(DEB_HOST_MULTIARCH) \
 		usr/share/doc
 	: # install the shared library
-	cp -p $(buildd_shared)/libpython$(VER)m.so.1.0 \
+	cp -p $(buildd_shared)/libpython$(VER).so.1.0 \
 		$(d_lib)/usr/lib/$(DEB_HOST_MULTIARCH)/
 	dh_link -p$(p_lib) \
-	    /usr/lib/$(DEB_HOST_MULTIARCH)/libpython$(VER)m.so.1.0 \
-		/usr/lib/$(DEB_HOST_MULTIARCH)/libpython$(VER)m.so.1 \
-	    /usr/lib/$(DEB_HOST_MULTIARCH)/libpython$(VER)m.so.1 \
-		/$(scriptdir)/config-$(VER)m-$(DEB_HOST_MULTIARCH)/libpython$(VER)m.so \
-	    /usr/lib/$(DEB_HOST_MULTIARCH)/libpython$(VER)m.so.1 \
-		/$(scriptdir)/config-$(VER)m-$(DEB_HOST_MULTIARCH)/libpython$(VER).so
+	    /usr/lib/$(DEB_HOST_MULTIARCH)/libpython$(VER).so.1.0 \
+		/usr/lib/$(DEB_HOST_MULTIARCH)/libpython$(VER).so.1 \
+	    /usr/lib/$(DEB_HOST_MULTIARCH)/libpython$(VER).so.1 \
+		/$(scriptdir)/config-$(VER)-$(DEB_HOST_MULTIARCH)/libpython$(VER).so \
+	    /usr/lib/$(DEB_HOST_MULTIARCH)/libpython$(VER).so.1 \
+		/$(scriptdir)/config-$(VER)-$(DEB_HOST_MULTIARCH)/libpython$(VER).so
 
 	ln -sf $(p_base) $(d_lib)/usr/share/doc/$(p_lib)
 
-	ln -sf libpython$(VER)m.so.1 $(d)/usr/lib/$(DEB_HOST_MULTIARCH)/libpython$(VER)m.so
+	ln -sf libpython$(VER).so.1 $(d)/usr/lib/$(DEB_HOST_MULTIARCH)/libpython$(VER).so
 
 ifeq ($(with_interp),shared)
 	: # install the statically linked runtime
@@ -890,7 +889,7 @@ endif
 	: # install the Makefile of the shared python build
 	sed $(sysconfig_substflags) \
 		$(buildd_shared)/Makefile \
-		> $(d)/$(scriptdir)/config-$(VER)m-$(DEB_HOST_MULTIARCH)/Makefile
+		> $(d)/$(scriptdir)/config-$(VER)-$(DEB_HOST_MULTIARCH)/Makefile
 
 	: # Move the minimal libraries into $(p_lmin).
 	dh_installdirs -p$(p_lmin) \
@@ -908,7 +907,7 @@ endif
 		$(foreach i,$(MIN_PACKAGES),$(scriptdir)/$(i)) \
 		$(foreach i,$(MIN_ENCODINGS),$(scriptdir)/$(i)) \
 		$(scriptdir)/site.py \
-		$(scriptdir)/_sysconfigdata_m_$(PLAT)_$(DEB_HOST_MULTIARCH).py \
+		$(scriptdir)/_sysconfigdata__$(PLAT)_$(DEB_HOST_MULTIARCH).py \
 		`cd $(d); for i in $(MIN_EXTS); do \
 			test -e $(scriptdir)/lib-dynload/$$i.*.so \
 			  && echo $(scriptdir)/lib-dynload/$$i.*.so; \
@@ -921,9 +920,7 @@ endif
 		usr/share/man/man1
 	$(dh_compat2) dh_movefiles -p$(p_min) --sourcedir=$(d) \
 		usr/bin/python$(VER) \
-		usr/bin/python$(VER)m \
-		usr/share/man/man1/python$(VER).1 \
-		usr/share/man/man1/python$(VER)m.1
+		usr/share/man/man1/python$(VER).1
 
 	rv=0; \
 	for i in $(MIN_EXTS); do \
@@ -943,8 +940,7 @@ endif
 #	mv $(d)/usr/share/include/python$(VER)/* $(d)/usr/include/python$(VER)/.
 #	rm -rf $(d)/usr/share/include
 
-	cp $(d)/usr/bin/$(PVER)m-config $(d)/usr/bin/$(DEB_HOST_MULTIARCH)-$(PVER)m-config
-	ln -sf $(DEB_HOST_MULTIARCH)-$(PVER)m-config $(d)/usr/bin/$(DEB_HOST_MULTIARCH)-$(PVER)-config
+	cp $(d)/usr/bin/$(PVER)-config $(d)/usr/bin/$(DEB_HOST_MULTIARCH)-$(PVER)-config
 
 	dh_installdirs -p$(p_ldev) \
 		usr/bin \
@@ -954,29 +950,26 @@ endif
 
 	$(dh_compat2) dh_movefiles -p$(p_ldev) --sourcedir=$(d) \
 		usr/bin/$(DEB_HOST_MULTIARCH)-$(PVER)*-config \
-		usr/lib/python$(VER)/config-$(VER)m-$(DEB_HOST_MULTIARCH) \
+		usr/lib/python$(VER)/config-$(VER)-$(DEB_HOST_MULTIARCH) \
 		usr/include \
-		usr/lib/$(DEB_HOST_MULTIARCH)/libpython$(VER)m.{a,so} \
+		usr/lib/$(DEB_HOST_MULTIARCH)/libpython$(VER).{a,so} \
 		usr/lib/$(DEB_HOST_MULTIARCH)/pkgconfig/python-$(VER)*.pc \
 		usr/lib/python$(VER)/distutils/command/wininst-*.exe
 
-	sed 's/@subdir@/$(PVER)m/;s/@header@/pyconfig.h/' \
-		debian/multiarch.h.in > $(d_ldev)/usr/include/$(PVER)m/pyconfig.h
+	sed 's/@subdir@/$(PVER)/;s/@header@/pyconfig.h/' \
+		debian/multiarch.h.in > $(d_ldev)/usr/include/$(PVER)/pyconfig.h
 
 	sed -i \
-	    -e '/^Cflags:/s,$$, -I$${includedir}/$(DEB_HOST_MULTIARCH)/python$(VER)m,' \
+	    -e '/^Cflags:/s,$$, -I$${includedir}/$(DEB_HOST_MULTIARCH)/python$(VER),' \
 	    -e '/^libdir=/d;s/-L\$${libdir} *//' \
 		$(d_ldev)/usr/lib/$(DEB_HOST_MULTIARCH)/pkgconfig/python-$(VER).pc
 
 	dh_link -p$(p_ldev) \
-	    /usr/lib/$(PVER)/config-$(VER)m-$(DEB_HOST_MULTIARCH)/libpython$(VER)m.a \
-		/usr/lib/$(DEB_HOST_MULTIARCH)/libpython$(VER)m.a
+	    /usr/lib/$(PVER)/config-$(VER)-$(DEB_HOST_MULTIARCH)/libpython$(VER).a \
+		/usr/lib/$(DEB_HOST_MULTIARCH)/libpython$(VER).a
 
-	cp -p $(buildd_shared)/libpython$(VER)m-pic.a \
-		$(d_ldev)/usr/lib/python$(VER)/config-$(VER)m-$(DEB_HOST_MULTIARCH)/
-
-	: # symlinks for the "old" include directory name
-	ln -sf python$(VER)m $(d_ldev)/usr/include/python$(VER)
+	cp -p $(buildd_shared)/libpython$(VER)-pic.a \
+		$(d_ldev)/usr/lib/python$(VER)/config-$(VER)-$(DEB_HOST_MULTIARCH)/
 
 	dh_installdirs -p$(p_dev) \
 		usr/share/doc/python$(VER) \
@@ -993,21 +986,13 @@ endif
 
 	: # in $(p_ldev), prefix python-config with triplets
 	cp -p debian/python3-config.1 \
-		$(d_ldev)/usr/share/man/man1/$(DEB_HOST_MULTIARCH)-$(PVER)m-config.1
-	ln -sf $(DEB_HOST_MULTIARCH)-$(PVER)m-config.1.gz \
-		$(d_ldev)/usr/share/man/man1/$(DEB_HOST_MULTIARCH)-$(PVER)-config.1.gz
+		$(d_ldev)/usr/share/man/man1/$(DEB_HOST_MULTIARCH)-$(PVER)-config.1
 ifneq ($(DEB_HOST_MULTIARCH),$(DEB_HOST_GNU_TYPE))
-	ln -sf $(DEB_HOST_MULTIARCH)-$(PVER)m-config \
-		$(d_ldev)/usr/bin/$(DEB_HOST_GNU_TYPE)-$(PVER)m-config
 	ln -sf $(DEB_HOST_MULTIARCH)-$(PVER)-config \
 		$(d_ldev)/usr/bin/$(DEB_HOST_GNU_TYPE)-$(PVER)-config
 	ln -sf $(DEB_HOST_MULTIARCH)-$(PVER)-config.1.gz \
 		$(d_ldev)/usr/share/man/man1/$(DEB_HOST_GNU_TYPE)-$(PVER)-config.1.gz
-	ln -sf $(DEB_HOST_MULTIARCH)-$(PVER)-config.1.gz \
-		$(d_ldev)/usr/share/man/man1/$(DEB_HOST_GNU_TYPE)-$(PVER)m-config.1.gz
 endif
-	ln -sf $(DEB_HOST_MULTIARCH)-$(PVER)m-config $(d_dev)/usr/bin/$(PVER)m-config
-	ln -sf $(DEB_HOST_MULTIARCH)-$(PVER)m-config.1.gz $(d_dev)/usr/share/man/man1/$(PVER)m-config.1.gz
 
 	ln -sf $(DEB_HOST_MULTIARCH)-$(PVER)-config $(d_dev)/usr/bin/$(PVER)-config
 	ln -sf $(DEB_HOST_MULTIARCH)-$(PVER)-config.1.gz $(d_dev)/usr/share/man/man1/$(PVER)-config.1.gz
@@ -1182,19 +1167,19 @@ endif
 	: # install the Makefile of the shared python debug build
 	sed $(sysconfig_substflags) \
 		$(buildd_shdebug)/Makefile \
-		> $(d)-dbg/$(scriptdir)/config-$(VER)dm-$(DEB_HOST_MULTIARCH)/Makefile
+		> $(d)-dbg/$(scriptdir)/config-$(VER)d-$(DEB_HOST_MULTIARCH)/Makefile
 	sed $(sysconfig_substflags) \
-		$(buildd_shdebug)/$(shell cat $(buildd_shdebug)/pybuilddir.txt)/_sysconfigdata_dm_$(PLAT)_$(DEB_HOST_MULTIARCH).py \
-		> $(d)-dbg/$(scriptdir)/_sysconfigdata_dm_$(PLAT)_$(DEB_HOST_MULTIARCH).py
+		$(buildd_shdebug)/$(shell cat $(buildd_shdebug)/pybuilddir.txt)/_sysconfigdata_d_$(PLAT)_$(DEB_HOST_MULTIARCH).py \
+		> $(d)-dbg/$(scriptdir)/_sysconfigdata_d_$(PLAT)_$(DEB_HOST_MULTIARCH).py
 	sed -i $(sysconfig_substflags) \
-		$(d)-dbg/$(scriptdir)/_sysconfigdata_dm_$(PLAT)_$(DEB_HOST_MULTIARCH).py
+		$(d)-dbg/$(scriptdir)/_sysconfigdata_d_$(PLAT)_$(DEB_HOST_MULTIARCH).py
 
 	mv $(d)-dbg/usr/lib/libpython*.a $(d)-dbg/usr/lib/$(DEB_HOST_MULTIARCH)/
 
 	for i in $(d)-dbg/$(scriptdir)/lib-dynload/*.so; do \
 	  case "$$i" in *$(DEB_HOST_MULTIARCH)*) continue; esac; \
-	  b=$$(basename $$i .cpython-$(EXT_VER)dm.so); \
-	  d=$${b}.cpython-$(EXT_VER)dm-$(DEB_HOST_MULTIARCH).so; \
+	  b=$$(basename $$i .cpython-$(EXT_VER)d.so); \
+	  d=$${b}.cpython-$(EXT_VER)d-$(DEB_HOST_MULTIARCH).so; \
 	  mv $$i $(d)-dbg/$(scriptdir)/lib-dynload/$$d; \
 	done
 
@@ -1220,24 +1205,24 @@ endif
 		usr/bin \
 		usr/share/man/man1 \
 		$(scriptdir)/lib-dynload \
-		usr/include/$(PVER)dm \
-		usr/include/$(DEB_HOST_MULTIARCH)/$(PVER)dm \
+		usr/include/$(PVER)d \
+		usr/include/$(DEB_HOST_MULTIARCH)/$(PVER)d \
 		usr/lib/$(DEB_HOST_MULTIARCH)/pkgconfig
 
 	cp -p $(d)-dbg/$(scriptdir)/lib-dynload/*.so \
 		$(d_ldbg)/$(scriptdir)/lib-dynload/
-	cp -p $(d)-dbg/$(scriptdir)/_sysconfigdata_dm_$(PLAT)_$(DEB_HOST_MULTIARCH).py \
+	cp -p $(d)-dbg/$(scriptdir)/_sysconfigdata_d_$(PLAT)_$(DEB_HOST_MULTIARCH).py \
 		$(d_ldbg)/$(scriptdir)/
-	cp -p $(buildd_shdebug)/libpython$(VER)dm.so.1.0 \
+	cp -p $(buildd_shdebug)/libpython$(VER)d.so.1.0 \
 		$(d_ldbg)/usr/lib/$(DEB_HOST_MULTIARCH)/
 	dh_link -p$(p_ldbg) \
-	    /usr/lib/$(DEB_HOST_MULTIARCH)/libpython$(VER)dm.so.1.0 \
-		/usr/lib/$(DEB_HOST_MULTIARCH)/libpython$(VER)dm.so.1 \
-	    /usr/lib/$(DEB_HOST_MULTIARCH)/libpython$(VER)dm.so.1 \
-		/usr/lib/$(DEB_HOST_MULTIARCH)/libpython$(VER)dm.so
-	cp $(d)-dbg/usr/lib/$(DEB_HOST_MULTIARCH)/pkgconfig/python-$(VER)dm.pc \
+	    /usr/lib/$(DEB_HOST_MULTIARCH)/libpython$(VER)d.so.1.0 \
+		/usr/lib/$(DEB_HOST_MULTIARCH)/libpython$(VER)d.so.1 \
+	    /usr/lib/$(DEB_HOST_MULTIARCH)/libpython$(VER)d.so.1 \
+		/usr/lib/$(DEB_HOST_MULTIARCH)/libpython$(VER)d.so
+	cp $(d)-dbg/usr/lib/$(DEB_HOST_MULTIARCH)/pkgconfig/python-$(VER)d.pc \
 	  $(d_ldbg)/usr/lib/$(DEB_HOST_MULTIARCH)/pkgconfig/.
-	ln -s python-$(VER)dm.pc \
+	ln -s python-$(VER)d.pc \
 	  $(d_ldbg)/usr/lib/$(DEB_HOST_MULTIARCH)/pkgconfig/python-$(VER)-dbg.pc
 
 	dh_installdirs -p$(p_dbg) \
@@ -1247,8 +1232,8 @@ endif
 	cp -p Misc/SpecialBuilds.txt $(d_dbg)/usr/share/doc/$(p_base)/
 	cp -p debian/$(PVER)-dbg.README.Debian \
 		$(d_dbg)/usr/share/doc/$(p_base)/README.debug
-	cp -p $(buildd_debug)/python $(d_dbg)/usr/bin/$(PVER)dm
-	ln -sf python$(VER)dm $(d_dbg)/usr/bin/$(PVER)-dbg
+	cp -p $(buildd_debug)/python $(d_dbg)/usr/bin/$(PVER)d
+	ln -sf python$(VER)d $(d_dbg)/usr/bin/$(PVER)-dbg
 
 ifneq ($(with_tk),yes)
 	rm -f $(d_ldbg)/$(scriptdir)/lib-dynload/_tkinter*.so
@@ -1263,67 +1248,67 @@ else
 	dh_strip -p$(p_gdbm) --dbg-package=$(p_gdbm_dbg)
 endif
 
-	cp -a $(d)-dbg/$(scriptdir)/config-$(VER)dm-$(DEB_HOST_MULTIARCH) \
+	cp -a $(d)-dbg/$(scriptdir)/config-$(VER)d-$(DEB_HOST_MULTIARCH) \
 		$(d_ldbg)/$(scriptdir)/
 	dh_link -p$(p_ldbg) \
-	    /usr/lib/$(DEB_HOST_MULTIARCH)/libpython$(VER)dm.so \
-		/$(scriptdir)/config-$(VER)dm-$(DEB_HOST_MULTIARCH)/libpython$(VER)dm.so \
-	    /usr/lib/$(DEB_HOST_MULTIARCH)/libpython$(VER)dm.so \
-		/$(scriptdir)/config-$(VER)dm-$(DEB_HOST_MULTIARCH)/libpython$(VER).so \
-	    /$(scriptdir)/config-$(VER)dm-$(DEB_HOST_MULTIARCH)/libpython$(VER)dm.a \
-	    	/usr/lib/$(DEB_HOST_MULTIARCH)/libpython$(VER)dm.a
+	    /usr/lib/$(DEB_HOST_MULTIARCH)/libpython$(VER)d.so \
+		/$(scriptdir)/config-$(VER)d-$(DEB_HOST_MULTIARCH)/libpython$(VER)d.so \
+	    /usr/lib/$(DEB_HOST_MULTIARCH)/libpython$(VER)d.so \
+		/$(scriptdir)/config-$(VER)d-$(DEB_HOST_MULTIARCH)/libpython$(VER).so \
+	    /$(scriptdir)/config-$(VER)d-$(DEB_HOST_MULTIARCH)/libpython$(VER)d.a \
+	    	/usr/lib/$(DEB_HOST_MULTIARCH)/libpython$(VER)d.a
 
-	for i in $(d_ldev)/usr/include/$(PVER)m/*; do \
+	for i in $(d_ldev)/usr/include/$(PVER)/*; do \
 	  i=$$(basename $$i); \
 	  case $$i in pyconfig.h) continue; esac; \
-	  ln -sf ../$(PVER)m/$$i $(d_ldbg)/usr/include/$(PVER)dm/$$i; \
+	  ln -sf ../$(PVER)/$$i $(d_ldbg)/usr/include/$(PVER)d/$$i; \
 	done
-	cp -p $(buildd_debug)/pyconfig.h $(d_ldbg)/usr/include/$(DEB_HOST_MULTIARCH)/$(PVER)dm/
-	sed 's/@subdir@/$(PVER)dm/;s/@header@/pyconfig.h/' \
-		debian/multiarch.h.in > $(d_ldbg)/usr/include/$(PVER)dm/pyconfig.h
+	cp -p $(buildd_debug)/pyconfig.h $(d_ldbg)/usr/include/$(DEB_HOST_MULTIARCH)/$(PVER)d/
+	sed 's/@subdir@/$(PVER)d/;s/@header@/pyconfig.h/' \
+		debian/multiarch.h.in > $(d_ldbg)/usr/include/$(PVER)d/pyconfig.h
 
 	ln -sf $(PVER).1.gz $(d_dbg)/usr/share/man/man1/$(PVER)-dbg.1.gz
 
 	: # in $(p_ldbg), prefix python-config with triplets
-	cp $(d)-dbg/usr/bin/$(PVER)dm-config \
-		$(d_ldbg)/usr/bin/$(DEB_HOST_MULTIARCH)-$(PVER)dm-config
-	ln -sf $(DEB_HOST_MULTIARCH)-$(PVER)dm-config \
+	cp $(d)-dbg/usr/bin/$(PVER)d-config \
+		$(d_ldbg)/usr/bin/$(DEB_HOST_MULTIARCH)-$(PVER)d-config
+	ln -sf $(DEB_HOST_MULTIARCH)-$(PVER)d-config \
 		$(d_ldbg)/usr/bin/$(DEB_HOST_MULTIARCH)-$(PVER)-dbg-config
-	ln -sf $(DEB_HOST_MULTIARCH)-$(PVER)m-config.1.gz \
-		$(d_ldbg)/usr/share/man/man1/$(DEB_HOST_MULTIARCH)-$(PVER)dm-config.1.gz
-	ln -sf $(DEB_HOST_MULTIARCH)-$(PVER)m-config.1.gz \
+	ln -sf $(DEB_HOST_MULTIARCH)-$(PVER)-config.1.gz \
+		$(d_ldbg)/usr/share/man/man1/$(DEB_HOST_MULTIARCH)-$(PVER)d-config.1.gz
+	ln -sf $(DEB_HOST_MULTIARCH)-$(PVER)-config.1.gz \
 		$(d_ldbg)/usr/share/man/man1/$(DEB_HOST_MULTIARCH)-$(PVER)-dbg-config.1.gz
 ifneq ($(DEB_HOST_MULTIARCH),$(DEB_HOST_GNU_TYPE))
-	ln -sf $(DEB_HOST_MULTIARCH)-$(PVER)dm-config \
-		$(d_ldbg)/usr/bin/$(DEB_HOST_GNU_TYPE)-$(PVER)dm-config
+	ln -sf $(DEB_HOST_MULTIARCH)-$(PVER)d-config \
+		$(d_ldbg)/usr/bin/$(DEB_HOST_GNU_TYPE)-$(PVER)d-config
 	ln -sf $(DEB_HOST_MULTIARCH)-$(PVER)-config.1.gz \
-		$(d_ldbg)/usr/share/man/man1/$(DEB_HOST_GNU_TYPE)-$(PVER)dm-config.1.gz
-	ln -sf $(DEB_HOST_MULTIARCH)-$(PVER)dm-config \
+		$(d_ldbg)/usr/share/man/man1/$(DEB_HOST_GNU_TYPE)-$(PVER)d-config.1.gz
+	ln -sf $(DEB_HOST_MULTIARCH)-$(PVER)d-config \
 		$(d_ldbg)/usr/bin/$(DEB_HOST_GNU_TYPE)-$(PVER)-dbg-config
-	ln -sf $(DEB_HOST_MULTIARCH)-$(PVER)dm-config.1.gz \
+	ln -sf $(DEB_HOST_MULTIARCH)-$(PVER)d-config.1.gz \
 		$(d_ldbg)/usr/share/man/man1/$(DEB_HOST_GNU_TYPE)-$(PVER)-dbg-config.1.gz
 endif
-	ln -sf $(DEB_HOST_MULTIARCH)-$(PVER)dm-config $(d_dbg)/usr/bin/$(PVER)dm-config
-	ln -sf $(DEB_HOST_MULTIARCH)-$(PVER)dm-config.1.gz $(d_dbg)/usr/share/man/man1/$(PVER)dm-config.1.gz
+	ln -sf $(DEB_HOST_MULTIARCH)-$(PVER)d-config $(d_dbg)/usr/bin/$(PVER)d-config
+	ln -sf $(DEB_HOST_MULTIARCH)-$(PVER)d-config.1.gz $(d_dbg)/usr/share/man/man1/$(PVER)d-config.1.gz
 
 	ln -sf $(DEB_HOST_MULTIARCH)-$(PVER)-dbg-config $(d_dbg)/usr/bin/$(PVER)-dbg-config
 	ln -sf $(DEB_HOST_MULTIARCH)-$(PVER)-dbg-config.1.gz $(d_dbg)/usr/share/man/man1/$(PVER)-dbg-config.1.gz
 
 	: # symlinks for the "old" include / config directory names
 	ln -sf $(PVER)-config.1.gz $(d_dbg)/usr/share/man/man1/$(PVER)-dbg-config.1.gz
-	ln -sf $(PVER).1.gz $(d_dbg)/usr/share/man/man1/$(PVER)dm.1.gz
-	ln -sf $(PVER)-config.1.gz $(d_dbg)/usr/share/man/man1/$(PVER)dm-config.1.gz
+	ln -sf $(PVER).1.gz $(d_dbg)/usr/share/man/man1/$(PVER)d.1.gz
+	ln -sf $(PVER)-config.1.gz $(d_dbg)/usr/share/man/man1/$(PVER)d-config.1.gz
 
 ifeq ($(with_udeb),yes)
 	: # Copy the most important files from $(p_min) into $(p_udeb).
 	dh_installdirs -p$(p_udeb) \
 		etc/$(PVER) \
 		usr/bin \
-		usr/include/$(PVER)mu \
+		usr/include/$(PVER)u \
 		$(scriptdir)/lib-dynload \
-		$(scriptdir)/config-$(VER)m-$(DEB_HOST_MULTIARCH)
+		$(scriptdir)/config-$(VER)-$(DEB_HOST_MULTIARCH)
 	cp -p $(d_min)/usr/bin/python$(VER) $(d_udeb)/usr/bin/
-	ln -sf python$(VER)mu $(d_udeb)/usr/bin/python$(VER)
+	ln -sf python$(VER)u $(d_udeb)/usr/bin/python$(VER)
 	ln -sf python$(VER) $(d_udeb)/usr/bin/python3
 	cp -p $(foreach i,$(MIN_MODS),$(d_min)/$(scriptdir)/$(i).py) \
 		$(d_udeb)/$(scriptdir)/
@@ -1331,10 +1316,10 @@ ifeq ($(with_udeb),yes)
 		$(d_udeb)/$(scriptdir)/
 	cp -p $(foreach i,$(MIN_ENCODINGS),$(d_min)/$(scriptdir)/$(i)) \
 		$(d_udeb)/$(scriptdir)/
-	cp -p $(d_min)/$(scriptdir)/config-$(VER)m-$(DEB_HOST_MULTIARCH)/Makefile \
-		$(d_udeb)/$(scriptdir)/config-$(VER)m-$(DEB_HOST_MULTIARCH)/
-	cp -p $(d_min)/usr/include/$(DEB_HOST_MULTIARCH)/$(PVER)m/pyconfig.h \
-		$(d_udeb)/usr/include/$(DEB_HOST_MULTIARCH)/$(PVER)m/
+	cp -p $(d_min)/$(scriptdir)/config-$(VER)-$(DEB_HOST_MULTIARCH)/Makefile \
+		$(d_udeb)/$(scriptdir)/config-$(VER)-$(DEB_HOST_MULTIARCH)/
+	cp -p $(d_min)/usr/include/$(DEB_HOST_MULTIARCH)/$(PVER)/pyconfig.h \
+		$(d_udeb)/usr/include/$(DEB_HOST_MULTIARCH)/$(PVER)/
 	cp -p $(d_min)/$(scriptdir)/site.py $(d_udeb)/$(scriptdir)/
 	cp -p debian/sitecustomize.py $(d_udeb)/etc/$(PVER)/
 	dh_link -p$(p_udeb) /etc/$(PVER)/sitecustomize.py \
@@ -1439,15 +1424,15 @@ endif
 		| xargs -n 1 $(DEB_HOST_GNU_TYPE)-objcopy -p --remove-section=.gnu.lto_.*
 	dh_strip -a -N$(p_dbg) -N$(p_ldbg) -Xdebug -Xdbg --dbg-package=$(p_dbg)
 	mkdir -p $(d_dbg)/usr/share/gdb/auto-load/usr/bin
-	cp Tools/gdb/libpython.py $(d_dbg)/usr/share/gdb/auto-load/usr/bin/$(PVER)m-gdb.py
-	ln -sf $(PVER)m-gdb.py $(d_dbg)/usr/share/gdb/auto-load/usr/bin/$(PVER)-gdb.py
-	ln -sf $(PVER)m-gdb.py $(d_dbg)/usr/share/gdb/auto-load/usr/bin/$(PVER)dm-gdb.py
-	ln -sf $(PVER)m-gdb.py $(d_dbg)/usr/share/gdb/auto-load/usr/bin/$(PVER)-dbg-gdb.py
+	cp Tools/gdb/libpython.py $(d_dbg)/usr/share/gdb/auto-load/usr/bin/$(PVER)-gdb.py
+	ln -sf $(PVER)-gdb.py $(d_dbg)/usr/share/gdb/auto-load/usr/bin/$(PVER)-gdb.py
+	ln -sf $(PVER)-gdb.py $(d_dbg)/usr/share/gdb/auto-load/usr/bin/$(PVER)d-gdb.py
+	ln -sf $(PVER)-gdb.py $(d_dbg)/usr/share/gdb/auto-load/usr/bin/$(PVER)-dbg-gdb.py
 	mkdir -p $(d_dbg)/usr/share/gdb/auto-load/usr/lib/$(DEB_HOST_MULTIARCH)
-	ln -sf ../../bin/$(PVER)m-gdb.py \
-		$(d_dbg)/usr/share/gdb/auto-load/usr/lib/$(DEB_HOST_MULTIARCH)/lib$(PVER)m.so.1.0-gdb.py
-	ln -sf ../../bin/$(PVER)m-gdb.py \
-		$(d_dbg)/usr/share/gdb/auto-load/usr/lib/$(DEB_HOST_MULTIARCH)/lib$(PVER)dm.so.1.0-gdb.py
+	ln -sf ../../bin/$(PVER)-gdb.py \
+		$(d_dbg)/usr/share/gdb/auto-load/usr/lib/$(DEB_HOST_MULTIARCH)/lib$(PVER).so.1.0-gdb.py
+	ln -sf ../../bin/$(PVER)-gdb.py \
+		$(d_dbg)/usr/share/gdb/auto-load/usr/lib/$(DEB_HOST_MULTIARCH)/lib$(PVER)d.so.1.0-gdb.py
 	dh_link -a
 	dh_compress -a -X.py
 	dh_fixperms -a
