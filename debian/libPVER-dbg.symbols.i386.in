@@ -11,21 +11,16 @@ libpython@VER@d.so.1.0 libpython@VER@-dbg #MINVER#
  _PyUnicode_compact_data@Base @SVER@
  _PyUnicode_data@Base @SVER@
  _PyUnicode_utf8@Base @SVER@
- _Py_AddToAllObjects@Base @SVER@
+ _PyWstrList_CheckConsistency@Base 3.8.0~a4
  _Py_Dealloc@Base @SVER@
- _Py_ForgetReference@Base @SVER@
- _Py_GetObjects@Base @SVER@
  _Py_GetRefTotal@Base @SVER@
  _Py_HashSecret_Initialized@Base @SVER@
  _Py_NegativeRefcount@Base @SVER@
- _Py_NewReference@Base @SVER@
- _Py_PrintReferenceAddresses@Base @SVER@
- _Py_PrintReferences@Base @SVER@
  _Py_RefTotal@Base @SVER@
  _Py_dumptree@Base @SVER@
  _Py_hashtable_print_stats@Base @SVER@
  _Py_printtree@Base @SVER@
  _Py_showtree@Base @SVER@
  _Py_tok_dump@Base @SVER@
- PyModule_Create2TraceRefs@Base @SVER@
- PyModule_FromDefAndSpec2TraceRefs@Base @SVER@
+ PyModule_Create2@Base 3.8.0~a4
+ PyModule_FromDefAndSpec2@Base 3.8.0~a4
