@@ -1,4 +1,4 @@
-libpython@VER@dm.so.1.0 libpython@VER@-dbg #MINVER#
+libpython@VER@d.so.1.0 libpython@VER@-dbg #MINVER#
 #include "libpython.symbols"
  _PyDebug_PrintTotalRefs@Base @SVER@
  _PyObject_DebugMallocStats@Base @SVER@
