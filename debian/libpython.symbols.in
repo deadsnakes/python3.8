@@ -1216,17 +1216,17 @@
  _PyContext_Fini@Base @SVER@
  _PyContext_Init@Base @SVER@
  _PyContext_NewHamtForTests@Base @SVER@
- _PyCoreConfig_AsDict@Base @SVER@
  _PyCoreConfig_Clear@Base @SVER@
  _PyCoreConfig_Copy@Base @SVER@
- _PyCoreConfig_GetEnv@Base @SVER@
- _PyCoreConfig_GetEnvDup@Base @SVER@
- _PyCoreConfig_GetGlobalConfig@Base @SVER@
+ _PyCoreConfig_DecodeLocale@Base 3.8.0~a4
+ _PyCoreConfig_GetCoreConfig@Base 3.8.0~a4
  _PyCoreConfig_InitPathConfig@Base @SVER@
  _PyCoreConfig_Read@Base @SVER@
- _PyCoreConfig_ReadFromArgv@Base 3.8.0~a3
- _PyCoreConfig_SetGlobalConfig@Base @SVER@
+ _PyCoreConfig_SetArgv@Base 3.8.0~a4
  _PyCoreConfig_SetPathConfig@Base @SVER@
+ _PyCoreConfig_SetPyArgv@Base 3.8.0~a4
+ _PyCoreConfig_SetString@Base 3.8.0~a4
+ _PyCoreConfig_SetWideArgv@Base 3.8.0~a4
  _PyCoreConfig_Write@Base 3.8.0~a3
  _PyCoroWrapper_Type@Base @SVER@
  _PyCoro_GetAwaitableIter@Base @SVER@
@@ -1238,6 +1238,7 @@
  _PyDictKeys_DecRef@Base @SVER@
  _PyDictView_Intersect@Base @SVER@
  _PyDictView_New@Base @SVER@
+ _PyDict_CheckConsistency@Base 3.8.0~a4
  _PyDict_Contains@Base @SVER@
  _PyDict_DebugMallocStats@Base @SVER@
  _PyDict_DelItemId@Base @SVER@
@@ -1410,7 +1411,6 @@
  _PyInterpreterState_Get@Base @SVER@
  _PyInterpreterState_GetCoreConfig@Base 3.8.0~a3
  _PyInterpreterState_GetIDObject@Base 3.8.0~a3
- _PyInterpreterState_GetMainConfig@Base 3.8.0~a3
  _PyInterpreterState_GetMainModule@Base 3.8.0~a3
  _PyInterpreterState_IDDecref@Base @SVER@
  _PyInterpreterState_IDIncref@Base @SVER@
@@ -1450,14 +1450,9 @@
  _PyLong_UnsignedLong_Converter@Base @SVER@
  _PyLong_UnsignedShort_Converter@Base @SVER@
  _PyLong_Zero@Base @SVER@
- _PyMainInterpreterConfig_AsDict@Base @SVER@
- _PyMainInterpreterConfig_Clear@Base @SVER@
- _PyMainInterpreterConfig_Copy@Base @SVER@
- _PyMainInterpreterConfig_Read@Base @SVER@
  _PyManagedBuffer_Type@Base @SVER@
  _PyMem_DumpTraceback@Base @SVER@
  _PyMem_GetAllocatorsName@Base @SVER@
- _PyMem_IsFreed@Base @SVER@
  _PyMem_RawStrdup@Base @SVER@
  _PyMem_RawWcsdup@Base @SVER@
  _PyMem_SetDefaultAllocator@Base @SVER@
@@ -1496,6 +1491,7 @@
  _PyObject_CallMethodId_SizeT@Base @SVER@
  _PyObject_CallMethod_SizeT@Base @SVER@
  _PyObject_Call_Prepend@Base @SVER@
+ _PyObject_CheckConsistency@Base 3.8.0~a4
  _PyObject_CheckCrossInterpreterData@Base @SVER@
  _PyObject_DebugMallocStats@Base @SVER@
  _PyObject_DebugTypeStats@Base @SVER@
@@ -1535,21 +1531,13 @@
  _PyPathConfig_ComputeSysPath0@Base 3.8.0~a3
  _PyPathConfig_SetGlobal@Base @SVER@
  _PyPreCmdline_Clear@Base 3.8.0~a3
- _PyPreCmdline_Copy@Base 3.8.0~a3
- _PyPreCmdline_GetCoreConfig@Base 3.8.0~a3
- _PyPreCmdline_GetPreConfig@Base 3.8.0~a3
  _PyPreCmdline_Read@Base 3.8.0~a3
  _PyPreCmdline_SetArgv@Base 3.8.0~a3
  _PyPreCmdline_SetCoreConfig@Base 3.8.0~a3
- _PyPreCmdline_SetPreConfig@Base 3.8.0~a3
  _PyPreConfig_AsDict@Base 3.8.0~a3
  _PyPreConfig_Clear@Base 3.8.0~a3
  _PyPreConfig_Copy@Base 3.8.0~a3
- _PyPreConfig_GetEnv@Base 3.8.0~a3
- _PyPreConfig_GetGlobalConfig@Base 3.8.0~a3
  _PyPreConfig_Read@Base 3.8.0~a3
- _PyPreConfig_ReadFromArgv@Base 3.8.0~a3
- _PyPreConfig_SetGlobalConfig@Base 3.8.0~a3
  _PyPreConfig_Write@Base 3.8.0~a3
  _PyRuntime@Base @SVER@
  _PyRuntimeState_Fini@Base @SVER@
@@ -1653,6 +1641,7 @@
  _PyTuple_MaybeUntrack@Base @SVER@
  _PyTuple_Resize@Base @SVER@
  _PyType_CalculateMetaclass@Base @SVER@
+ _PyType_CheckConsistency@Base 3.8.0~a4
  _PyType_Fini@Base @SVER@
  _PyType_GetDocFromInternalDoc@Base @SVER@
  _PyType_GetTextSignatureFromInternalDoc@Base @SVER@
@@ -1678,6 +1667,7 @@
  _PyUnicode_AsUnicode@Base @SVER@
  _PyUnicode_BidirectionalNames@Base @SVER@
  _PyUnicode_CategoryNames@Base @SVER@
+ _PyUnicode_CheckConsistency@Base 3.8.0~a4
  _PyUnicode_ClearStaticStrings@Base @SVER@
  _PyUnicode_Copy@Base @SVER@
  _PyUnicode_Database_Records@Base @SVER@
@@ -1700,6 +1690,7 @@
  _PyUnicode_FromASCII@Base @SVER@
  _PyUnicode_FromId@Base @SVER@
  _PyUnicode_Init@Base @SVER@
+ _PyUnicode_InitEncodings@Base 3.8.0~a4
  _PyUnicode_InsertThousandsGrouping@Base @SVER@
  _PyUnicode_IsAlpha@Base @SVER@
  _PyUnicode_IsCaseIgnorable@Base @SVER@
@@ -1730,6 +1721,7 @@
  _PyUnicode_TransformDecimalAndSpaceToASCII@Base @SVER@
  _PyUnicode_TypeRecords@Base @SVER@
  _PyUnicode_XStrip@Base @SVER@
+ _PyWarnings_Fini@Base 3.8.0~a4
  _PyWarnings_Init@Base @SVER@
  _PyWeakref_CallableProxyType@Base @SVER@
  _PyWeakref_ClearRef@Base @SVER@
@@ -1740,6 +1732,7 @@
  _PyWstrList_AsList@Base 3.8.0~a3
  _PyWstrList_Clear@Base 3.8.0~a3
  _PyWstrList_Copy@Base 3.8.0~a3
+ _PyWstrList_Extend@Base 3.8.0~a4
  _Py_AnnAssign@Base @SVER@
  _Py_Assert@Base @SVER@
  _Py_Assign@Base @SVER@
@@ -1799,9 +1792,10 @@
  _Py_FunctionType@Base @SVER@
  _Py_GeneratorExp@Base @SVER@
  _Py_GetAllocatedBlocks@Base @SVER@
+ _Py_GetConfigsAsDict@Base 3.8.0~a4
+ _Py_GetEnv@Base 3.8.0~a4
  _Py_GetErrorHandler@Base @SVER@
  _Py_GetForceASCII@Base @SVER@
- _Py_GetGlobalVariablesAsDict@Base @SVER@
  _Py_GetLocaleconvNumeric@Base @SVER@
  _Py_Gid_Converter@Base @SVER@
  _Py_Global@Base @SVER@
@@ -1817,9 +1811,9 @@
  _Py_Import@Base @SVER@
  _Py_ImportFrom@Base @SVER@
  _Py_Index@Base @SVER@
- _Py_InitializeCore@Base @SVER@
+ _Py_InitializeFromArgs@Base 3.8.0~a4
  _Py_InitializeFromConfig@Base @SVER@
- _Py_InitializeMainInterpreter@Base @SVER@
+ _Py_InitializeFromWideArgs@Base 3.8.0~a4
  _Py_Interactive@Base @SVER@
  _Py_IsCoreInitialized@Base @SVER@
  _Py_IsFinalizing@Base @SVER@
@@ -1843,13 +1837,16 @@
  _Py_PackageContext@Base @SVER@
  _Py_Pass@Base @SVER@
  _Py_PreInitialize@Base 3.8.0~a3
- _Py_PreInitializeFromConfig@Base 3.8.0~a3
- _Py_PreInitializeFromPreConfig@Base 3.8.0~a3
+ _Py_PreInitializeFromArgs@Base 3.8.0~a4
+ _Py_PreInitializeFromCoreConfig@Base 3.8.0~a4
+ _Py_PreInitializeFromPyArgv@Base 3.8.0~a4
+ _Py_PreInitializeFromWideArgs@Base 3.8.0~a4
  _Py_PyAtExit@Base @SVER@
  _Py_Raise@Base @SVER@
  _Py_ResetForceASCII@Base @SVER@
  _Py_RestoreSignals@Base @SVER@
  _Py_Return@Base @SVER@
+ _Py_RunMain@Base 3.8.0~a4
  _Py_Set@Base @SVER@
  _Py_SetComp@Base @SVER@
  _Py_SetFileSystemEncoding@Base @SVER@
