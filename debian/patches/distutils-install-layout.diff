@@ -157,10 +157,10 @@ index 0ddc736..0a71b61 100644
          self.outputs = [self.target]
  
 diff --git a/Lib/distutils/sysconfig.py b/Lib/distutils/sysconfig.py
-index a349467..06a2284 100644
+index b51629e..1428a6a 100644
 --- a/Lib/distutils/sysconfig.py
 +++ b/Lib/distutils/sysconfig.py
-@@ -133,6 +133,7 @@ def get_python_lib(plat_specific=0, standard_lib=0, prefix=None):
+@@ -139,6 +139,7 @@ def get_python_lib(plat_specific=0, standard_lib=0, prefix=None):
      If 'prefix' is supplied, use it instead of sys.base_prefix or
      sys.base_exec_prefix -- i.e., ignore 'plat_specific'.
      """
@@ -168,7 +168,7 @@ index a349467..06a2284 100644
      if prefix is None:
          if standard_lib:
              prefix = plat_specific and BASE_EXEC_PREFIX or BASE_PREFIX
-@@ -144,6 +145,12 @@ def get_python_lib(plat_specific=0, standard_lib=0, prefix=None):
+@@ -150,6 +151,12 @@ def get_python_lib(plat_specific=0, standard_lib=0, prefix=None):
                                   "lib", "python" + get_python_version())
          if standard_lib:
              return libpython
@@ -217,7 +217,7 @@ index 287ab19..00e3f94 100644
  
      def test_debug_mode(self):
 diff --git a/Lib/pydoc.py b/Lib/pydoc.py
-index 6a9a97a..d70ce1a 100644
+index d403674..5de6bf6 100644
 --- a/Lib/pydoc.py
 +++ b/Lib/pydoc.py
 @@ -414,6 +414,7 @@ class Doc:
@@ -276,7 +276,7 @@ index ad11463..4829f88 100644
              sitepackages.append(prefix)
              sitepackages.append(os.path.join(prefix, "lib", "site-packages"))
 diff --git a/Lib/test/test_site.py b/Lib/test/test_site.py
-index 8643da0..7805302 100644
+index 41c4229..16e90ca 100644
 --- a/Lib/test/test_site.py
 +++ b/Lib/test/test_site.py
 @@ -266,10 +266,10 @@ class HelperFunctionsTests(unittest.TestCase):
