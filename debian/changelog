@@ -1,3 +1,10 @@
+python3.8 (3.8.0~a4-1+bionic1) bionic; urgency=medium
+
+  * Python 3.8.0 alpha 4 release.
+  * Remove m abiflag following upstream.
+
+ -- Anthony Sottile <asottile@umich.edu>  Tue, 07 May 2019 18:43:53 -0700
+
 python3.8 (3.8.0~a3-1+bionic1) bionic; urgency=medium
 
   * Python 3.8.0 alpha 3 release.
