@@ -5,11 +5,11 @@ Subject: ext-no-libpython-link
 # DP: Don't link extensions with the shared libpython library.
 # DP: Don't link extensions with the shared libpython library.
 ---
- Lib/distutils/command/build_ext.py | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ Lib/distutils/command/build_ext.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/Lib/distutils/command/build_ext.py b/Lib/distutils/command/build_ext.py
-index 0428466..452b8e0 100644
+index c3b9602..fc5f320 100644
 --- a/Lib/distutils/command/build_ext.py
 +++ b/Lib/distutils/command/build_ext.py
 @@ -231,7 +231,7 @@ class build_ext(Command):
@@ -21,12 +21,3 @@ index 0428466..452b8e0 100644
              if not sysconfig.python_build:
                  # building third party extensions
                  self.library_dirs.append(sysconfig.get_config_var('LIBDIR'))
-@@ -724,7 +724,7 @@ class build_ext(Command):
-             return ext.libraries
-         else:
-             from distutils import sysconfig
--            if sysconfig.get_config_var('Py_ENABLE_SHARED'):
-+            if False and sysconfig.get_config_var('Py_ENABLE_SHARED'):
-                 pythonlib = 'python{}.{}{}'.format(
-                     sys.hexversion >> 24, (sys.hexversion >> 16) & 0xff,
-                     sysconfig.get_config_var('ABIFLAGS'))

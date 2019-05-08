@@ -9,10 +9,10 @@ Subject: multiarch
  3 files changed, 11 insertions(+), 1 deletion(-)
 
 diff --git a/Lib/distutils/sysconfig.py b/Lib/distutils/sysconfig.py
-index 122271a..e712579 100644
+index b49b506..6f3f30c 100644
 --- a/Lib/distutils/sysconfig.py
 +++ b/Lib/distutils/sysconfig.py
-@@ -105,6 +105,9 @@ def get_python_inc(plat_specific=0, prefix=None):
+@@ -111,6 +111,9 @@ def get_python_inc(plat_specific=0, prefix=None):
                  incdir = os.path.join(get_config_var('srcdir'), 'Include')
                  return os.path.normpath(incdir)
          python_dir = 'python' + get_python_version() + build_flags
@@ -23,7 +23,7 @@ index 122271a..e712579 100644
      elif os.name == "nt":
          if python_build:
 diff --git a/Lib/sysconfig.py b/Lib/sysconfig.py
-index cc8c796..528335b 100644
+index 8446c8d..d10b149 100644
 --- a/Lib/sysconfig.py
 +++ b/Lib/sysconfig.py
 @@ -558,6 +558,12 @@ def get_config_vars(*args):
@@ -40,10 +40,10 @@ index cc8c796..528335b 100644
          srcdir = _CONFIG_VARS.get('srcdir', _PROJECT_BASE)
          if os.name == 'posix':
 diff --git a/Makefile.pre.in b/Makefile.pre.in
-index a2b2a4d..61acdfd 100644
+index a00f3d3..9e41ca0 100644
 --- a/Makefile.pre.in
 +++ b/Makefile.pre.in
-@@ -778,6 +778,7 @@ Modules/signalmodule.o: $(srcdir)/Modules/signalmodule.c $(srcdir)/Modules/posix
+@@ -781,6 +781,7 @@ Modules/signalmodule.o: $(srcdir)/Modules/signalmodule.c $(srcdir)/Modules/posix
  
  Python/dynload_shlib.o: $(srcdir)/Python/dynload_shlib.c Makefile
  	$(CC) -c $(PY_CORE_CFLAGS) \
@@ -51,7 +51,7 @@ index a2b2a4d..61acdfd 100644
  		-DSOABI='"$(SOABI)"' \
  		-o $@ $(srcdir)/Python/dynload_shlib.c
  
-@@ -1516,7 +1517,7 @@ inclinstall:
+@@ -1531,7 +1532,7 @@ inclinstall:
  LIBPL=		@LIBPL@
  
  # pkgconfig directory
