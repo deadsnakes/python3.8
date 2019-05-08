@@ -2,6 +2,554 @@
 Python News
 +++++++++++
 
+What's New in Python 3.8.0 alpha 4?
+===================================
+
+*Release date: 2019-05-06*
+
+Security
+--------
+
+- bpo-36742: Fixes mishandling of pre-normalization characters in
+  urlsplit().
+
+- bpo-30458: Address CVE-2019-9740 by disallowing URL paths with embedded
+  whitespace or control characters through into the underlying http client
+  request.  Such potentially malicious header injection URLs now cause an
+  http.client.InvalidURL exception to be raised.
+
+- bpo-35755: :func:`shutil.which` now uses ``os.confstr("CS_PATH")`` if
+  available and if the :envvar:`PATH` environment variable is not set.
+  Remove also the current directory from :data:`posixpath.defpath`. On Unix,
+  :func:`shutil.which` and the :mod:`subprocess` module no longer search the
+  executable in the current directory if the :envvar:`PATH` environment
+  variable is not set.
+
+Core and Builtins
+-----------------
+
+- bpo-36751: The :func:`~inspect.getfullargspec` function in the
+  :mod:`inspect` module is deprecated in favor of the
+  :func:`inspect.signature` API. Contributed by Pablo Galindo.
+
+- bpo-36722: In debug build, import now also looks for C extensions compiled
+  in release mode and for C extensions compiled in the stable ABI.
+
+- bpo-32849: Fix Python Initialization code on FreeBSD to detect properly
+  when stdin file descriptor (fd 0) is invalid.
+
+- bpo-36623: Remove parser headers and related function declarations that
+  lack implementations after the removal of pgen.
+
+- bpo-20180: ``dict.pop()`` is now up to 33% faster thanks to Argument
+  Clinic. Patch by Inada Naoki.
+
+- bpo-36611: Debug memory allocators: disable serialno field by default from
+  debug hooks on Python memory allocators to reduce the memory footprint by
+  5%. Enable :mod:`tracemalloc` to get the traceback where a memory block
+  has been allocated when a fatal memory error is logged to decide where to
+  put a breakpoint. Compile Python with ``PYMEM_DEBUG_SERIALNO`` defined to
+  get back the field.
+
+- bpo-36588: On AIX, :attr:`sys.platform` doesn't contain the major version
+  anymore. Always return ``'aix'``, instead of ``'aix3'`` .. ``'aix7'``.
+  Since older Python versions include the version number, it is recommended
+  to always use ``sys.platform.startswith('aix')``. Contributed by M. Felt.
+
+- bpo-36549: Change str.capitalize to use titlecase for the first character
+  instead of uppercase.
+
+- bpo-36540: Implement :pep:`570` (Python positional-only parameters). Patch
+  by Pablo Galindo.
+
+- bpo-36475: :c:func:`PyEval_AcquireLock` and :c:func:`PyEval_AcquireThread`
+  now terminate the current thread if called while the interpreter is
+  finalizing, making them consistent with :c:func:`PyEval_RestoreThread`,
+  :c:func:`Py_END_ALLOW_THREADS`, and :c:func:`PyGILState_Ensure`.
+
+- bpo-36504: Fix signed integer overflow in _ctypes.c's
+  ``PyCArrayType_new()``.
+
+- bpo-20844: Fix running script with encoding cookie and LF line ending may
+  fail on Windows.
+
+- bpo-24214: Fixed support of the surrogatepass error handler in the UTF-8
+  incremental decoder.
+
+- bpo-36452: Changing ``dict`` keys during iteration of the dict itself,
+  ``keys()``, ``values()``, or ``items()`` will now be detected in certain
+  corner cases where keys are deleted/added so that the number of keys isn't
+  changed. A `RuntimeError` will be raised after ``len(dict)`` iterations.
+  Contributed by Thomas Perl.
+
+- bpo-36459: Fix a possible double ``PyMem_FREE()`` due to tokenizer.c's
+  ``tok_nextc()``.
+
+- bpo-36433: Fixed TypeError message in classmethoddescr_call.
+
+- bpo-36430: Fix a possible reference leak in :func:`itertools.count`.
+
+- bpo-36440: Include node names in ``ParserError`` messages, instead of
+  numeric IDs. Patch by A. Skrobov.
+
+- bpo-36143: Regenerate :mod:`keyword` from the Grammar and Tokens file
+  using pgen. Patch by Pablo Galindo.
+
+- bpo-18372: Add missing :c:func:`PyObject_GC_Track` calls in the
+  :mod:`pickle` module. Patch by Zackery Spytz.
+
+Library
+-------
+
+- bpo-35952: Fix pythoninfo when the compiler is missing.
+
+- bpo-28238: The ``.find*()`` methods of xml.etree.ElementTree can now
+  search for wildcards like ``{*}tag`` and ``{ns}*`` that match a tag in any
+  namespace or all tags in a namespace.  Patch by Stefan Behnel.
+
+- bpo-26978: `pathlib.path.link_to()` is now implemented. It creates a hard
+  link pointing to a path.
+
+- bpo-1613500: :class:`fileinput.FileInput` now uses the input file mode to
+  correctly set the output file mode (previously it was hardcoded to
+  ``'w'``)  when ``inplace=True`` is passed to its constructor.
+
+- bpo-36734: Fix compilation of ``faulthandler.c`` on HP-UX. Initialize
+  ``stack_t current_stack`` to zero using ``memset()``.
+
+- bpo-13611: The xml.etree.ElementTree packages gained support for C14N 2.0
+  serialisation. Patch by Stefan Behnel.
+
+- bpo-36669: Add missing matrix multiplication operator support to
+  weakref.proxy.
+
+- bpo-36676: The XMLParser() in xml.etree.ElementTree provides namespace
+  prefix context to the parser target if it defines the callback methods
+  "start_ns()" and/or "end_ns()". Patch by Stefan Behnel.
+
+- bpo-36673: The TreeBuilder and XMLPullParser in xml.etree.ElementTree
+  gained support for parsing comments and processing instructions. Patch by
+  Stefan Behnel.
+
+- bpo-36650: The C version of functools.lru_cache() was treating calls with
+  an empty ``**kwargs`` dictionary as being distinct from calls with no
+  keywords at all. This did not result in an incorrect answer, but it did
+  trigger an unexpected cache miss.
+
+- bpo-28552: Fix :mod:`distutils.sysconfig` if :data:`sys.executable` is
+  ``None`` or an empty string: use :func:`os.getcwd` to initialize
+  ``project_base``.  Fix also the distutils build command: don't use
+  :data:`sys.executable` if it is ``None`` or an empty string.
+
+- bpo-35755: :func:`shutil.which` and
+  :func:`distutils.spawn.find_executable` now use ``os.confstr("CS_PATH")``
+  if available instead of :data:`os.defpath`, if the ``PATH`` environment
+  variable is not set. Moreover, don't use ``os.confstr("CS_PATH")`` nor
+  :data:`os.defpath` if the ``PATH`` environment variable is set to an empty
+  string.
+
+- bpo-25430: improve performance of ``IPNetwork.__contains__()``
+
+- bpo-30485: Path expressions in xml.etree.ElementTree can now avoid
+  explicit namespace prefixes for tags (or the "{namespace}tag" notation) by
+  passing a default namespace with an empty string prefix.
+
+- bpo-36613: Fix :mod:`asyncio` wait() not removing callback if exception
+
+- bpo-36598: Fix ``isinstance`` check for Mock objects with spec when the
+  code is executed under tracing. Patch by Karthikeyan Singaravelan.
+
+- bpo-18748: In development mode (:option:`-X` ``dev``) and in debug build,
+  the :class:`io.IOBase` destructor now logs ``close()`` exceptions. These
+  exceptions are silent by default in release mode.
+
+- bpo-36575: The ``_lsprof`` module now uses internal timer same to
+  ``time.perf_counter()`` by default. ``gettimeofday(2)`` was used on Unix.
+  New timer has better resolution on most Unix platforms and timings are no
+  longer impacted by system clock updates since ``perf_counter()`` is
+  monotonic. Patch by Inada Naoki.
+
+- bpo-33461: ``json.loads`` now emits ``DeprecationWarning`` when
+  ``encoding`` option is specified.  Patch by Matthias Bussonnier.
+
+- bpo-36559: The random module now prefers the lean internal _sha512 module
+  over hashlib for seed(version=2) to optimize import time.
+
+- bpo-17561: Set backlog=None as the default for socket.create_server.
+
+- bpo-34373: Fix :func:`time.mktime` error handling on AIX for year before
+  1970.
+
+- bpo-36232: Improve error message when trying to open existing DBM database
+  that actually doesn't exist. Patch by Marco Rougeth.
+
+- bpo-36546: Add statistics.quantiles()
+
+- bpo-36050: Optimized ``http.client.HTTPResponse.read()`` for large
+  response. Patch by Inada Naoki.
+
+- bpo-36522: If *debuglevel* is set to >0 in :mod:`http.client`, print all
+  values for headers with multiple values for the same header name. Patch by
+  Matt Houglum.
+
+- bpo-36492: Deprecated passing required arguments like *func* as keyword
+  arguments in functions which should accept arbitrary keyword arguments and
+  pass them to other function. Arbitrary keyword arguments (even with names
+  "self" and "func") can now be passed to these functions if the required
+  arguments are passed as positional arguments.
+
+- bpo-27181: Add statistics.geometric_mean().
+
+- bpo-30427: ``os.path.normcase()`` relies on ``os.fspath()`` to check the
+  type of its argument. Redundant checks have been removed from its
+  ``posixpath.normcase()`` and ``ntpath.normcase()`` implementations. Patch
+  by Wolfgang Maier.
+
+- bpo-36385: Stop rejecting IPv4 octets for being ambiguously octal. Leading
+  zeros are ignored, and no longer are assumed to specify octal octets.
+  Octets are always decimal numbers. Octets must still be no more than three
+  digits, including leading zeroes.
+
+- bpo-36434: Errors during writing to a ZIP file no longer prevent to
+  properly close it.
+
+- bpo-36407: Fixed wrong indentation writing for CDATA section in
+  xml.dom.minidom. Patch by Vladimir Surjaninov.
+
+- bpo-36326: inspect.getdoc() can now find docstrings for member objects
+  when __slots__ is a dictionary.
+
+- bpo-36366: Calling ``stop()`` on an unstarted or stopped
+  :func:`unittest.mock.patch` object will now return `None` instead of
+  raising :exc:`RuntimeError`, making the method idempotent. Patch by
+  Karthikeyan Singaravelan.
+
+- bpo-36348: The :meth:`imap.IMAP4.logout` method no longer ignores silently
+  arbitrary exceptions.
+
+- bpo-31904: Add time module support and fix test_time faiures for VxWorks.
+
+- bpo-36227: Added support for keyword arguments `default_namespace` and
+  `xml_declaration` in functions ElementTree.tostring() and
+  ElementTree.tostringlist().
+
+- bpo-36004: Added new alternate constructors
+  :meth:`datetime.date.fromisocalendar` and
+  :meth:`datetime.datetime.fromisocalendar`, which construct date objects
+  from ISO year, week number and weekday; these are the inverse of each
+  class's ``isocalendar`` method. Patch by Paul Ganssle.
+
+- bpo-35936: :mod:`modulefinder` no longer depends on the deprecated
+  :mod:`imp` module, and the initializer for
+  :class:`modulefinder.ModuleFinder` now has immutable default arguments.
+  Patch by Brandt Bucher.
+
+- bpo-35376: :mod:`modulefinder` correctly handles modules that have the
+  same name as a bad package. Patch by Brandt Bucher.
+
+- bpo-17396: :mod:`modulefinder` no longer crashes when encountering syntax
+  errors in followed imports. Patch by Brandt Bucher.
+
+- bpo-35934: Added :meth:`~socket.create_server()` and
+  :meth:`~socket.has_dualstack_ipv6()` convenience functions to automate the
+  necessary tasks usually involved when creating a server socket, including
+  accepting both IPv4 and IPv6 connections on the same socket.  (Contributed
+  by Giampaolo Rodola in :issue:`17561`.)
+
+- bpo-23078: Add support for :func:`classmethod` and :func:`staticmethod` to
+  :func:`unittest.mock.create_autospec`.  Initial patch by Felipe Ochoa.
+
+- bpo-35416: Fix potential resource warnings in distutils. Patch by Mickaël
+  Schoentgen.
+
+- bpo-25451: Add transparency methods to :class:`tkinter.PhotoImage`.  Patch
+  by Zackery Spytz.
+
+- bpo-35082: Don't return deleted attributes when calling dir on a
+  :class:`unittest.mock.Mock`.
+
+- bpo-34547: :class:`wsgiref.handlers.BaseHandler` now handles abrupt client
+  connection terminations gracefully. Patch by Petter Strandmark.
+
+- bpo-31658: :func:`xml.sax.parse` now supports :term:`path-like <path-like
+  object>`. Patch by Mickaël Schoentgen.
+
+- bpo-34139: Remove stale unix datagram socket before binding
+
+- bpo-33530: Implemented Happy Eyeballs in `asyncio.create_connection()`.
+  Added two new arguments, *happy_eyeballs_delay* and *interleave*, to
+  specify Happy Eyeballs behavior.
+
+- bpo-33291: Do not raise AttributeError when calling the inspect functions
+  isgeneratorfunction, iscoroutinefunction, isasyncgenfunction on a method
+  created from an arbitrary callable. Instead, return False.
+
+- bpo-31310: Fix the multiprocessing.semaphore_tracker so it is reused by
+  child processes
+
+- bpo-31292: Fix ``setup.py check --restructuredtext`` for files containing
+  ``include`` directives.
+
+Documentation
+-------------
+
+- bpo-36625: Remove obsolete comments from docstrings in fractions.Fraction
+
+- bpo-30840: Document relative imports
+
+- bpo-36523: Add docstring for io.IOBase.writelines().
+
+- bpo-36425: New documentation translation: `Simplified Chinese
+  <https://docs.python.org/zh-cn/>`_.
+
+- bpo-36345: Avoid the duplication of code from ``Tools/scripts/serve.py``
+  in using the :rst:dir:`literalinclude` directive for the basic
+  wsgiref-based web server in the documentation of :mod:`wsgiref`.
+  Contributed by Stéphane Wirtel.
+
+- bpo-36345: Using the code of the ``Tools/scripts/serve.py`` script as an
+  example in the :mod:`wsgiref` documentation.  Contributed by Stéphane
+  Wirtel.
+
+- bpo-36157: Added Documention for  PyInterpreterState_Main().
+
+- bpo-33043: Updates the docs.python.org page with the addition of a
+  'Contributing to Docs' link at the end of the page (between 'Reporting
+  Bugs' and 'About Documentation'). Updates the 'Found a Bug' page with
+  additional links and information in the Documentation Bugs section.
+
+- bpo-35581: @typing.type_check_only now allows type stubs to mark functions
+  and classes not available during runtime.
+
+- bpo-33832: Add glossary entry for 'magic method'.
+
+- bpo-32913: Added re.Match.groupdict example to regex HOWTO.
+
+Tests
+-----
+
+- bpo-36719: regrtest now always detects uncollectable objects. Previously,
+  the check was only enabled by ``--findleaks``. The check now also works
+  with ``-jN/--multiprocess N``. ``--findleaks`` becomes a deprecated alias
+  to ``--fail-env-changed``.
+
+- bpo-36725: When using mulitprocessing mode (-jN), regrtest now better
+  reports errors if a worker process fails, and it exits immediately on a
+  worker thread failure or when interrupted.
+
+- bpo-36454: Change test_time.test_monotonic() to test only the lower bound
+  of elapsed time after a sleep command rather than the upper bound. This
+  prevents unnecessary test failures on slow buildbots. Patch by Victor
+  Stinner.
+
+- bpo-32424: Improve test coverage for xml.etree.ElementTree. Patch by
+  Gordon P. Hemsley.
+
+- bpo-32424: Fix typo in test_cyclic_gc() test for xml.etree.ElementTree.
+  Patch by Gordon P. Hemsley.
+
+- bpo-36635: Add a new :mod:`_testinternalcapi` module to test the internal
+  C API.
+
+- bpo-36629: Fix ``test_imap4_host_default_value()`` of ``test_imaplib``:
+  catch also :data:`errno.ENETUNREACH` error.
+
+- bpo-36611: Fix ``test_sys.test_getallocatedblocks()`` when
+  :mod:`tracemalloc` is enabled.
+
+- bpo-36560: Fix reference leak hunting in regrtest: compute also deltas (of
+  reference count, allocated memory blocks, file descriptor count) during
+  warmup, to ensure that everything is initialized before starting to hunt
+  reference leaks.
+
+- bpo-36565: Fix reference hunting (``python3 -m test -R 3:3``) when Python
+  has no built-in abc module.
+
+- bpo-31904: Port test_resource to VxWorks: skip tests cases setting
+  RLIMIT_FSIZE and RLIMIT_CPU.
+
+- bpo-31904: Fix test_tabnanny on VxWorks: adjust ENOENT error message.
+
+- bpo-36436: Fix ``_testcapi.pymem_buffer_overflow()``: handle memory
+  allocation failure.
+
+- bpo-31904: Fix test_utf8_mode on VxWorks: Python always use UTF-8 on
+  VxWorks.
+
+- bpo-36341: Fix tests that may fail with PermissionError upon calling
+  bind() on AF_UNIX sockets.
+
+Build
+-----
+
+- bpo-36747: Remove the stale scriptsinstall Makefile target.
+
+- bpo-21536: On Unix, C extensions are no longer linked to libpython except
+  on Android.
+
+  It is now possible for a statically linked Python to load a C extension
+  built using a shared library Python.
+
+  When Python is embedded, ``libpython`` must not be loaded with
+  ``RTLD_LOCAL``, but ``RTLD_GLOBAL`` instead. Previously, using
+  ``RTLD_LOCAL``, it was already not possible to load C extensions which
+  were not linked to ``libpython``, such as C extensions of the standard
+  library built by the ``*shared*`` section of ``Modules/Setup``.
+
+  distutils, python-config and python-config.py have been modified.
+
+- bpo-36707: ``./configure --with-pymalloc`` no longer adds the ``m`` flag
+  to SOABI (sys.implementation.cache_tag). Enabling or disabling pymalloc
+  has no impact on the ABI.
+
+- bpo-36635: Change ``PyAPI_FUNC(type)``, ``PyAPI_DATA(type)`` and
+  ``PyMODINIT_FUNC`` macros of ``pyport.h`` when ``Py_BUILD_CORE_MODULE`` is
+  defined. The ``Py_BUILD_CORE_MODULE`` define must be now be used to build
+  a C extension as a dynamic library accessing Python internals: export the
+  PyInit_xxx() function in DLL exports on Windows.
+
+- bpo-31904: Don't build the ``_crypt`` extension on VxWorks.
+
+- bpo-36618: Add ``-fmax-type-align=8`` to CFLAGS when clang compiler is
+  detected. The pymalloc memory allocator aligns memory on 8 bytes. On
+  x86-64, clang expects alignment on 16 bytes by default and so uses MOVAPS
+  instruction which can lead to segmentation fault. Instruct clang that
+  Python is limited to alignemnt on 8 bytes to use MOVUPS instruction
+  instead: slower but don't trigger a SIGSEGV if the memory is not aligned
+  on 16 bytes. Sadly, the flag must be added to ``CFLAGS`` and not just
+  ``CFLAGS_NODIST``, since third party C extensions can have the same issue.
+
+- bpo-36605: ``make tags`` and ``make TAGS`` now also parse
+  ``Modules/_io/*.c`` and ``Modules/_io/*.h``.
+
+- bpo-36465: Release builds and debug builds are now ABI compatible:
+  defining the ``Py_DEBUG`` macro no longer implies the ``Py_TRACE_REFS``
+  macro, which introduces the only ABI incompatibility. The
+  ``Py_TRACE_REFS`` macro, which adds the :func:`sys.getobjects` function
+  and the :envvar:`PYTHONDUMPREFS` environment variable, can be set using
+  the new ``./configure --with-trace-refs`` build option.
+
+- bpo-36577: setup.py now correctly reports missing OpenSSL headers and
+  libraries again.
+
+- bpo-36544: Fix regression introduced in bpo-36146 refactoring setup.py
+
+- bpo-36508: ``python-config --ldflags`` no longer includes flags of the
+  ``LINKFORSHARED`` variable. The ``LINKFORSHARED`` variable must only be
+  used to build executables.
+
+- bpo-36503: Remove references to "aix3" and "aix4". Patch by M. Felt.
+
+Windows
+-------
+
+- bpo-35920: Added platform.win32_edition() and platform.win32_is_iot().
+  Added support for cross-compiling packages for Windows ARM32. Skip tests
+  that are not expected to work on Windows IoT Core ARM32.
+
+- bpo-36649: Remove trailing spaces for registry keys when installed via the
+  Store.
+
+- bpo-34144: Fixed activate.bat to correctly update codepage when chcp.com
+  returns dots in output. Patch by Lorenz Mende.
+
+- bpo-36509: Added preset-iot layout for Windows IoT ARM containers. This
+  layout doesn't contain UI components like tkinter or IDLE. It also doesn't
+  contain files to support on-target builds since Windows ARM32 builds must
+  be cross-compiled when using MSVC.
+
+- bpo-35941: enum_certificates function of the ssl module now returns
+  certificates from all available certificate stores inside windows in a
+  query instead of returning only certificates from the system wide
+  certificate store. This includes certificates from these certificate
+  stores: local machine, local machine enterprise, local machine group
+  policy, current user, current user group policy, services, users.
+  ssl.enum_crls() function is changed in the same way to return all
+  certificate revocation lists inside the windows certificate revocation
+  list stores.
+
+- bpo-36441: Fixes creating a venv when debug binaries are installed.
+
+- bpo-36085: Enable better DLL resolution on Windows by using safe DLL
+  search paths and adding :func:`os.add_dll_directory`.
+
+- bpo-36010: Add the venv standard library module to the nuget distribution
+  for Windows.
+
+- bpo-29515: Add the following socket module constants on Windows:
+  IPPROTO_AH IPPROTO_CBT IPPROTO_DSTOPTS IPPROTO_EGP IPPROTO_ESP
+  IPPROTO_FRAGMENT IPPROTO_GGP IPPROTO_HOPOPTS IPPROTO_ICLFXBM
+  IPPROTO_ICMPV6 IPPROTO_IDP IPPROTO_IGMP IPPROTO_IGP IPPROTO_IPV4
+  IPPROTO_IPV6 IPPROTO_L2TP IPPROTO_MAX IPPROTO_ND IPPROTO_NONE IPPROTO_PGM
+  IPPROTO_PIM IPPROTO_PUP IPPROTO_RDP IPPROTO_ROUTING IPPROTO_SCTP
+  IPPROTO_ST
+
+- bpo-35947: Added current version of libffi to cpython-source-deps. Change
+  _ctypes to use current version of libffi on Windows.
+
+- bpo-34060: Report system load when running test suite on Windows. Patch by
+  Ammar Askar. Based on prior work by Jeremy Kloth.
+
+- bpo-31512: With the Windows 10 Creators Update, non-elevated users can now
+  create symlinks as long as the computer has Developer Mode enabled.
+
+macOS
+-----
+
+- bpo-34602: Avoid failures setting macOS stack resource limit with
+  resource.setrlimit. This reverts an earlier fix for bpo-18075 which forced
+  a non-default stack size when building the interpreter executable on
+  macOS.
+
+IDLE
+----
+
+- bpo-36429: Fix starting IDLE with pyshell. Add idlelib.pyshell alias at
+  top; remove pyshell alias at bottom. Remove obsolete __name__=='__main__'
+  command.
+
+Tools/Demos
+-----------
+
+- bpo-14546: Fix the argument handling in Tools/scripts/lll.py.
+
+C API
+-----
+
+- bpo-36763: Fix memory leak in :c:func:`Py_SetStandardStreamEncoding`:
+  release memory if the function is called twice.
+
+- bpo-36641: :c:macro:`PyDoc_VAR(name)` and
+  :c:macro:`PyDoc_STRVAR(name,str)` now create ``static const char name[]``
+  instead of ``static char name[]``.  Patch by Inada Naoki.
+
+- bpo-36389: Change the value of ``CLEANBYTE``, ``DEADDYTE`` and
+  ``FORBIDDENBYTE`` internal constants used by debug hooks on Python memory
+  allocators (:c:func:`PyMem_SetupDebugHooks` function). Byte patterns
+  ``0xCB``, ``0xDB`` and ``0xFB`` have been replaced with ``0xCD``, ``0xDD``
+  and ``0xFD`` to use the same values than Windows CRT debug ``malloc()``
+  and ``free()``.
+
+- bpo-36443: Since Python 3.7.0, calling :c:func:`Py_DecodeLocale` before
+  :c:func:`Py_Initialize` produces mojibake if the ``LC_CTYPE`` locale is
+  coerced and/or if the UTF-8 Mode is enabled by the user configuration. The
+  LC_CTYPE coercion and UTF-8 Mode are now disabled by default to fix the
+  mojibake issue. They must now be enabled explicitly (opt-in) using the new
+  :c:func:`_Py_PreInitialize` API with ``_PyPreConfig``.
+
+- bpo-36025: Fixed an accidental change to the datetime C API where the
+  arguments to the :c:func:`PyDate_FromTimestamp` function were incorrectly
+  interpreted as a single timestamp rather than an arguments tuple, which
+  causes existing code to start raising :exc:`TypeError`. The
+  backwards-incompatible change was only present in alpha releases of Python
+  3.8. Patch by Paul Ganssle.
+
+- bpo-35810: Modify ``PyObject_Init`` to correctly increase the refcount of
+  heap- allocated Type objects. Also fix the refcounts of the heap-allocated
+  types that were either doing this manually or not decreasing the type's
+  refcount in tp_dealloc
+
+
 What's New in Python 3.8.0 alpha 3?
 ===================================
 
@@ -29,7 +577,7 @@ Core and Builtins
 
 - bpo-36398: Fix a possible crash in ``structseq_repr()``.
 
-- bpo-12477: Fix bug in parsermodule when parsing a state in a DFA that has
+- bpo-36256: Fix bug in parsermodule when parsing a state in a DFA that has
   two or more arcs with labels of the same type. Patch by Pablo Galindo.
 
 - bpo-36365: repr(structseq) is no longer limited to 512 bytes.
@@ -91,7 +639,7 @@ Core and Builtins
   numbers to C integers.  Using the ``__int__()`` method in implicit
   conversions has been deprecated.
 
-- bpo-11814: Retire pgen and use a modified version of pgen2 to generate the
+- bpo-35808: Retire pgen and use a modified version of pgen2 to generate the
   parser. Patch by Pablo Galindo.
 
 Library
