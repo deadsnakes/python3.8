@@ -5,11 +5,11 @@ Subject: tempfile-minimal
 # DP: Avoid shutil import when it is not available.
 # DP: Avoid shutil import when it is not available.
 ---
- Lib/tempfile.py | 145 ++++++++++++++++++++++++++++++++++++++++++++++++++++++--
- 1 file changed, 142 insertions(+), 3 deletions(-)
+ Lib/tempfile.py | 143 +++++++++++++++++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 141 insertions(+), 2 deletions(-)
 
 diff --git a/Lib/tempfile.py b/Lib/tempfile.py
-index a66d6f3..222d9fc 100644
+index e8b111e..11bb0af 100644
 --- a/Lib/tempfile.py
 +++ b/Lib/tempfile.py
 @@ -40,7 +40,146 @@ import functools as _functools
@@ -160,18 +160,12 @@ index a66d6f3..222d9fc 100644
  import errno as _errno
  from random import Random as _Random
  import weakref as _weakref
-@@ -779,7 +918,7 @@ class TemporaryDirectory(object):
+@@ -805,7 +944,7 @@ class TemporaryDirectory(object):
+             else:
+                 raise
+ 
+-        _shutil.rmtree(name, onerror=onerror)
++        _rmtree(name, onerror=onerror)
  
      @classmethod
      def _cleanup(cls, name, warn_message):
--        _shutil.rmtree(name)
-+        _rmtree(name)
-         _warnings.warn(warn_message, ResourceWarning)
- 
-     def __repr__(self):
-@@ -793,4 +932,4 @@ class TemporaryDirectory(object):
- 
-     def cleanup(self):
-         if self._finalizer.detach():
--            _shutil.rmtree(self.name)
-+            _rmtree(self.name)
