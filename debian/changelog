@@ -1,3 +1,10 @@
+python3.8 (3.8.0~b1-1+bionic1) bionic; urgency=medium
+
+  * Python 3.8.0 beta 1 release.
+  * Add importlib.metadata deps to python3.8-minimal.
+
+ -- Anthony Sottile <asottile@umich.edu>  Tue, 04 Jun 2019 19:47:19 -0700
+
 python3.8 (3.8.0~a4-1+bionic1) bionic; urgency=medium
 
   * Python 3.8.0 alpha 4 release.
