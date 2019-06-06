@@ -11,7 +11,7 @@ libpython@VER@d.so.1.0 libpython@VER@-dbg #MINVER#
  _PyUnicode_compact_data@Base @SVER@
  _PyUnicode_data@Base @SVER@
  _PyUnicode_utf8@Base @SVER@
- _PyWstrList_CheckConsistency@Base 3.8.0~a4
+ _PyWideStringList_CheckConsistency@Base 3.8.0~b1
  _Py_Dealloc@Base @SVER@
  _Py_GetRefTotal@Base @SVER@
  _Py_HashSecret_Initialized@Base @SVER@
