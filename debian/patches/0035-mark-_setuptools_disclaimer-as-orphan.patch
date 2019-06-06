@@ -1,0 +1,18 @@
+From: Anthony Sottile <asottile@umich.edu>
+Date: Wed, 5 Jun 2019 20:15:46 -0700
+Subject: mark _setuptools_disclaimer as orphan
+
+---
+ Doc/distutils/_setuptools_disclaimer.rst | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/Doc/distutils/_setuptools_disclaimer.rst b/Doc/distutils/_setuptools_disclaimer.rst
+index cc75858..13f8dc1 100644
+--- a/Doc/distutils/_setuptools_disclaimer.rst
++++ b/Doc/distutils/_setuptools_disclaimer.rst
+@@ -1,3 +1,5 @@
++:orphan:
++
+ .. note::
+ 
+    This document is being retained solely until the ``setuptools`` documentation

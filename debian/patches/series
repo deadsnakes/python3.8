@@ -32,3 +32,4 @@ argparse-no-shutil.diff
 0034-disable-docs-theme.patch
 0033-older-sphinx-v2.patch
 0034-fix-old-sphinx.patch
+0035-mark-_setuptools_disclaimer-as-orphan.patch
