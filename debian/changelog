@@ -1,3 +1,9 @@
+python3.8 (3.8.0~b1-1+xenial2) xenial; urgency=medium
+
+  * Fix 32-bit build by adding symbol.
+
+ -- Anthony Sottile <asottile@umich.edu>  Wed, 05 Jun 2019 20:41:33 -0700
+
 python3.8 (3.8.0~b1-1+xenial1) xenial; urgency=medium
 
   * Python 3.8.0 beta 1 release.
