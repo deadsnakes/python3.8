@@ -19,6 +19,7 @@ are:
   _collections		extension
   _collections_abc	module
   _compat_pickle	module
+  _csv			extension
   _datetime		extension
   _elementtree		extension
   _fileio		builtin
@@ -76,8 +77,10 @@ are:
   contextlib		module
   copy			module
   copyreg		module
+  csv			module
   datetime		module
   dis			module
+  email			package
   encodings		package
   enum			module
   errno			builtin
@@ -117,6 +120,7 @@ are:
   pwd			builtin
   pyexpat		extension
   py_compile		module
+  quopri		module
   random		module
   re			module
   reprlib		module
@@ -147,8 +151,11 @@ are:
   tracemalloc		module
   types			module
   unicodedata		extension
+  urllib		package
+  uu			module
   warnings		module
   weakref		module
+  zipfile		module
   zipimport		module
   zlib			extension
 

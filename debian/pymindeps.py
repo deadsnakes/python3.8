@@ -115,6 +115,7 @@ excluded_imports = {
     'hashlib': set(('logging', '_hashlib')),
     #'hashlib': set(('_hashlib', '_md5', '_sha', '_sha256','_sha512',)),
     'heapq': set(('doctest',)),
+    'importlib': set(('csv', 'email', 'zipfile')),
     #'io': set(('_dummy_thread',)),
     'logging': set(('multiprocessing',)),
     'os': set(('nt', 'ntpath', 'os2', 'os2emxpath', 'mac', 'macpath',
@@ -132,6 +133,7 @@ excluded_imports = {
     'tempfile': set(('_dummy_thread', 'shutil')),
     'functools': set(('typing',)),
     'platform': set(('distutils','plistlib')),
+    'zipfile': set(('bz2','lzma')),
     }
 
 def main(argv):
