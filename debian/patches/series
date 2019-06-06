@@ -31,3 +31,4 @@ argparse-no-shutil.diff
 0033-older-sphinx.patch
 0034-disable-docs-theme.patch
 0033-older-sphinx-v2.patch
+0034-fix-old-sphinx.patch
