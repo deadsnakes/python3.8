@@ -9,7 +9,7 @@ Last-Update: 2017-11-27
  1 file changed, 6 insertions(+)
 
 diff --git a/Doc/Makefile b/Doc/Makefile
-index 53877e6..96b222b 100644
+index 6f86728..182fedd 100644
 --- a/Doc/Makefile
 +++ b/Doc/Makefile
 @@ -28,6 +28,7 @@ help:
@@ -20,7 +20,7 @@ index 53877e6..96b222b 100644
  	@echo "  text       to make plain text files"
  	@echo "  epub       to make EPUB files"
  	@echo "  changes    to make an overview over all changed/added/deprecated items"
-@@ -73,6 +74,11 @@ latex: build
+@@ -81,6 +82,11 @@ latex: build
  	@echo "Run \`make all-pdf' or \`make all-ps' in that directory to" \
  	      "run these through (pdf)latex."
  

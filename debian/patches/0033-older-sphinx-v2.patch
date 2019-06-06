@@ -10,7 +10,7 @@ Subject: older sphinx v2
  4 files changed, 3 insertions(+), 7 deletions(-)
 
 diff --git a/Doc/c-api/typeobj.rst b/Doc/c-api/typeobj.rst
-index 0647a49..b44fa90 100644
+index 83fcc5a..0763fd2 100644
 --- a/Doc/c-api/typeobj.rst
 +++ b/Doc/c-api/typeobj.rst
 @@ -34,7 +34,6 @@ Quick Reference
@@ -19,8 +19,8 @@ index 0647a49..b44fa90 100644
  .. table::
 -   :widths: 18,18,18,1,1,1,1
  
-    +---------------------------------------------+-----------------------------------+-------------------+---------------+
-    | PyTypeObject Slot [#slots]_                 | :ref:`Type <slot-typedefs-table>` | special           | Info [#cols]_ |
+    +------------------------------------------------+-----------------------------------+-------------------+---------------+
+    | PyTypeObject Slot [#slots]_                    | :ref:`Type <slot-typedefs-table>` | special           | Info [#cols]_ |
 @@ -194,7 +193,6 @@ sub-slots
  ^^^^^^^^^
  
@@ -30,10 +30,10 @@ index 0647a49..b44fa90 100644
     +---------------------------------------------------------+-----------------------------------+--------------+
     | Slot                                                    | :ref:`Type <slot-typedefs-table>` | special      |
 diff --git a/Doc/conf.py b/Doc/conf.py
-index e0a873d..93df22d 100644
+index 55155e1..db0e4c1 100644
 --- a/Doc/conf.py
 +++ b/Doc/conf.py
-@@ -42,7 +42,7 @@ today_fmt = '%B %d, %Y'
+@@ -45,7 +45,7 @@ today_fmt = '%B %d, %Y'
  highlight_language = 'python3'
  
  # Minimum version of sphinx required
@@ -43,7 +43,7 @@ index e0a873d..93df22d 100644
  # Ignore any .rst files in the venv/ directory.
  venvdir = os.getenv('VENVDIR', 'venv')
 diff --git a/Doc/tools/extensions/pyspecific.py b/Doc/tools/extensions/pyspecific.py
-index 6631743..e80af41 100644
+index 8bf7eb6..6a2bede 100644
 --- a/Doc/tools/extensions/pyspecific.py
 +++ b/Doc/tools/extensions/pyspecific.py
 @@ -23,7 +23,6 @@ from docutils import nodes, utils
@@ -54,7 +54,7 @@ index 6631743..e80af41 100644
  from sphinx.util.nodes import split_explicit_title
  from sphinx.writers.html import HTMLTranslator
  from sphinx.writers.text import TextWriter, TextTranslator
-@@ -351,7 +350,7 @@ class PydocTopicsBuilder(Builder):
+@@ -390,7 +389,7 @@ class PydocTopicsBuilder(Builder):
  
      def write(self, *ignored):
          writer = TextWriter(self)

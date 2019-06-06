@@ -9,7 +9,7 @@ Subject: ext-no-libpython-link
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/Lib/distutils/command/build_ext.py b/Lib/distutils/command/build_ext.py
-index c3b9602..fc5f320 100644
+index 2d7cdf0..b4ed255 100644
 --- a/Lib/distutils/command/build_ext.py
 +++ b/Lib/distutils/command/build_ext.py
 @@ -231,7 +231,7 @@ class build_ext(Command):
