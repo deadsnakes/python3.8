@@ -1,3 +1,9 @@
+python3.8 (3.8.0~b2-1+bionic1) bionic; urgency=medium
+
+  * Python 3.8.0 beta 2 release.
+
+ -- Anthony Sottile <asottile@umich.edu>  Thu, 04 Jul 2019 15:57:47 -0700
+
 python3.8 (3.8.0~b1-1+bionic2) bionic; urgency=medium
 
   * Fix 32-bit build by adding symbol
