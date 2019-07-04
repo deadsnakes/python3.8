@@ -320,11 +320,11 @@ def fmean(data):
     except TypeError:
         # Handle iterators that do not define __len__().
         n = 0
-        def count(x):
+        def count(iterable):
             nonlocal n
-            n += 1
-            return x
-        total = fsum(map(count, data))
+            for n, x in enumerate(iterable, start=1):
+                yield x
+        total = fsum(count(data))
     else:
         total = fsum(data)
     try:
@@ -603,7 +603,7 @@ def multimode(data):
 # options make for easier choices and that external packages can be
 # used for anything more advanced.
 
-def quantiles(dist, *, n=4, method='exclusive'):
+def quantiles(dist, /, *, n=4, method='exclusive'):
     '''Divide *dist* into *n* continuous intervals with equal probability.
 
     Returns a list of (n - 1) cut points separating the intervals.

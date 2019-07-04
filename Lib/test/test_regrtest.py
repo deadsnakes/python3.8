@@ -616,7 +616,9 @@ class ProgramsTestCase(BaseTestCase):
         # Tools\buildbot\test.bat
         script = os.path.join(ROOT_DIR, 'Tools', 'buildbot', 'test.bat')
         test_args = ['--testdir=%s' % self.tmptestdir]
-        if platform.architecture()[0] == '64bit':
+        if platform.machine() == 'ARM64':
+            test_args.append('-arm64') # ARM 64-bit build
+        elif platform.architecture()[0] == '64bit':
             test_args.append('-x64')   # 64-bit build
         if not Py_DEBUG:
             test_args.append('+d')     # Release build, use python.exe
@@ -629,7 +631,9 @@ class ProgramsTestCase(BaseTestCase):
         if not os.path.isfile(script):
             self.skipTest(f'File "{script}" does not exist')
         rt_args = ["-q"]             # Quick, don't run tests twice
-        if platform.architecture()[0] == '64bit':
+        if platform.machine() == 'ARM64':
+            rt_args.append('-arm64') # ARM 64-bit build
+        elif platform.architecture()[0] == '64bit':
             rt_args.append('-x64')   # 64-bit build
         if Py_DEBUG:
             rt_args.append('-d')     # Debug build, use python_d.exe
@@ -1119,6 +1123,21 @@ class ArgsTestCase(BaseTestCase):
         self.check_executed_tests(output, [testname],
                                   env_changed=[testname],
                                   fail_env_changed=True)
+
+    def test_cleanup(self):
+        dirname = os.path.join(self.tmptestdir, "test_python_123")
+        os.mkdir(dirname)
+        filename = os.path.join(self.tmptestdir, "test_python_456")
+        open(filename, "wb").close()
+        names = [dirname, filename]
+
+        cmdargs = ['-m', 'test',
+                   '--tempdir=%s' % self.tmptestdir,
+                   '--cleanup']
+        self.run_python(cmdargs)
+
+        for name in names:
+            self.assertFalse(os.path.exists(name), name)
 
 
 class TestUtils(unittest.TestCase):

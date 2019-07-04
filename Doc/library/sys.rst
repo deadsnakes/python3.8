@@ -16,6 +16,10 @@ always available.
    On POSIX systems where Python was built with the standard ``configure``
    script, this contains the ABI flags as specified by :pep:`3149`.
 
+   .. versionchanged:: 3.8
+      Default flags became an empty string (``m`` flag for pymalloc has been
+      removed).
+
    .. versionadded:: 3.2
 
 
@@ -81,6 +85,9 @@ always available.
 
    The native equivalent of this function is :c:func:`PySys_Audit`. Using the
    native function is preferred when possible.
+
+   See the :ref:`audit events table <audit-events>` for all events raised by
+   ``CPython``.
 
    .. versionadded:: 3.8
 
@@ -162,7 +169,7 @@ always available.
 
    This function should be used for internal and specialized purposes only.
 
-   .. audit-event:: sys._current_frames
+   .. audit-event:: sys._current_frames "" sys._current_frames
 
 
 .. function:: breakpointhook()
@@ -671,7 +678,7 @@ always available.
    that is deeper than the call stack, :exc:`ValueError` is raised.  The default
    for *depth* is zero, returning the frame at the top of the call stack.
 
-   .. audit-event:: sys._getframe
+   .. audit-event:: sys._getframe "" sys._getframe
 
    .. impl-detail::
 
@@ -905,6 +912,12 @@ always available.
    <tut-interactive>`.  This is done after the :envvar:`PYTHONSTARTUP` file is
    read, so that you can set this hook there.  The :mod:`site` module
    :ref:`sets this <rlcompleter-config>`.
+
+   .. audit-event:: cpython.run_interactivehook hook sys.__interactivehook__
+
+      Raises an :ref:`auditing event <auditing>`
+      ``cpython.run_interactivehook`` with the hook object as the argument when
+      the hook is called on startup.
 
    .. versionadded:: 3.4
 
@@ -1186,7 +1199,7 @@ always available.
    ``'return'``, ``'c_call'``, ``'c_return'``, or ``'c_exception'``. *arg* depends
    on the event type.
 
-   .. audit-event:: sys.setprofile
+   .. audit-event:: sys.setprofile "" sys.setprofile
 
    The events have the following meaning:
 
@@ -1308,7 +1321,7 @@ always available.
 
    For more information on code and frame objects, refer to :ref:`types`.
 
-   .. audit-event:: sys.settrace
+   .. audit-event:: sys.settrace "" sys.settrace
 
    .. impl-detail::
 
@@ -1330,9 +1343,9 @@ always available.
    first time. The *finalizer* will be called when an asynchronous generator
    is about to be garbage collected.
 
-   .. audit-event:: sys.set_asyncgen_hooks_firstiter
+   .. audit-event:: sys.set_asyncgen_hooks_firstiter "" sys.set_asyncgen_hooks
 
-   .. audit-event:: sys.set_asyncgen_hooks_finalizer
+   .. audit-event:: sys.set_asyncgen_hooks_finalizer "" sys.set_asyncgen_hooks
 
    Two auditing events are raised because the underlying API consists of two
    calls, each of which must raise its own event.
@@ -1514,12 +1527,20 @@ always available.
    * *err_msg*: Error message, can be ``None``.
    * *object*: Object causing the exception, can be ``None``.
 
-   :func:`sys.unraisablehook` can be overridden to control how unraisable
-   exceptions are handled.
-
    The default hook formats *err_msg* and *object* as:
    ``f'{err_msg}: {object!r}'``; use "Exception ignored in" error message
    if *err_msg* is ``None``.
+
+   :func:`sys.unraisablehook` can be overridden to control how unraisable
+   exceptions are handled.
+
+   Storing *exc_value* using a custom hook can create a reference cycle. It
+   should be cleared explicitly to break the reference cycle when the
+   exception is no longer needed.
+
+   Storing *object* using a custom hook can resurrect it if it is set to an
+   object which is being finalized. Avoid storing *object* after the custom
+   hook completes to avoid resurrecting objects.
 
    See also :func:`excepthook` which handles uncaught exceptions.
 

@@ -1,6 +1,5 @@
 # Author: Steven J. Bethard <steven.bethard@gmail.com>.
 
-import codecs
 import inspect
 import os
 import shutil
@@ -1617,6 +1616,24 @@ class TestFileTypeOpenArgs(TestCase):
             for type, args in cases:
                 type('foo')
                 m.assert_called_with('foo', *args)
+
+
+class TestFileTypeMissingInitialization(TestCase):
+    """
+    Test that add_argument throws an error if FileType class
+    object was passed instead of instance of FileType
+    """
+
+    def test(self):
+        parser = argparse.ArgumentParser()
+        with self.assertRaises(ValueError) as cm:
+            parser.add_argument('-x', type=argparse.FileType)
+
+        self.assertEqual(
+            '%r is a FileType class object, instance of it must be passed'
+            % (argparse.FileType,),
+            str(cm.exception)
+        )
 
 
 class TestTypeCallable(ParserTestCase):
