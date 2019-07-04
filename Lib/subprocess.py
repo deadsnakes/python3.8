@@ -459,12 +459,12 @@ def run(*popenargs,
     The other arguments are the same as for the Popen constructor.
     """
     if input is not None:
-        if 'stdin' in kwargs:
+        if kwargs.get('stdin') is not None:
             raise ValueError('stdin and input arguments may not both be used.')
         kwargs['stdin'] = PIPE
 
     if capture_output:
-        if ('stdout' in kwargs) or ('stderr' in kwargs):
+        if kwargs.get('stdout') is not None or kwargs.get('stderr') is not None:
             raise ValueError('stdout and stderr arguments may not be used '
                              'with capture_output.')
         kwargs['stdout'] = PIPE
@@ -1268,6 +1268,11 @@ class Popen(object):
                 comspec = os.environ.get("COMSPEC", "cmd.exe")
                 args = '{} /c "{}"'.format (comspec, args)
 
+            if cwd is not None:
+                cwd = os.fsdecode(cwd)
+
+            sys.audit("subprocess.Popen", executable, args, cwd, env)
+
             # Start the process
             try:
                 hp, ht, pid, tid = _winapi.CreateProcess(executable, args,
@@ -1276,7 +1281,7 @@ class Popen(object):
                                          int(not close_fds),
                                          creationflags,
                                          env,
-                                         os.fsdecode(cwd) if cwd is not None else None,
+                                         cwd,
                                          startupinfo)
             finally:
                 # Child is launched. Close the parent's copy of those pipe
@@ -1542,6 +1547,8 @@ class Popen(object):
 
             if executable is None:
                 executable = args[0]
+
+            sys.audit("subprocess.Popen", executable, args, cwd, env)
 
             if (_USE_POSIX_SPAWN
                     and os.path.dirname(executable)

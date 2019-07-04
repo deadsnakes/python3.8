@@ -58,6 +58,14 @@ This module defines the following functions:
    :func:`threading.excepthook` can be overridden to control how uncaught
    exceptions raised by :func:`Thread.run` are handled.
 
+   Storing *exc_value* using a custom hook can create a reference cycle. It
+   should be cleared explicitly to break the reference cycle when the
+   exception is no longer needed.
+
+   Storing *object* using a custom hook can resurrect it if it is set to an
+   object which is being finalized. Avoid storing *object* after the custom
+   hook completes to avoid resurrecting objects.
+
    .. seealso::
       :func:`sys.excepthook` handles uncaught exceptions.
 
@@ -82,7 +90,7 @@ This module defines the following functions:
    Its value may be used to uniquely identify this particular thread system-wide
    (until the thread terminates, after which the value may be recycled by the OS).
 
-   .. availability:: Windows, FreeBSD, Linux, macOS, OpenBSD.
+   .. availability:: Windows, FreeBSD, Linux, macOS, OpenBSD, NetBSD, AIX.
 
    .. versionadded:: 3.8
 
