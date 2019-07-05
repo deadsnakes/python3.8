@@ -9,12 +9,12 @@ Subject: disable-some-tests
  1 file changed, 1 insertion(+)
 
 diff --git a/Lib/distutils/tests/test_build_ext.py b/Lib/distutils/tests/test_build_ext.py
-index 88847f9..65f456c 100644
+index 52d36b2..7c672d8 100644
 --- a/Lib/distutils/tests/test_build_ext.py
 +++ b/Lib/distutils/tests/test_build_ext.py
-@@ -102,6 +102,7 @@ class BuildExtTestCase(TempdirManager,
-         self.assertIsInstance(xx.Null(), xx.Null)
-         self.assertIsInstance(xx.Str(), xx.Str)
+@@ -111,6 +111,7 @@ class BuildExtTestCase(TempdirManager,
+         """)
+         assert_python_ok('-c', code)
  
 +    @unittest.skip('Skipping failing Solaris test')
      def test_solaris_enable_shared(self):

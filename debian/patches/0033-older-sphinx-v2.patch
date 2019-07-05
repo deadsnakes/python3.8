@@ -5,12 +5,12 @@ Subject: older sphinx v2
 ---
  Doc/c-api/typeobj.rst              | 2 --
  Doc/conf.py                        | 2 +-
- Doc/tools/extensions/pyspecific.py | 3 +--
+ Doc/tools/extensions/pyspecific.py | 4 ++--
  Doc/tools/extensions/suspicious.py | 3 +--
- 4 files changed, 3 insertions(+), 7 deletions(-)
+ 4 files changed, 4 insertions(+), 7 deletions(-)
 
 diff --git a/Doc/c-api/typeobj.rst b/Doc/c-api/typeobj.rst
-index 83fcc5a..0763fd2 100644
+index 638fb0c..d62209b 100644
 --- a/Doc/c-api/typeobj.rst
 +++ b/Doc/c-api/typeobj.rst
 @@ -34,7 +34,6 @@ Quick Reference
@@ -43,18 +43,26 @@ index 55155e1..db0e4c1 100644
  # Ignore any .rst files in the venv/ directory.
  venvdir = os.getenv('VENVDIR', 'venv')
 diff --git a/Doc/tools/extensions/pyspecific.py b/Doc/tools/extensions/pyspecific.py
-index 8bf7eb6..6a2bede 100644
+index 28b8bda..b8979fd 100644
 --- a/Doc/tools/extensions/pyspecific.py
 +++ b/Doc/tools/extensions/pyspecific.py
-@@ -23,7 +23,6 @@ from docutils import nodes, utils
+@@ -9,6 +9,7 @@
+     :license: Python license.
+ """
+ 
++import logging
+ import re
+ import io
+ from os import getenv, path
+@@ -23,7 +24,6 @@ from docutils import nodes, utils
  from sphinx import addnodes
  from sphinx.builders import Builder
  from sphinx.locale import translators
--from sphinx.util import status_iterator
+-from sphinx.util import status_iterator, logging
  from sphinx.util.nodes import split_explicit_title
  from sphinx.writers.html import HTMLTranslator
  from sphinx.writers.text import TextWriter, TextTranslator
-@@ -390,7 +389,7 @@ class PydocTopicsBuilder(Builder):
+@@ -454,7 +454,7 @@ class PydocTopicsBuilder(Builder):
  
      def write(self, *ignored):
          writer = TextWriter(self)
@@ -64,7 +72,7 @@ index 8bf7eb6..6a2bede 100644
                                       length=len(pydoc_topic_labels)):
              if label not in self.env.domaindata['std']['labels']:
 diff --git a/Doc/tools/extensions/suspicious.py b/Doc/tools/extensions/suspicious.py
-index 494efab..baf7e73 100644
+index 34a0112..fd35ccf 100644
 --- a/Doc/tools/extensions/suspicious.py
 +++ b/Doc/tools/extensions/suspicious.py
 @@ -41,6 +41,7 @@ Copyright 2009 Gabriel A. Genellina
