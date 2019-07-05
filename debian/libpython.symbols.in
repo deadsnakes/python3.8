@@ -7,7 +7,6 @@
  PyAST_Validate@Base @SVER@
  PyAST_mod2obj@Base @SVER@
  PyAST_obj2mod@Base @SVER@
- PyAST_obj2mod_ex@Base 3.8.0~a3
  PyArena_AddPyObject@Base @SVER@
  PyArena_Free@Base @SVER@
  PyArena_Malloc@Base @SVER@
@@ -110,6 +109,7 @@
  PyCode_Addr2Line@Base @SVER@
  PyCode_New@Base @SVER@
  PyCode_NewEmpty@Base @SVER@
+ PyCode_NewWithPosOnlyArgs@Base 3.8.0~b2
  PyCode_Optimize@Base @SVER@
  PyCode_Type@Base @SVER@
  PyCodec_BackslashReplaceErrors@Base @SVER@
@@ -147,6 +147,7 @@
  PyConfig_SetBytesArgv@Base 3.8.0~b1
  PyConfig_SetBytesString@Base 3.8.0~b1
  PyConfig_SetString@Base 3.8.0~b1
+ PyConfig_SetWideStringList@Base 3.8.0~b2
  PyContextTokenMissing_Type@Base @SVER@
  PyContextToken_Type@Base @SVER@
  PyContextVar_Get@Base @SVER@
