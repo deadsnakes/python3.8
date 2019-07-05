@@ -910,6 +910,12 @@ class TestParser(TestParserMixin, TestEmailBase):
         self.assertEqual(word.token_type, 'atom')
         self.assertEqual(word[0].token_type, 'cfws')
 
+    def test_get_word_all_CFWS(self):
+        # bpo-29412: Test that we don't raise IndexError when parsing CFWS only
+        # token.
+        with self.assertRaises(errors.HeaderParseError):
+            parser.get_word('(Recipients list suppressed')
+
     def test_get_word_qs_yields_qs(self):
         word = self._test_get_x(parser.get_word,
             '"bar " (bang) ah', '"bar " (bang) ', 'bar  ', [], 'ah')
@@ -2323,6 +2329,17 @@ class TestParser(TestParserMixin, TestEmailBase):
 
     # get_address_list
 
+    def test_get_address_list_CFWS(self):
+        address_list = self._test_get_x(parser.get_address_list,
+                                        '(Recipient list suppressed)',
+                                        '(Recipient list suppressed)',
+                                        ' ',
+                                        [errors.ObsoleteHeaderDefect],  # no content in address list
+                                        '')
+        self.assertEqual(address_list.token_type, 'address-list')
+        self.assertEqual(len(address_list.mailboxes), 0)
+        self.assertEqual(address_list.mailboxes, address_list.all_mailboxes)
+
     def test_get_address_list_mailboxes_simple(self):
         address_list = self._test_get_x(parser.get_address_list,
             'dinsdale@example.com',
@@ -2493,6 +2510,78 @@ class TestParser(TestParserMixin, TestEmailBase):
             parser.parse_content_transfer_encoding_header,
             ";foo", ";foo", ";foo", [errors.InvalidHeaderDefect]*3
         )
+
+    # get_msg_id
+
+    def test_get_msg_id_valid(self):
+        msg_id = self._test_get_x(
+            parser.get_msg_id,
+            "<simeple.local@example.something.com>",
+            "<simeple.local@example.something.com>",
+            "<simeple.local@example.something.com>",
+            [],
+            '',
+            )
+        self.assertEqual(msg_id.token_type, 'msg-id')
+
+    def test_get_msg_id_obsolete_local(self):
+        msg_id = self._test_get_x(
+            parser.get_msg_id,
+            '<"simeple.local"@example.com>',
+            '<"simeple.local"@example.com>',
+            '<simeple.local@example.com>',
+            [errors.ObsoleteHeaderDefect],
+            '',
+            )
+        self.assertEqual(msg_id.token_type, 'msg-id')
+
+    def test_get_msg_id_non_folding_literal_domain(self):
+        msg_id = self._test_get_x(
+            parser.get_msg_id,
+            "<simple.local@[someexamplecom.domain]>",
+            "<simple.local@[someexamplecom.domain]>",
+            "<simple.local@[someexamplecom.domain]>",
+            [],
+            "",
+            )
+        self.assertEqual(msg_id.token_type, 'msg-id')
+
+
+    def test_get_msg_id_obsolete_domain_part(self):
+        msg_id = self._test_get_x(
+            parser.get_msg_id,
+            "<simplelocal@(old)example.com>",
+            "<simplelocal@(old)example.com>",
+            "<simplelocal@ example.com>",
+            [errors.ObsoleteHeaderDefect],
+            ""
+        )
+
+    def test_get_msg_id_no_id_right_part(self):
+        msg_id = self._test_get_x(
+            parser.get_msg_id,
+            "<simplelocal>",
+            "<simplelocal>",
+            "<simplelocal>",
+            [errors.InvalidHeaderDefect],
+            ""
+        )
+        self.assertEqual(msg_id.token_type, 'msg-id')
+
+    def test_get_msg_id_no_angle_start(self):
+        with self.assertRaises(errors.HeaderParseError):
+            parser.get_msg_id("msgwithnoankle")
+
+    def test_get_msg_id_no_angle_end(self):
+        msg_id = self._test_get_x(
+            parser.get_msg_id,
+            "<simplelocal@domain",
+            "<simplelocal@domain>",
+            "<simplelocal@domain>",
+            [errors.InvalidHeaderDefect],
+            ""
+        )
+        self.assertEqual(msg_id.token_type, 'msg-id')
 
 
 @parameterize

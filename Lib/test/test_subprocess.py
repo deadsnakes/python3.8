@@ -3,7 +3,6 @@ from unittest import mock
 from test import support
 import subprocess
 import sys
-import platform
 import signal
 import io
 import itertools
@@ -21,16 +20,10 @@ import textwrap
 from test.support import FakePath
 
 try:
-    import ctypes
-except ImportError:
-    ctypes = None
-else:
-    import ctypes.util
-
-try:
     import _testcapi
 except ImportError:
     _testcapi = None
+
 
 if support.PGO:
     raise unittest.SkipTest("test is not helpful for PGO")
@@ -1705,16 +1698,15 @@ class POSIXProcessTestCase(BaseTestCase):
         # still indicates that it was called.
         try:
             output = subprocess.check_output(
-                    [sys.executable, "-c",
-                     "import os; print(os.getpgid(os.getpid()))"],
+                    [sys.executable, "-c", "import os; print(os.getsid(0))"],
                     start_new_session=True)
         except OSError as e:
             if e.errno != errno.EPERM:
                 raise
         else:
-            parent_pgid = os.getpgid(os.getpid())
-            child_pgid = int(output)
-            self.assertNotEqual(parent_pgid, child_pgid)
+            parent_sid = os.getsid(0)
+            child_sid = int(output)
+            self.assertNotEqual(parent_sid, child_sid)
 
     def test_run_abort(self):
         # returncode handles signal termination
