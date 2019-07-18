@@ -1,3 +1,9 @@
+python3.8 (3.8.0~b2-1+bionic2) bionic; urgency=medium
+
+  * Don't ship unversioned python3-embed.pc
+
+ -- Anthony Sottile <asottile@umich.edu>  Wed, 17 Jul 2019 22:53:32 -0700
+
 python3.8 (3.8.0~b2-1+bionic1) bionic; urgency=medium
 
   * Python 3.8.0 beta 2 release.
