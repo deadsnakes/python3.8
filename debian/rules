@@ -857,7 +857,7 @@ endif
 
 	: # versioned install only
 	rm -f $(d)/usr/bin/{2to3,idle3,pydoc3,pysetup3,python3,python3-config}
-	rm -f $(d)/usr/lib/*/pkgconfig/python3.pc
+	rm -f $(d)/usr/lib/*/pkgconfig/python3{,-embed}.pc
 
 	dh_installdirs -p$(p_lib) \
 		usr/lib/$(DEB_HOST_MULTIARCH) \
