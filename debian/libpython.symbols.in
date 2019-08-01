@@ -1236,7 +1236,6 @@
  _PyBytes_Resize@Base @SVER@
  _PyCFunction_DebugMallocStats@Base @SVER@
  _PyCFunction_FastCallDict@Base @SVER@
- _PyCFunction_Vectorcall@Base 3.8.0~b1
  _PyCode_CheckLineNumber@Base @SVER@
  _PyCode_ConstantKey@Base @SVER@
  _PyCode_GetExtra@Base @SVER@
@@ -1508,7 +1507,6 @@
  _PyMem_Strdup@Base @SVER@
  _PyMethodDef_RawFastCallDict@Base @SVER@
  _PyMethodDef_RawFastCallKeywords@Base @SVER@
- _PyMethodDescr_Vectorcall@Base 3.8.0~b1
  _PyMethodWrapper_Type@Base @SVER@
  _PyMethod_DebugMallocStats@Base @SVER@
  _PyModuleSpec_IsInitializing@Base @SVER@
