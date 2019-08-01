@@ -14,6 +14,7 @@ import gc
 import glob
 import importlib
 import importlib.util
+import locale
 import logging.handlers
 import nntplib
 import os
@@ -92,7 +93,7 @@ __all__ = [
     "bigmemtest", "bigaddrspacetest", "cpython_only", "get_attribute",
     "requires_IEEE_754", "skip_unless_xattr", "requires_zlib",
     "anticipate_failure", "load_package_tests", "detect_api_mismatch",
-    "check__all__", "skip_unless_bind_unix_socket",
+    "check__all__", "skip_unless_bind_unix_socket", "skip_if_buggy_ucrt_strfptime",
     "ignore_warnings",
     # sys
     "is_jython", "is_android", "check_impl_detail", "unix_shell",
@@ -2499,6 +2500,27 @@ def skip_unless_symlink(test):
     msg = "Requires functional symlink implementation"
     return test if ok else unittest.skip(msg)(test)
 
+_buggy_ucrt = None
+def skip_if_buggy_ucrt_strfptime(test):
+    """
+    Skip decorator for tests that use buggy strptime/strftime
+
+    If the UCRT bugs are present time.localtime().tm_zone will be
+    an empty string, otherwise we assume the UCRT bugs are fixed
+
+    See bpo-37552 [Windows] strptime/strftime return invalid
+    results with UCRT version 17763.615
+    """
+    global _buggy_ucrt
+    if _buggy_ucrt is None:
+        if(sys.platform == 'win32' and
+                locale.getdefaultlocale()[1]  == 'cp65001' and
+                time.localtime().tm_zone == ''):
+            _buggy_ucrt = True
+        else:
+            _buggy_ucrt = False
+    return unittest.skip("buggy MSVC UCRT strptime/strftime")(test) if _buggy_ucrt else test
+
 class PythonSymlink:
     """Creates a symlink for the current Python executable"""
     def __init__(self, link=None):
@@ -2954,7 +2976,7 @@ def fd_count():
     if sys.platform.startswith(('linux', 'freebsd')):
         try:
             names = os.listdir("/proc/self/fd")
-            # Substract one because listdir() opens internally a file
+            # Subtract one because listdir() internally opens a file
             # descriptor to list the content of the /proc/self/fd/ directory.
             return len(names) - 1
         except FileNotFoundError:
@@ -3157,3 +3179,60 @@ class catch_unraisable_exception:
     def __exit__(self, *exc_info):
         sys.unraisablehook = self._old_hook
         del self.unraisable
+
+
+class catch_threading_exception:
+    """
+    Context manager catching threading.Thread exception using
+    threading.excepthook.
+
+    Attributes set when an exception is catched:
+
+    * exc_type
+    * exc_value
+    * exc_traceback
+    * thread
+
+    See threading.excepthook() documentation for these attributes.
+
+    These attributes are deleted at the context manager exit.
+
+    Usage:
+
+        with support.catch_threading_exception() as cm:
+            # code spawning a thread which raises an exception
+            ...
+
+            # check the thread exception, use cm attributes:
+            # exc_type, exc_value, exc_traceback, thread
+            ...
+
+        # exc_type, exc_value, exc_traceback, thread attributes of cm no longer
+        # exists at this point
+        # (to avoid reference cycles)
+    """
+
+    def __init__(self):
+        self.exc_type = None
+        self.exc_value = None
+        self.exc_traceback = None
+        self.thread = None
+        self._old_hook = None
+
+    def _hook(self, args):
+        self.exc_type = args.exc_type
+        self.exc_value = args.exc_value
+        self.exc_traceback = args.exc_traceback
+        self.thread = args.thread
+
+    def __enter__(self):
+        self._old_hook = threading.excepthook
+        threading.excepthook = self._hook
+        return self
+
+    def __exit__(self, *exc_info):
+        threading.excepthook = self._old_hook
+        del self.exc_type
+        del self.exc_value
+        del self.exc_traceback
+        del self.thread
