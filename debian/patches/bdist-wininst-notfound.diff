@@ -11,10 +11,10 @@ Subject: bdist-wininst-notfound
  1 file changed, 4 insertions(+)
 
 diff --git a/Lib/distutils/command/bdist_wininst.py b/Lib/distutils/command/bdist_wininst.py
-index acaa184..36fd497 100644
+index b5ed6f0..403e802 100644
 --- a/Lib/distutils/command/bdist_wininst.py
 +++ b/Lib/distutils/command/bdist_wininst.py
-@@ -363,6 +363,10 @@ class bdist_wininst(Command):
+@@ -371,6 +371,10 @@ class bdist_wininst(Command):
  
          filename = os.path.join(directory, "wininst-%s%s.exe" % (bv, sfix))
          f = open(filename, "rb")
