@@ -1428,6 +1428,16 @@ class TestParser(TestParserMixin, TestEmailBase):
         self.assertEqual(addr_spec.domain, 'example.com')
         self.assertEqual(addr_spec.addr_spec, 'star.a.star@example.com')
 
+    def test_get_addr_spec_multiple_domains(self):
+        with self.assertRaises(errors.HeaderParseError):
+            parser.get_addr_spec('star@a.star@example.com')
+
+        with self.assertRaises(errors.HeaderParseError):
+            parser.get_addr_spec('star@a@example.com')
+
+        with self.assertRaises(errors.HeaderParseError):
+            parser.get_addr_spec('star@172.17.0.1@example.com')
+
     # get_obs_route
 
     def test_get_obs_route_simple(self):
@@ -1669,6 +1679,14 @@ class TestParser(TestParserMixin, TestEmailBase):
         self.assertEqual(len(display_name), 4)
         self.assertEqual(display_name[3].comments, ['with trailing comment'])
         self.assertEqual(display_name.display_name, 'simple phrase.')
+
+    def test_get_display_name_for_invalid_address_field(self):
+        # bpo-32178: Test that address fields starting with `:` don't cause
+        # IndexError when parsing the display name.
+        display_name = self._test_get_x(
+            parser.get_display_name,
+            ':Foo ', '', '', [errors.InvalidHeaderDefect], ':Foo ')
+        self.assertEqual(display_name.value, '')
 
     # get_name_addr
 
