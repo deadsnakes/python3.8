@@ -9,7 +9,7 @@ Subject: older sphinx
  3 files changed, 2 insertions(+), 84 deletions(-)
 
 diff --git a/Doc/conf.py b/Doc/conf.py
-index e85ea5b..fd0d4f5 100644
+index abaa760..21004fb 100644
 --- a/Doc/conf.py
 +++ b/Doc/conf.py
 @@ -45,7 +45,7 @@ today_fmt = '%B %d, %Y'
@@ -20,7 +20,7 @@ index e85ea5b..fd0d4f5 100644
 +needs_sphinx = '1.6'
  
  # Ignore any .rst files in the venv/ directory.
- venvdir = os.getenv('VENVDIR', 'venv')
+ exclude_patterns = ['venv/*', 'README.rst']
 diff --git a/Doc/library/turtle.rst b/Doc/library/turtle.rst
 index 7f9f0c3..5d7f060 100644
 --- a/Doc/library/turtle.rst

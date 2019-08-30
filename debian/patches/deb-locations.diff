@@ -25,7 +25,7 @@ index 9a22e56..2f59ee5 100644
  
  This can be overridden by setting the PYTHONDOCS environment variable
 diff --git a/Misc/python.man b/Misc/python.man
-index 8d5ad8c..9b95022 100644
+index 3aa9f1f..a527910 100644
 --- a/Misc/python.man
 +++ b/Misc/python.man
 @@ -337,7 +337,7 @@ exception).  Error messages are written to stderr.
