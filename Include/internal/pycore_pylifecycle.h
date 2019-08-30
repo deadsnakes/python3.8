@@ -15,8 +15,6 @@ extern "C" {
  * KeyboardInterrupt exception, suggesting the user pressed ^C. */
 PyAPI_DATA(int) _Py_UnhandledKeyboardInterrupt;
 
-PyAPI_FUNC(int) Py_BytesMain(int argc, char **argv);
-
 extern int _Py_SetFileSystemEncoding(
     const char *encoding,
     const char *errors);
@@ -43,6 +41,8 @@ extern PyStatus _PySys_Create(
     PyInterpreterState *interp,
     PyObject **sysmod_p);
 extern PyStatus _PySys_SetPreliminaryStderr(PyObject *sysdict);
+extern PyStatus _PySys_ReadPreinitWarnOptions(PyConfig *config);
+extern PyStatus _PySys_ReadPreinitXOptions(PyConfig *config);
 extern int _PySys_InitMain(
     _PyRuntimeState *runtime,
     PyInterpreterState *interp);
