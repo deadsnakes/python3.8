@@ -7,7 +7,7 @@ Subject: setup-modules
  1 file changed, 5 insertions(+), 6 deletions(-)
 
 diff --git a/Modules/Setup b/Modules/Setup
-index ed5ee6c..7877daf 100644
+index 983fa01..4bed1e4 100644
 --- a/Modules/Setup
 +++ b/Modules/Setup
 @@ -175,7 +175,7 @@ _symtable symtablemodule.c
@@ -19,7 +19,7 @@ index ed5ee6c..7877daf 100644
  #_pickle _pickle.c	# pickle accelerator
  #_datetime _datetimemodule.c	# datetime accelerator
  #_bisect _bisectmodule.c	# Bisection algorithms
-@@ -206,10 +206,7 @@ _symtable symtablemodule.c
+@@ -207,10 +207,7 @@ _symtable symtablemodule.c
  
  # Socket module helper for SSL support; you must comment out the other
  # socket line above, and possibly edit the SSL variable:
@@ -31,7 +31,7 @@ index ed5ee6c..7877daf 100644
  
  # The crypt module is now disabled by default because it breaks builds
  # on many systems (where -lcrypt is needed), e.g. Linux (I believe).
-@@ -242,6 +239,7 @@ _symtable symtablemodule.c
+@@ -243,6 +240,7 @@ _symtable symtablemodule.c
  
  #_md5 md5module.c
  
@@ -39,7 +39,7 @@ index ed5ee6c..7877daf 100644
  
  # The _sha module implements the SHA checksum algorithms.
  # (NIST's Secure Hash Algorithms.)
-@@ -329,6 +327,7 @@ _symtable symtablemodule.c
+@@ -330,6 +328,7 @@ _symtable symtablemodule.c
  # Fred Drake's interface to the Python parser
  #parser parsermodule.c
  
@@ -47,7 +47,7 @@ index ed5ee6c..7877daf 100644
  
  # Andrew Kuchling's zlib module.
  # This require zlib 1.1.3 (or later).
-@@ -338,7 +337,7 @@ _symtable symtablemodule.c
+@@ -339,7 +338,7 @@ _symtable symtablemodule.c
  # Interface to the Expat XML parser
  # More information on Expat can be found at www.libexpat.org.
  #
