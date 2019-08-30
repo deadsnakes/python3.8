@@ -326,7 +326,6 @@
  PyExc_SystemError@Base @SVER@
  PyExc_SystemExit@Base @SVER@
  PyExc_TabError@Base @SVER@
- PyExc_TargetScopeError@Base @SVER@
  PyExc_TimeoutError@Base @SVER@
  PyExc_TypeError@Base @SVER@
  PyExc_UnboundLocalError@Base @SVER@
@@ -1099,6 +1098,7 @@
  PyWeakref_NewProxy@Base @SVER@
  PyWeakref_NewRef@Base @SVER@
  PyWideStringList_Append@Base 3.8.0~b1
+ PyWideStringList_Insert@Base 3.8.0~b4
  PyWrapperDescr_Type@Base @SVER@
  PyWrapper_New@Base @SVER@
  PyZip_Type@Base @SVER@
@@ -1638,6 +1638,8 @@
  _PySys_ImplCacheTag@Base @SVER@
  _PySys_ImplName@Base @SVER@
  _PySys_InitMain@Base @SVER@
+ _PySys_ReadPreinitWarnOptions@Base 3.8.0~b4
+ _PySys_ReadPreinitXOptions@Base 3.8.0~b4
  _PySys_SetObjectId@Base @SVER@
  _PySys_SetPreliminaryStderr@Base @SVER@
  _PyThreadState_DeleteExcept@Base @SVER@
