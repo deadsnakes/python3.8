@@ -42,6 +42,7 @@ Architecture: any
 Multi-Arch: allowed
 Priority: @PRIO@
 Depends: @PVER@ (= ${binary:Version}),
+ @PVER@-distutils,
  ${shlibs:Depends}, ${misc:Depends},
 Breaks: python3-pip (<< 1.5.6-4)
 Description: Interactive high-level object-oriented language (pyvenv binary, version @VER@)
