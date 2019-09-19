@@ -1,3 +1,9 @@
+python3.8 (3.8.0~b4-1+xenial3) xenial; urgency=medium
+
+  * Fix broken -gdb.py for -dbg package
+
+ -- Anthony Sottile <asottile@umich.edu>  Thu, 19 Sep 2019 14:29:22 -0700
+
 python3.8 (3.8.0~b4-1+xenial2) xenial; urgency=medium
 
   * Make python3.8-venv depend on python3.8-distutils
