@@ -1,3 +1,9 @@
+python3.8 (3.8.0~b4-1+bionic3) bionic; urgency=medium
+
+  * Fix broken -gdb.py for -dbg package.
+
+ -- Anthony Sottile <asottile@umich.edu>  Thu, 19 Sep 2019 13:58:12 -0700
+
 python3.8 (3.8.0~b4-1+bionic2) bionic; urgency=medium
 
   * Make python3.8-venv depend on python3.8-distutils
