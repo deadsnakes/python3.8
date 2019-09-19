@@ -1425,7 +1425,6 @@ endif
 	dh_strip -a -N$(p_dbg) -N$(p_ldbg) -Xdebug -Xdbg --dbg-package=$(p_dbg)
 	mkdir -p $(d_dbg)/usr/share/gdb/auto-load/usr/bin
 	cp Tools/gdb/libpython.py $(d_dbg)/usr/share/gdb/auto-load/usr/bin/$(PVER)-gdb.py
-	ln -sf $(PVER)-gdb.py $(d_dbg)/usr/share/gdb/auto-load/usr/bin/$(PVER)-gdb.py
 	ln -sf $(PVER)-gdb.py $(d_dbg)/usr/share/gdb/auto-load/usr/bin/$(PVER)d-gdb.py
 	ln -sf $(PVER)-gdb.py $(d_dbg)/usr/share/gdb/auto-load/usr/bin/$(PVER)-dbg-gdb.py
 	mkdir -p $(d_dbg)/usr/share/gdb/auto-load/usr/lib/$(DEB_HOST_MULTIARCH)
