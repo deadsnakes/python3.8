@@ -19,7 +19,7 @@ extern int _Py_SetFileSystemEncoding(
     const char *encoding,
     const char *errors);
 extern void _Py_ClearFileSystemEncoding(void);
-extern PyStatus _PyUnicode_InitEncodings(PyInterpreterState *interp);
+extern PyStatus _PyUnicode_InitEncodings(PyThreadState *tstate);
 #ifdef MS_WINDOWS
 extern int _PyUnicode_EnableLegacyWindowsFSEncoding(void);
 #endif
@@ -41,7 +41,7 @@ extern PyStatus _PySys_Create(
     PyInterpreterState *interp,
     PyObject **sysmod_p);
 extern PyStatus _PySys_SetPreliminaryStderr(PyObject *sysdict);
-extern PyStatus _PySys_ReadPreinitWarnOptions(PyConfig *config);
+extern PyStatus _PySys_ReadPreinitWarnOptions(PyWideStringList *options);
 extern PyStatus _PySys_ReadPreinitXOptions(PyConfig *config);
 extern int _PySys_InitMain(
     _PyRuntimeState *runtime,
@@ -83,7 +83,7 @@ extern void _PyUnicode_Fini(void);
 extern void PyLong_Fini(void);
 extern void _PyFaulthandler_Fini(void);
 extern void _PyHash_Fini(void);
-extern int _PyTraceMalloc_Fini(void);
+extern void _PyTraceMalloc_Fini(void);
 extern void _PyWarnings_Fini(PyInterpreterState *interp);
 
 extern void _PyGILState_Init(
