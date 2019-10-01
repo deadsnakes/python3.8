@@ -10,7 +10,7 @@ Subject: older sphinx v2
  4 files changed, 4 insertions(+), 7 deletions(-)
 
 diff --git a/Doc/c-api/typeobj.rst b/Doc/c-api/typeobj.rst
-index 638fb0c..d62209b 100644
+index bb76750..3f646ad 100644
 --- a/Doc/c-api/typeobj.rst
 +++ b/Doc/c-api/typeobj.rst
 @@ -34,7 +34,6 @@ Quick Reference
@@ -43,7 +43,7 @@ index ba0cad9..a03324a 100644
  # Ignore any .rst files in the venv/ directory.
  exclude_patterns = ['venv/*', 'README.rst']
 diff --git a/Doc/tools/extensions/pyspecific.py b/Doc/tools/extensions/pyspecific.py
-index 28b8bda..b8979fd 100644
+index 2d95612..9e2cb7e 100644
 --- a/Doc/tools/extensions/pyspecific.py
 +++ b/Doc/tools/extensions/pyspecific.py
 @@ -9,6 +9,7 @@
@@ -54,15 +54,15 @@ index 28b8bda..b8979fd 100644
  import re
  import io
  from os import getenv, path
-@@ -23,7 +24,6 @@ from docutils import nodes, utils
- from sphinx import addnodes
- from sphinx.builders import Builder
+@@ -27,7 +28,6 @@ try:
+ except ImportError:
+     from sphinx.environment import NoUri
  from sphinx.locale import translators
 -from sphinx.util import status_iterator, logging
  from sphinx.util.nodes import split_explicit_title
- from sphinx.writers.html import HTMLTranslator
  from sphinx.writers.text import TextWriter, TextTranslator
-@@ -454,7 +454,7 @@ class PydocTopicsBuilder(Builder):
+ from sphinx.writers.latex import LaTeXTranslator
+@@ -426,7 +426,7 @@ class PydocTopicsBuilder(Builder):
  
      def write(self, *ignored):
          writer = TextWriter(self)
@@ -72,7 +72,7 @@ index 28b8bda..b8979fd 100644
                                       length=len(pydoc_topic_labels)):
              if label not in self.env.domaindata['std']['labels']:
 diff --git a/Doc/tools/extensions/suspicious.py b/Doc/tools/extensions/suspicious.py
-index 34a0112..fd35ccf 100644
+index 9e814fb..bd4f687 100644
 --- a/Doc/tools/extensions/suspicious.py
 +++ b/Doc/tools/extensions/suspicious.py
 @@ -41,6 +41,7 @@ Copyright 2009 Gabriel A. Genellina

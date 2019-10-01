@@ -7,10 +7,10 @@ Subject: fix old sphinx
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/Doc/tools/extensions/pyspecific.py b/Doc/tools/extensions/pyspecific.py
-index b8979fd..43840fc 100644
+index 9e2cb7e..642d36e 100644
 --- a/Doc/tools/extensions/pyspecific.py
 +++ b/Doc/tools/extensions/pyspecific.py
-@@ -374,7 +374,7 @@ class DeprecatedRemoved(Directive):
+@@ -346,7 +346,7 @@ class DeprecatedRemoved(Directive):
                                     translatable=False)
              node.append(para)
          env = self.state.document.settings.env

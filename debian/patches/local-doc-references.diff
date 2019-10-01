@@ -21,10 +21,10 @@ index 17592d7..722dc29 100644
        {% if switchers is defined and not embedded %}
        <script type="text/javascript" src="{{ pathto('_static/switchers.js', 1) }}"></script>{% endif %}
 diff --git a/Lib/idlelib/help.html b/Lib/idlelib/help.html
-index 91e66a4..1657fb8 100644
+index 0754f24..33c8baf 100644
 --- a/Lib/idlelib/help.html
 +++ b/Lib/idlelib/help.html
-@@ -27,7 +27,7 @@
+@@ -25,7 +25,7 @@
      <link rel="copyright" title="Copyright" href="../copyright.html" />
      <link rel="next" title="Other Graphical User Interface Packages" href="othergui.html" />
      <link rel="prev" title="tkinter.scrolledtext — Scrolled Text Widget" href="tkinter.scrolledtext.html" />
