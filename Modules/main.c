@@ -54,16 +54,14 @@ pymain_init(const _PyArgv *args)
 
     PyPreConfig preconfig;
     PyPreConfig_InitPythonConfig(&preconfig);
+
     status = _Py_PreInitializeFromPyArgv(&preconfig, args);
     if (_PyStatus_EXCEPTION(status)) {
         return status;
     }
 
     PyConfig config;
-    status = PyConfig_InitPythonConfig(&config);
-    if (_PyStatus_EXCEPTION(status)) {
-        goto done;
-    }
+    PyConfig_InitPythonConfig(&config);
 
     /* pass NULL as the config: config is read from command line arguments,
        environment variables, configuration files */

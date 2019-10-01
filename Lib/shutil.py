@@ -135,9 +135,13 @@ def _fastcopy_sendfile(fsrc, fdst):
     # should not make any difference, also in case the file content
     # changes while being copied.
     try:
-        blocksize = max(os.fstat(infd).st_size, 2 ** 23)  # min 8MB
-    except Exception:
-        blocksize = 2 ** 27  # 128MB
+        blocksize = max(os.fstat(infd).st_size, 2 ** 23)  # min 8MiB
+    except OSError:
+        blocksize = 2 ** 27  # 128MiB
+    # On 32-bit architectures truncate to 1GiB to avoid OverflowError,
+    # see bpo-38319.
+    if sys.maxsize < 2 ** 32:
+        blocksize = min(blocksize, 2 ** 30)
 
     offset = 0
     while True:
@@ -330,7 +334,8 @@ def copystat(src, dst, *, follow_symlinks=True):
     Copy the permission bits, last access time, last modification time, and
     flags from `src` to `dst`. On Linux, copystat() also copies the "extended
     attributes" where possible. The file contents, owner, and group are
-    unaffected. `src` and `dst` are path names given as strings.
+    unaffected. `src` and `dst` are path-like objects or path names given as
+    strings.
 
     If the optional flag `follow_symlinks` is not set, symlinks aren't
     followed if and only if both `src` and `dst` are symlinks.

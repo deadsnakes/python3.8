@@ -265,9 +265,8 @@ which is narrower than complex.  Comparisons between numbers of mixed type use
 the same rule. [2]_ The constructors :func:`int`, :func:`float`, and
 :func:`complex` can be used to produce numbers of a specific type.
 
-All numeric types (except complex) support the following operations, sorted by
-ascending priority (all numeric operations have a higher priority than
-comparison operations):
+All numeric types (except complex) support the following operations (for priorities of
+the operations, see :ref:`operator-summary`):
 
 +---------------------+---------------------------------+---------+--------------------+
 | Operation           | Result                          | Notes   | Full documentation |
@@ -4210,6 +4209,10 @@ pairs within braces, for example: ``{'jack': 4098, 'sjoerd': 4127}`` or ``{4098:
    These are the operations that dictionaries support (and therefore, custom
    mapping types should support too):
 
+   .. describe:: list(d)
+
+      Return a list of all the keys used in the dictionary *d*.
+
    .. describe:: len(d)
 
       Return the number of items in the dictionary *d*.
@@ -4344,8 +4347,16 @@ pairs within braces, for example: ``{'jack': 4098, 'sjoerd': 4127}`` or ``{4098:
       Return a new view of the dictionary's values.  See the
       :ref:`documentation of view objects <dict-views>`.
 
+      An equality comparison between one ``dict.values()`` view and another
+      will always return ``False``. This also applies when comparing
+      ``dict.values()`` to itself::
+
+         >>> d = {'a': 1}
+         >>> d.values() == d.values()
+         False
+
    Dictionaries compare equal if and only if they have the same ``(key,
-   value)`` pairs. Order comparisons ('<', '<=', '>=', '>') raise
+   value)`` pairs (regardless of ordering). Order comparisons ('<', '<=', '>=', '>') raise
    :exc:`TypeError`.
 
    Dictionaries preserve insertion order.  Note that updating a key does not
