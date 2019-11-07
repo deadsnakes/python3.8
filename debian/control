@@ -44,7 +44,7 @@ Architecture: any
 Multi-Arch: allowed
 Priority: optional
 Depends: python3.8 (= ${binary:Version}),
- python3.8-distutils,
+ python3-distutils,
  ${shlibs:Depends}, ${misc:Depends},
 Breaks: python3-pip (<< 1.5.6-4)
 Description: Interactive high-level object-oriented language (pyvenv binary, version 3.8)
@@ -150,7 +150,7 @@ Package: libpython3.8-testsuite
 Section: libdevel
 Architecture: all
 Depends: python3.8 (>= ${binary:Version}), ${misc:Depends}, net-tools
-Suggests: python3.8-gdbm, python3.8-tk
+Suggests: python3-gdbm, python3-tk
 Description: Testsuite for the Python standard library (v3.8)
  The complete testsuite for the Python standard library.  Note that
  a subset is found in the libpython3.8-stdlib package, which should
@@ -160,7 +160,7 @@ Description: Testsuite for the Python standard library (v3.8)
 
 Package: idle-python3.8
 Architecture: all
-Depends: python3.8, python3.8-tk,
+Depends: python3.8, python3-tk,
   ${misc:Depends},
   libjs-mathjax,
 Enhances: python3.8
@@ -196,7 +196,7 @@ Architecture: any
 Multi-Arch: allowed
 Depends: python3.8 (= ${binary:Version}), libpython3.8-dbg (= ${binary:Version}), ${shlibs:Depends}, ${misc:Depends}
 Recommends: gdb
-Suggests: python3.8-gdbm-dbg, python3.8-tk-dbg
+Suggests: python3-gdbm-dbg, python3-tk-dbg
 Description: Debug Build of the Python Interpreter (version 3.8)
  The package holds two things:
  .
@@ -220,66 +220,3 @@ Description: Debug Build of the Python Interpreter (version 3.8)
  - Debug information for standard python extensions.
  .
  See the README.debug for more information.
-
-Package: python3.8-tk
-Architecture: any
-Multi-Arch: same
-Depends: python3.8, ${python:Depends}, ${shlibs:Depends}, ${misc:Depends}
-Provides: ${python:Provides}
-Suggests: tix, python3.8-tk-dbg
-Description: Tkinter - Writing Tk applications with Python (version 3.8)
- A module for writing portable GUI applications with Python (version 3.8)
- using Tk. Also known as Tkinter.
-
-Package: python3.8-gdbm
-Architecture: any
-Multi-Arch: same
-Depends: python3.8, ${python:Depends}, ${shlibs:Depends}, ${misc:Depends}
-Provides: ${python:Provides}
-Suggests: python3.8-gdbm-dbg
-Description: GNU dbm database support for Python (version 3.8)
- GNU dbm database module for Python (version 3.8). Install this if you want to
- create or read GNU dbm database files with Python.
-
-Package: python3.8-tk-dbg
-Architecture: any
-Multi-Arch: same
-Priority: extra
-Section: debug
-Depends: python3.8-dbg, ${python:Depends}, python3.8-tk (= ${binary:Version}), ${shlibs:Depends}, ${misc:Depends}
-Description: Tkinter - Writing Tk applications with Python (version 3.8 debug extension)
- A module for writing portable GUI applications with Python (version 3.8)
- using Tk. Also known as Tkinter.
- .
- This package contains the extensions built for the Python debug interpreter.
-
-Package: python3.8-gdbm-dbg
-Architecture: any
-Multi-Arch: same
-Priority: extra
-Section: debug
-Depends: python3.8-dbg, ${python:Depends}, python3.8-gdbm (= ${binary:Version}), ${shlibs:Depends}, ${misc:Depends}
-Description: GNU dbm database support for Python (version 3.8 debug extension)
- GNU dbm database module for Python (version 3.8). Install this if you want to
- create or read GNU dbm database files with Python.
- .
- This package contains the extensions built for the Python debug interpreter.
-
-Package: python3.8-distutils
-Architecture: all
-Multi-Arch: foreign
-Depends: ${python:Depends}, ${misc:Depends}, python3.8-lib2to3 (>= 3.6.4)
-Provides: ${python:Provides}
-Description: distutils package for Python (version 3.8)
- Distutils package for Python (version 3.8).  This package contains the
- distutils module from the Python standard library.
-
-Package: python3.8-lib2to3
-Architecture: all
-Multi-Arch: foreign
-Priority: optional
-Depends: ${python:Depends}, ${misc:Depends}
-Provides: ${python:Provides}
-Description: lib2to3 package for Python (version 3.8)
-  Lib2to3 package for Python (version 3.8).  This package contains the
-  lib2to3 module from the Python standard library.
