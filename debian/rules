@@ -359,7 +359,6 @@ common_configure_args = \
 		--with-computed-gotos \
 		--without-ensurepip \
 		--with-system-expat \
-		--with-system-libmpdec \
 
 ifneq (,$(filter $(DEB_HOST_ARCH), avr32 or1k))
   common_configure_args += --without-ffi
