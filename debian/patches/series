@@ -24,13 +24,5 @@ disable-some-tests.diff
 mangle-fstack-protector.diff
 reproducible-buildinfo.diff
 pydoc-use-pager.diff
-local-doc-references.diff
-doc-build-texinfo.diff
 build-math-object.diff
 argparse-no-shutil.diff
-0033-older-sphinx.patch
-0034-disable-docs-theme.patch
-0033-older-sphinx-v2.patch
-0034-fix-old-sphinx.patch
-0035-mark-_setuptools_disclaimer-as-orphan.patch
-0036-allow-older-sphinx.patch

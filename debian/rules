@@ -233,7 +233,6 @@ p_lib	:= lib$(PVER)
 p_dev	:= $(PVER)-dev
 p_exam	:= $(PVER)-examples
 p_idle	:= idle-$(PVER)
-p_doc	:= $(PVER)-doc
 p_dbg	:= $(PVER)-dbg
 p_udeb	:= $(PVER)-udeb
 p_venv	:= $(PVER)-venv
@@ -256,7 +255,6 @@ d_lib	:= debian/$(p_lib)
 d_dev	:= debian/$(p_dev)
 d_exam	:= debian/$(p_exam)
 d_idle	:= debian/$(p_idle)
-d_doc	:= debian/$(p_doc)
 d_dbg	:= debian/$(p_dbg)
 d_udeb	:= debian/$(p_udeb)
 d_venv	:= debian/$(p_venv)
@@ -272,7 +270,7 @@ d_ldbg	:= debian/$(p_ldbg)
 d_ltst	:= debian/$(p_ltst)
 
 build-arch: stamps/stamp-build
-build-indep: stamps/stamp-build-doc
+build-indep:
 build: build-arch
 stamps/stamp-build: stamps/stamp-build-static stamps/stamp-mincheck \
     stamps/stamp-build-shared stamps/stamp-build-debug \
@@ -669,40 +667,6 @@ minimal-test:
 	     -x test_codecencodings_cn test_codecencodings_hk \
 		test_codecencodings_jp test_codecencodings_kr \
 		test_codecencodings_tw test_codecs test_multibytecodec \
-
-stamps/stamp-doc-html:
-	dh_testdir
-	$(MAKE) -C Doc html
-	@mkdir -p stamps
-	touch stamps/stamp-doc-html
-
-stamps/stamp-doc-info:
-	dh_testdir
-	rm -rf Doc/build/texinfo
-	$(MAKE) -C Doc texinfo
-# - Change name of info file (@setfilename) to include the version.
-# - Change the directory entry to include the version and point to the
-#   correct filename.
-# - Change image links (@image) to point to a subdirectory.
-# - Remove trailing whitespace.
-	sed -e 's/^@setfilename .*/@setfilename $(PVER).info/' \
-	    -e '/^@direntry/,/^@/s/^\*[^:]*: ([^)]*)/* Python $(VER): ($(PVER))/' \
-	    -e 's,@image{,@image{$(PVER)/,g' \
-	    -e 's/ *$$//' \
-	  < Doc/build/texinfo/python.texi \
-	  > Doc/build/texinfo/$(PVER).texi
-	rm -f Doc/build/texinfo/python.texi
-# - Create a symbolic link so that makeinfo will be able to find the
-#   image files.
-	ln -s . Doc/build/texinfo/$(PVER)
-	$(MAKE) -C Doc/build/texinfo
-	@mkdir -p stamps
-	touch stamps/stamp-doc-info
-
-build-doc: stamps/stamp-patch stamps/stamp-build-doc
-stamps/stamp-build-doc: stamps/stamp-doc-html stamps/stamp-doc-info
-	@mkdir -p stamps
-	touch stamps/stamp-build-doc
 
 control-file:
 	sed -e "s/@PVER@/$(PVER)/g" \
@@ -1335,31 +1299,6 @@ binary-indep: build-indep install stamps/stamp-control
 	dh_testdir -i
 	dh_testroot -i
 
-	: # $(p_doc) package
-	dh_installdirs -p$(p_doc) \
-		usr/share/doc/$(p_base) \
-		usr/share/doc/$(p_doc)
-	dh_installdocs -p$(p_doc)
-	cp -a Doc/build/html $(d_doc)/usr/share/doc/$(p_base)/
-	rm -f $(d_doc)/usr/share/doc/$(p_base)/html/_static/jquery.js
-	dh_link -p$(p_doc) \
-		/usr/share/doc/$(p_base)/html /usr/share/doc/$(p_doc)/html \
-		/usr/share/javascript/jquery/jquery.js /usr/share/doc/$(p_base)/html/_static/jquery.js \
-		/usr/share/javascript/underscore/underscore.js /usr/share/doc/$(p_base)/html/_static/underscore.js
-	dh_installinfo -p$(p_doc)
-	for f in $(d_doc)/usr/share/doc/$(p_base)/html/_images/*.png; do \
-	  b=$$(basename $$f); \
-	  dh_link -p$(p_doc) /usr/share/doc/$(p_base)/html/_images/$$b /usr/share/info/$(PVER)/$$b; \
-	done
-
-	: # devhelp docs
-	cd $(buildd_static) && ./python ../debian/pyhtml2devhelp.py \
-		../$(d_doc)/usr/share/doc/$(p_base)/html index.html $(VER) \
-		> ../$(d_doc)/usr/share/doc/$(p_base)/html/$(PVER).devhelp
-	gzip -9nv $(d_doc)/usr/share/doc/$(p_base)/html/$(PVER).devhelp
-	dh_link -p$(p_doc) \
-		/usr/share/doc/$(p_base)/html /usr/share/devhelp/books/$(PVER)
-
 	for i in $(p_ltst); do \
 	  rm -rf debian/$$i/usr/share/doc/$$i; \
 	  ln -s $(p_base) debian/$$i/usr/share/doc/$$i; \
@@ -1380,7 +1319,6 @@ binary-indep: build-indep install stamps/stamp-control
 	    echo "make executable: $$i"; \
 	  fi; \
 	done
-	-find $(d_doc) -name '*.txt' -perm 755 -exec chmod 644 {} \;
 
 	dh_installdeb -i $(dh_args)
 	dh_gencontrol -i $(dh_args)
@@ -1442,15 +1380,6 @@ endif
 	  fi; \
 	done
 
-	dh_makeshlibs -p$(p_lib) -V '$(p_lib)'
-	dh_makeshlibs -p$(p_ldbg) -V '$(p_ldbg)'
-# don't include the following symbols, found in extensions
-# which either can be built as builtin or extension.
-	sed -ri \
-	  -e '/^ (PyInit_|_add_one_to_index|asdl_)/d' \
-	  -e '/^ (PyExpat_XML_|PyExpat_Xml)/d' \
-	  -e '/^ (ffi_type_|_ctypes_)/d' \
-	    $(d_lib)/DEBIAN/symbols $(d_ldbg)/DEBIAN/symbols
 	dh_installdeb -a
 	dh_shlibdeps -a
 	dep=`sed -n '/^shlibs:Depends/s/[^=]*=\(.*\)/\1/p' $(d_min).substvars | awk -v RS=', ' -v ORS=', ' '/^libc6/ { print }'`; \
