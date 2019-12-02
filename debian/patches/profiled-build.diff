@@ -1,0 +1,31 @@
+From: Ubuntu Core Developers <ubuntu-devel-discuss@lists.ubuntu.com>
+Date: Thu, 14 Feb 2019 18:59:14 -0800
+Subject: profiled-build
+
+# DP: Ignore errors in the profile task.
+# DP: Ignore errors in the profile task.
+---
+ Makefile.pre.in | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
+
+diff --git a/Makefile.pre.in b/Makefile.pre.in
+index 502317a..80ee10b 100644
+--- a/Makefile.pre.in
++++ b/Makefile.pre.in
+@@ -497,6 +497,16 @@ build_all_generate_profile:
+ run_profile_task:
+ 	@ # FIXME: can't run for a cross build
+ 	$(LLVM_PROF_FILE) $(RUNSHARED) ./$(BUILDPYTHON) $(PROFILE_TASK) || true
++	task="$(PROFILE_TASK)"; \
++	case "$$task" in \
++	*-s\ *) \
++	  $(LLVM_PROF_FILE) $(RUNSHARED) ./$(BUILDPYTHON) $$task; \
++	  while [ -f $(abs_builddir)/build/pynexttest ]; do \
++	    $(LLVM_PROF_FILE) $(RUNSHARED) ./$(BUILDPYTHON) $$task; \
++	  done;; \
++	*) \
++	  $(LLVM_PROF_FILE) $(RUNSHARED) ./$(BUILDPYTHON) $$task; \
++	esac
+ 
+ build_all_merge_profile:
+ 	$(LLVM_PROF_MERGER)

@@ -177,6 +177,7 @@ endif
 ifneq (,$(findstring $(DEB_HOST_ARCH), amd64 armel armhf i386 powerpc ppc64 ppc64el s390x))
   with_lto := yes
 endif
+with_pgo :=
 with_lto :=
 
 ifneq (,$(findstring noopt, $(DEB_BUILD_OPTIONS)))
@@ -287,8 +288,7 @@ PROFILE_EXCLUDES = test_compiler test_distutils test_subprocess \
 	test_threading test_threading_local test_threadsignals \
 	test_concurrent_futures test_ctypes \
 	test_dbm_dumb test_dbm_ndbm test_pydoc test_sundry \
-	test_signal test_ioctl test_gdb test_ensurepip test_venv \
-	test_asyncio test_io test_poplib
+	test_signal test_ioctl test_gdb test_ensurepip test_venv
 
 # TODO: these hang/fail with new OpenSSL
 PROFILE_EXCLUDES += \
@@ -300,7 +300,9 @@ PROFILE_EXCLUDES += \
 
 # TODO: update profiled-build.diff to support --next
 #       --next=20
-PROFILE_TASK = -m test.regrtest --pgo \
+PROFILE_TASK = ../Lib/test/regrtest.py \
+	-s \
+	-j 1 -unone,decimal \
 	-x $(sort $(TEST_EXCLUDES) $(PROFILE_EXCLUDES))
 
 stamps/stamp-build-static: stamps/stamp-configure-static
@@ -327,8 +329,7 @@ run-profile-task:
 stamps/stamp-build-shared: stamps/stamp-configure-shared
 	dh_testdir
 	$(MAKE) $(NJOBS) -C $(buildd_shared) \
-		EXTRA_CFLAGS="$(EXTRA_OPT_CFLAGS)" \
-		PROFILE_TASK='$(PROFILE_TASK)' $(make_build_target)
+		EXTRA_CFLAGS="$(EXTRA_OPT_CFLAGS)"
 	: # build a static library with PIC objects
 	$(MAKE) $(NJOBS) -C $(buildd_shared) \
 		EXTRA_CFLAGS="$(EXTRA_OPT_CFLAGS)" \
@@ -338,7 +339,7 @@ stamps/stamp-build-shared: stamps/stamp-configure-shared
 stamps/stamp-build-debug: stamps/stamp-configure-debug
 	dh_testdir
 	$(MAKE) $(NJOBS) -C $(buildd_debug) \
-		EXTRA_CFLAGS="$(DEBUG_CFLAGS)" build_all
+		EXTRA_CFLAGS="$(DEBUG_CFLAGS)"
 
 	cd $(buildd_static) && ./python -c 'import _decimal'
 	cd $(buildd_debug) && ./python -c 'import math, cmath'
@@ -349,14 +350,13 @@ stamps/stamp-build-shared-debug: stamps/stamp-configure-shared-debug
 	dh_testdir
 	: # build the shared debug library
 	$(MAKE) $(NJOBS) -C $(buildd_shdebug) \
-		EXTRA_CFLAGS="$(DEBUG_CFLAGS)" build_all
+		EXTRA_CFLAGS="$(DEBUG_CFLAGS)"
 	touch stamps/stamp-build-shared-debug
 
 common_configure_args = \
 		--prefix=/usr \
 		--enable-ipv6 \
 		--enable-loadable-sqlite-extensions \
-		--enable-optimizations \
 		--with-dbmliborder=bdb:gdbm \
 		--with-computed-gotos \
 		--without-ensurepip \
