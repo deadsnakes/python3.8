@@ -202,7 +202,6 @@ sysconfig_substflags = \
 	-e '/^OPT/s,-O3,-O2,' \
 	-e 's/-O3/-O2/g;s/$(LTO_CFLAGS)//g' \
 	-e 's/-fprofile-use *-fprofile-correction//g' \
-	-e 's/-fstack-protector /-fstack-protector-strong /g' \
 	-e 's/-specs=[^ ]*//g' \
 	-e 's/-fdebug-prefix-map=[^ ]*//g' \
 	-e 's,^RUNSHARED *=.*,RUNSHARED=,' \
