@@ -1,3 +1,9 @@
+python3.8 (3.8.0-1+trusty2) trusty; urgency=medium
+
+  * -fstack-protector-strong isn't a thing on trusty
+
+ -- Anthony Sottile <asottile@umich.edu>  Mon, 02 Dec 2019 12:53:20 -0800
+
 python3.8 (3.8.0-1+trusty1) trusty; urgency=medium
 
   * Rebuild for trusty
