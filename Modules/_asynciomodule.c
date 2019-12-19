@@ -1092,6 +1092,7 @@ static PyObject *
 _asyncio_Future_get_loop_impl(FutureObj *self)
 /*[clinic end generated code: output=119b6ea0c9816c3f input=cba48c2136c79d1f]*/
 {
+    ENSURE_FUTURE_ALIVE(self)
     Py_INCREF(self->fut_loop);
     return self->fut_loop;
 }
@@ -1810,6 +1811,21 @@ TaskWakeupMethWrapper_dealloc(TaskWakeupMethWrapper *o)
     Py_TYPE(o)->tp_free(o);
 }
 
+static PyObject *
+TaskWakeupMethWrapper_get___self__(TaskWakeupMethWrapper *o, void *Py_UNUSED(ignored))
+{
+    if (o->ww_task) {
+        Py_INCREF(o->ww_task);
+        return (PyObject*)o->ww_task;
+    }
+    Py_RETURN_NONE;
+}
+
+static PyGetSetDef TaskWakeupMethWrapper_getsetlist[] = {
+    {"__self__", (getter)TaskWakeupMethWrapper_get___self__, NULL, NULL},
+    {NULL} /* Sentinel */
+};
+
 static PyTypeObject TaskWakeupMethWrapper_Type = {
     PyVarObject_HEAD_INIT(NULL, 0)
     "TaskWakeupMethWrapper",
@@ -1821,6 +1837,7 @@ static PyTypeObject TaskWakeupMethWrapper_Type = {
     .tp_flags = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_HAVE_GC,
     .tp_traverse = (traverseproc)TaskWakeupMethWrapper_traverse,
     .tp_clear = (inquiry)TaskWakeupMethWrapper_clear,
+    .tp_getset = TaskWakeupMethWrapper_getsetlist,
 };
 
 static PyObject *
@@ -3257,7 +3274,7 @@ module_init(void)
     }
     if (module_initialized != 0) {
         return 0;
-    } 
+    }
     else {
         module_initialized = 1;
     }
@@ -3393,24 +3410,28 @@ PyInit__asyncio(void)
     Py_INCREF(&FutureType);
     if (PyModule_AddObject(m, "Future", (PyObject *)&FutureType) < 0) {
         Py_DECREF(&FutureType);
+        Py_DECREF(m);
         return NULL;
     }
 
     Py_INCREF(&TaskType);
     if (PyModule_AddObject(m, "Task", (PyObject *)&TaskType) < 0) {
         Py_DECREF(&TaskType);
+        Py_DECREF(m);
         return NULL;
     }
 
     Py_INCREF(all_tasks);
     if (PyModule_AddObject(m, "_all_tasks", all_tasks) < 0) {
         Py_DECREF(all_tasks);
+        Py_DECREF(m);
         return NULL;
     }
 
     Py_INCREF(current_tasks);
     if (PyModule_AddObject(m, "_current_tasks", current_tasks) < 0) {
         Py_DECREF(current_tasks);
+        Py_DECREF(m);
         return NULL;
     }
 
