@@ -2,6 +2,360 @@
 Python News
 +++++++++++
 
+What's New in Python 3.8.1 final?
+=================================
+
+*Release date: 2019-12-18*
+
+Core and Builtins
+-----------------
+
+- bpo-39080: Fix the value of *end_col_offset* for Starred Expression AST
+  nodes when they are among the elements in the *args* attribute of Call AST
+  nodes.
+
+- bpo-39031: When parsing an "elif" node, lineno and col_offset of the node
+  now point to the "elif" keyword and not to its condition, making it
+  consistent with the "if" node. Patch by Lysandros Nikolaou.
+
+- bpo-39008: :c:func:`PySys_Audit` now requires ``Py_ssize_t`` to be used
+  for size arguments in the format string, regardless of whethen
+  ``PY_SSIZE_T_CLEAN`` was defined at include time.
+
+Library
+-------
+
+- bpo-39022: Update importliib.metadata to include improvements from
+  importlib_metadata 1.3 including better serialization of EntryPoints and
+  improved documentation for custom finders.
+
+- bpo-38811: Fix an unhandled exception in :mod:`pathlib` when
+  :meth:`os.link` is missing. Patch by Toke Høiland-Jørgensen.
+
+- bpo-36406: Handle namespace packages in :mod:`doctest`. Patch by
+  Karthikeyan Singaravelan.
+
+Tests
+-----
+
+- bpo-38546: Multiprocessing and concurrent.futures tests now stop the
+  resource tracker process when tests complete.
+
+Windows
+-------
+
+- bpo-39007: Add auditing events to functions in :mod:`winreg`.
+
+macOS
+-----
+
+- bpo-38295: Prevent failure of test_relative_path in test_py_compile on
+  macOS Catalina.
+
+IDLE
+----
+
+- bpo-38944: Excape key now closes IDLE completion windows.  Patch by Johnny
+  Najera.
+
+- bpo-38943: Fix IDLE autocomplete windows not always appearing on some
+  systems. Patch by Johnny Najera.
+
+
+What's New in Python 3.8.1 release candidate 1?
+===============================================
+
+*Release date: 2019-12-09*
+
+Security
+--------
+
+- bpo-38945: Newline characters have been escaped when performing uu
+  encoding to prevent them from overflowing into to content section of the
+  encoded file. This prevents malicious or accidental modification of data
+  during the decoding process.
+
+- bpo-37228: Due to significant security concerns, the *reuse_address*
+  parameter of :meth:`asyncio.loop.create_datagram_endpoint` is no longer
+  supported. This is because of the behavior of ``SO_REUSEADDR`` in UDP. For
+  more details, see the documentation for
+  ``loop.create_datagram_endpoint()``. (Contributed by Kyle Stanley, Antoine
+  Pitrou, and Yury Selivanov in :issue:`37228`.)
+
+- bpo-38722: :mod:`runpy` now uses :meth:`io.open_code` to open code files.
+  Patch by Jason Killen.
+
+- bpo-38804: Fixes a ReDoS vulnerability in :mod:`http.cookiejar`. Patch by
+  Ben Caller.
+
+- bpo-38622: Add additional audit events for the :mod:`ctypes` module.
+
+- bpo-38418: Fixes audit event for :func:`os.system` to be named
+  ``os.system``.
+
+Core and Builtins
+-----------------
+
+- bpo-38673: In REPL mode, don't switch to PS2 if the line starts with
+  comment or whitespace. Based on work by Batuhan Taşkaya.
+
+- bpo-38922: Calling ``replace`` on a code object now raises the
+  ``code.__new__`` audit event.
+
+- bpo-38920: Add audit hooks for when :func:`sys.excepthook` and
+  :func:`sys.unraisablehook` are invoked
+
+- bpo-38892: Improve documentation for audit events table and functions.
+
+- bpo-38707: ``MainThread.native_id`` is now correctly reset in child
+  processes spawned using :class:`multiprocessing.Process`, instead of
+  retaining the parent's value.
+
+- bpo-38640: Fixed a bug in the compiler that was causing to raise in the
+  presence of break statements and continue statements inside always false
+  while loops. Patch by Pablo Galindo.
+
+- bpo-38535: Fixed line numbers and column offsets for AST nodes for calls
+  without arguments in decorators.
+
+- bpo-38525: Fix a segmentation fault when using reverse iterators of empty
+  ``dict`` objects. Patch by Dong-hee Na and Inada Naoki.
+
+- bpo-35409: Ignore GeneratorExit exceptions when throwing an exception into
+  the aclose coroutine of an asynchronous generator.
+
+Library
+-------
+
+- bpo-39006: Fix asyncio when the ssl module is missing: only check for
+  ssl.SSLSocket instance if the ssl module is available.
+
+- bpo-38708: Fix a potential IndexError in email parser when parsing an
+  empty msg-id.
+
+- bpo-38698: Add a new ``InvalidMessageID`` token to email parser to
+  represent invalid Message-ID headers.  Also, add defects when there is
+  remaining value after parsing the header.
+
+- bpo-38979: Return class from ``ContextVar.__class_getitem__`` to simplify
+  subclassing.
+
+- bpo-38986: Make repr of C accelerated TaskWakeupMethWrapper the same as of
+  pure Python version.
+
+- bpo-38529: Drop too noisy asyncio warning about deletion of a stream
+  without explicit ``.close()`` call.
+
+- bpo-38634: The :mod:`readline` module now detects if Python is linked to
+  libedit at runtime on all platforms.  Previously, the check was only done
+  on macOS.
+
+- bpo-33684: Fix ``json.tool`` failed to read a JSON file with non-ASCII
+  characters when locale encoding is not UTF-8.
+
+- bpo-38698: Prevent UnboundLocalError to pop up in parse_message_id
+
+  parse_message_id() was improperly using a token defined inside an
+  exception handler, which was raising `UnboundLocalError` on parsing an
+  invalid value. Patch by Claudiu Popa.
+
+- bpo-26730: Fix ``SpooledTemporaryFile.rollover()`` might corrupt the file
+  when it is in text mode. Patch by Serhiy Storchaka.
+
+- bpo-38668: Calling func:`shutil.copytree` to copy a directory tree from
+  one directory to another subdirectory resulted in an endless loop and a
+  RecursionError. A fix was added to consume an iterator and create the list
+  of the entries to be copied, avoiding the recursion for newly created
+  directories. Patch by Bruno P. Kinoshita.
+
+- bpo-37838: :meth:`typing.get_type_hints` properly handles functions
+  decorated with :meth:`functools.wraps`.
+
+- bpo-38859: AsyncMock now returns StopAsyncIteration on the exaustion of a
+  side_effects iterable. Since PEP-479 its Impossible to raise a
+  StopIteration exception from a coroutine.
+
+- bpo-38857: AsyncMock fix for return values that are awaitable types.  This
+  also covers side_effect iterable values that happend to be awaitable, and
+  wraps callables that return an awaitable type. Before these awaitables
+  were being awaited instead of being returned as is.
+
+- bpo-38821: Fix unhandled exceptions in :mod:`argparse` when
+  internationalizing error messages for arguments with ``nargs`` set to
+  special (non-integer) values. Patch by Federico Bond.
+
+- bpo-38820: Make Python compatible with OpenSSL 3.0.0.
+  :func:`ssl.SSLSocket.getpeercert` no longer returns IPv6 addresses with a
+  trailing new line.
+
+- bpo-38807: Update :exc:`TypeError` messages for :meth:`os.path.join` to
+  include :class:`os.PathLike` objects as acceptable input types.
+
+- bpo-38785: Prevent asyncio from crashing if parent ``__init__`` is not
+  called from a constructor of object derived from ``asyncio.Future``.
+
+- bpo-38723: :mod:`pdb` now uses :meth:`io.open_code` to trigger auditing
+  events.
+
+- bpo-27805: Allow opening pipes and other non-seekable files in append mode
+  with :func:`open`.
+
+- bpo-38686: Added support for multiple ``qop`` values in
+  :class:`urllib.request.AbstractDigestAuthHandler`.
+
+- bpo-38334: Fixed seeking backward on an encrypted
+  :class:`zipfile.ZipExtFile`.
+
+- bpo-34679: asynci.ProactorEventLoop.close() now only calls
+  signal.set_wakeup_fd() in the main thread.
+
+- bpo-31202: The case the result of :func:`pathlib.WindowsPath.glob` matches
+  now the case of the pattern for literal parts.
+
+- bpo-38521: Fixed erroneous equality comparison in statistics.NormalDist().
+
+- bpo-38478: Fixed a bug in :meth:`inspect.signature.bind` that was causing
+  it to fail when handling a keyword argument with same name as
+  positional-only parameter. Patch by Pablo Galindo.
+
+- bpo-33604: Fixed `hmac.new` and `hmac.HMAC` to raise TypeError instead of
+  ValueError when the digestmod parameter, now required in 3.8, is omitted.
+  Also clarified the hmac module documentation and docstrings.
+
+- bpo-38422: Clarify docstrings of pathlib suffix(es)
+
+- bpo-36993: Improve error reporting for corrupt zip files with bad zip64
+  extra data. Patch by Daniel Hillier.
+
+- bpo-36820: Break cycle generated when saving an exception in socket.py,
+  codeop.py and dyld.py as they keep alive not only the exception but user
+  objects through the ``__traceback__`` attribute. Patch by Mario Corchero.
+
+- bpo-34776: Fix dataclasses to support forward references in type
+  annotations
+
+- bpo-33348: lib2to3 now recognizes expressions after ``*`` and `**` like in
+  ``f(*[] or [])``.
+
+- bpo-27657: Fix urllib.parse.urlparse() with numeric paths. A string like
+  "path:80" is no longer parsed as a path but as a scheme ("path") and a
+  path ("80").
+
+Documentation
+-------------
+
+- bpo-38816: Provides more details about the interaction between
+  :c:func:`fork` and CPython's runtime, focusing just on the C-API.  This
+  includes cautions about where :c:func:`fork` should and shouldn't be
+  called.
+
+- bpo-38351: Modernize :mod:`email` examples from %-formatting to f-strings.
+
+- bpo-38778: Document the fact that :exc:`RuntimeError` is raised if
+  :meth:`os.fork` is called in a subinterpreter.
+
+- bpo-38592: Add Brazilian Portuguese to the language switcher at Python
+  Documentation website.
+
+Tests
+-----
+
+- bpo-38547: Fix test_pty: if the process is the session leader, closing the
+  master file descriptor raises a SIGHUP signal: simply ignore SIGHUP when
+  running the tests.
+
+- bpo-38992: Fix a test for :func:`math.fsum` that was failing due to
+  constant folding.
+
+- bpo-38965: Fix test_faulthandler on GCC 10. Use the "volatile" keyword in
+  ``faulthandler._stack_overflow()`` to prevent tail call optimization on
+  any compiler, rather than relying on compiler specific pragma.
+
+- bpo-38875: test_capi: trashcan tests now require the test "cpu" resource.
+
+- bpo-38841: Skip asyncio test_create_datagram_endpoint_existing_sock_unix
+  on platforms lacking a functional bind() for named unix domain sockets.
+
+- bpo-38669: Raise :exc:`TypeError` when passing target as a string with
+  :meth:`unittest.mock.patch.object`.
+
+- bpo-35998: Fix a race condition in test_asyncio.test_start_tls_server_1().
+  Previously, there was a race condition between the test main() function
+  which replaces the protocol and the test ServerProto protocol which sends
+  ANSWER once it gets HELLO. Now, only the test main() function is
+  responsible to send data, ServerProto no longer sends data.
+
+Build
+-----
+
+- bpo-37404: :mod:`asyncio` now raises :exc:`TyperError` when calling
+  incompatible methods with an :class:`ssl.SSLSocket` socket.  Patch by Ido
+  Michael.
+
+- bpo-38809: On Windows, build scripts will now recognize and use python.exe
+  from an active virtual env.
+
+- bpo-38684: Fix _hashlib build when Blake2 is disabled, but OpenSSL
+  supports it.
+
+- bpo-37415: Fix stdatomic.h header check for ICC compiler: the ICC
+  implementation lacks atomic_uintptr_t type which is needed by Python.
+
+Windows
+-------
+
+- bpo-33125: Add support for building and releasing Windows ARM64 packages.
+
+- bpo-38589: Fixes HTML Help shortcut when Windows is not installed to C
+  drive
+
+- bpo-38453: Ensure ntpath.realpath() correctly resolves relative paths.
+
+- bpo-38519: Restores the internal C headers that were missing from the
+  nuget.org and Microsoft Store packages.
+
+- bpo-38492: Remove ``pythonw.exe`` dependency on the Microsoft C++ runtime.
+
+macOS
+-----
+
+- bpo-37931: Fixed a crash on OSX dynamic builds that occurred when
+  re-initializing the posix module after a Py_Finalize if the environment
+  had changed since the previous `import posix`. Patch by Benoît Hudson.
+
+IDLE
+----
+
+- bpo-38862: 'Strip Trailing Whitespace' on the Format menu removes extra
+  newlines at the end of non-shell files.
+
+- bpo-26353: Stop adding newline when saving an IDLE shell window.
+
+- bpo-38636: Fix IDLE Format menu tab toggle and file indent width. These
+  functions (default shortcuts Alt-T and Alt-U) were mistakenly disabled in
+  3.7.5 and 3.8.0.
+
+- bpo-4630: Add an option to toggle IDLE's cursor blink for shell, editor,
+  and output windows.  See Settings, General, Window Preferences, Cursor
+  Blink. Patch by Zachary Spytz.
+
+- bpo-38598: Do not try to compile IDLE shell or output windows
+
+C API
+-----
+
+- bpo-37633: Re-export some function compatibility wrappers for macros in
+  ``pythonrun.h``.
+
+- bpo-38540: Fixed possible leak in :c:func:`PyArg_Parse` and similar
+  functions for format units ``"es#"`` and ``"et#"`` when the macro
+  :c:macro:`PY_SSIZE_T_CLEAN` is not defined.
+
+- bpo-36389: The ``_PyObject_CheckConsistency()`` function is now also
+  available in release mode. For example, it can be used to debug a crash in
+  the ``visit_decref()`` function of the GC.
+
+
 What's New in Python 3.8.0 final?
 =================================
 
