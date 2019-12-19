@@ -459,23 +459,26 @@ static PyObject *empty_values[1] = { NULL };
 int
 _PyDict_CheckConsistency(PyObject *op, int check_content)
 {
-#ifndef NDEBUG
-    _PyObject_ASSERT(op, PyDict_Check(op));
+#define CHECK(expr) \
+    do { if (!(expr)) { _PyObject_ASSERT_FAILED_MSG(op, Py_STRINGIFY(expr)); } } while (0)
+
+    assert(op != NULL);
+    CHECK(PyDict_Check(op));
     PyDictObject *mp = (PyDictObject *)op;
 
     PyDictKeysObject *keys = mp->ma_keys;
     int splitted = _PyDict_HasSplitTable(mp);
     Py_ssize_t usable = USABLE_FRACTION(keys->dk_size);
 
-    _PyObject_ASSERT(op, 0 <= mp->ma_used && mp->ma_used <= usable);
-    _PyObject_ASSERT(op, IS_POWER_OF_2(keys->dk_size));
-    _PyObject_ASSERT(op, 0 <= keys->dk_usable && keys->dk_usable <= usable);
-    _PyObject_ASSERT(op, 0 <= keys->dk_nentries && keys->dk_nentries <= usable);
-    _PyObject_ASSERT(op, keys->dk_usable + keys->dk_nentries <= usable);
+    CHECK(0 <= mp->ma_used && mp->ma_used <= usable);
+    CHECK(IS_POWER_OF_2(keys->dk_size));
+    CHECK(0 <= keys->dk_usable && keys->dk_usable <= usable);
+    CHECK(0 <= keys->dk_nentries && keys->dk_nentries <= usable);
+    CHECK(keys->dk_usable + keys->dk_nentries <= usable);
 
     if (!splitted) {
         /* combined table */
-        _PyObject_ASSERT(op, keys->dk_refcnt == 1);
+        CHECK(keys->dk_refcnt == 1);
     }
 
     if (check_content) {
@@ -484,7 +487,7 @@ _PyDict_CheckConsistency(PyObject *op, int check_content)
 
         for (i=0; i < keys->dk_size; i++) {
             Py_ssize_t ix = dictkeys_get_index(keys, i);
-            _PyObject_ASSERT(op, DKIX_DUMMY <= ix && ix <= usable);
+            CHECK(DKIX_DUMMY <= ix && ix <= usable);
         }
 
         for (i=0; i < usable; i++) {
@@ -494,32 +497,33 @@ _PyDict_CheckConsistency(PyObject *op, int check_content)
             if (key != NULL) {
                 if (PyUnicode_CheckExact(key)) {
                     Py_hash_t hash = ((PyASCIIObject *)key)->hash;
-                    _PyObject_ASSERT(op, hash != -1);
-                    _PyObject_ASSERT(op, entry->me_hash == hash);
+                    CHECK(hash != -1);
+                    CHECK(entry->me_hash == hash);
                 }
                 else {
                     /* test_dict fails if PyObject_Hash() is called again */
-                    _PyObject_ASSERT(op, entry->me_hash != -1);
+                    CHECK(entry->me_hash != -1);
                 }
                 if (!splitted) {
-                    _PyObject_ASSERT(op, entry->me_value != NULL);
+                    CHECK(entry->me_value != NULL);
                 }
             }
 
             if (splitted) {
-                _PyObject_ASSERT(op, entry->me_value == NULL);
+                CHECK(entry->me_value == NULL);
             }
         }
 
         if (splitted) {
             /* splitted table */
             for (i=0; i < mp->ma_used; i++) {
-                _PyObject_ASSERT(op, mp->ma_values[i] != NULL);
+                CHECK(mp->ma_values[i] != NULL);
             }
         }
     }
-#endif
     return 1;
+
+#undef CHECK
 }
 
 
@@ -3458,10 +3462,15 @@ dictiter_new(PyDictObject *dict, PyTypeObject *itertype)
     di->di_dict = dict;
     di->di_used = dict->ma_used;
     di->len = dict->ma_used;
-    if ((itertype == &PyDictRevIterKey_Type ||
+    if (itertype == &PyDictRevIterKey_Type ||
          itertype == &PyDictRevIterItem_Type ||
-         itertype == &PyDictRevIterValue_Type) && dict->ma_used) {
+         itertype == &PyDictRevIterValue_Type) {
+        if (dict->ma_values) {
+            di->di_pos = dict->ma_used - 1;
+        }
+        else {
             di->di_pos = dict->ma_keys->dk_nentries - 1;
+        }
     }
     else {
         di->di_pos = 0;
@@ -3831,22 +3840,21 @@ dictreviter_iternext(dictiterobject *di)
     PyDictKeysObject *k = d->ma_keys;
     PyObject *key, *value, *result;
 
+    if (i < 0) {
+        goto fail;
+    }
     if (d->ma_values) {
-        if (i < 0) {
-            goto fail;
-        }
         key = DK_ENTRIES(k)[i].me_key;
         value = d->ma_values[i];
         assert (value != NULL);
     }
     else {
         PyDictKeyEntry *entry_ptr = &DK_ENTRIES(k)[i];
-        while (i >= 0 && entry_ptr->me_value == NULL) {
+        while (entry_ptr->me_value == NULL) {
+            if (--i < 0) {
+                goto fail;
+            }
             entry_ptr--;
-            i--;
-        }
-        if (i < 0) {
-            goto fail;
         }
         key = entry_ptr->me_key;
         value = entry_ptr->me_value;
