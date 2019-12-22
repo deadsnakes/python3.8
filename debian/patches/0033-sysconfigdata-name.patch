@@ -1,0 +1,79 @@
+From: Anthony Sottile <asottile@umich.edu>
+Date: Sun, 22 Dec 2019 00:15:16 -0800
+Subject: sysconfigdata-name
+
+---
+ Lib/distutils/sysconfig.py | 3 +--
+ Lib/sysconfig.py           | 3 +--
+ Makefile.pre.in            | 7 +++++--
+ configure.ac               | 2 +-
+ 4 files changed, 8 insertions(+), 7 deletions(-)
+
+diff --git a/Lib/distutils/sysconfig.py b/Lib/distutils/sysconfig.py
+index 3b536c2..caeb1f0 100644
+--- a/Lib/distutils/sysconfig.py
++++ b/Lib/distutils/sysconfig.py
+@@ -459,9 +459,8 @@ def _init_posix():
+     """Initialize the module as appropriate for POSIX systems."""
+     # _sysconfigdata is generated at build time, see the sysconfig module
+     name = os.environ.get('_PYTHON_SYSCONFIGDATA_NAME',
+-        '_sysconfigdata_{abi}_{platform}_{multiarch}'.format(
++        '_sysconfigdata_{abi}_{multiarch}'.format(
+         abi=sys.abiflags,
+-        platform=sys.platform,
+         multiarch=getattr(sys.implementation, '_multiarch', ''),
+     ))
+     _temp = __import__(name, globals(), locals(), ['build_time_vars'], 0)
+diff --git a/Lib/sysconfig.py b/Lib/sysconfig.py
+index d941ca9..cf76cb2 100644
+--- a/Lib/sysconfig.py
++++ b/Lib/sysconfig.py
+@@ -345,9 +345,8 @@ def get_makefile_filename():
+ 
+ def _get_sysconfigdata_name():
+     return os.environ.get('_PYTHON_SYSCONFIGDATA_NAME',
+-        '_sysconfigdata_{abi}_{platform}_{multiarch}'.format(
++        '_sysconfigdata_{abi}_{multiarch}'.format(
+         abi=sys.abiflags,
+-        platform=sys.platform,
+         multiarch=getattr(sys.implementation, '_multiarch', ''),
+     ))
+ 
+diff --git a/Makefile.pre.in b/Makefile.pre.in
+index 4fea724..1887429 100644
+--- a/Makefile.pre.in
++++ b/Makefile.pre.in
+@@ -1453,8 +1453,10 @@ libinstall:	build_all $(srcdir)/Modules/xxmodule.c
+ 			esac; \
+ 		done; \
+ 	done
+-	$(INSTALL_DATA) `cat pybuilddir.txt`/_sysconfigdata_$(ABIFLAGS)_$(MACHDEP)_$(MULTIARCH).py \
+-		$(DESTDIR)$(LIBDEST); \
++	$(INSTALL_DATA) `cat pybuilddir.txt`/_sysconfigdata_$(ABIFLAGS)_$(MULTIARCH).py \
++		$(DESTDIR)$(LIBDEST)
++	$(LN) -s _sysconfigdata_$(ABIFLAGS)_$(MULTIARCH).py \
++		$(DESTDIR)$(LIBDEST)/_sysconfigdata_$(ABIFLAGS)_$(MACHDEP)_$(MULTIARCH).py
+ 	$(INSTALL_DATA) $(srcdir)/LICENSE $(DESTDIR)$(LIBDEST)/LICENSE.txt
+ 	if test -d $(DESTDIR)$(LIBDEST)/distutils/tests; then \
+ 		$(INSTALL_DATA) $(srcdir)/Modules/xxmodule.c \
+@@ -1609,6 +1611,7 @@ sharedinstall: sharedmods
+ 		--install-scripts=$(BINDIR) \
+ 		--install-platlib=$(DESTSHARED) \
+ 		--root=$(DESTDIR)/
++	-rm $(DESTDIR)$(DESTSHARED)/_sysconfigdata_$(ABIFLAGS)_$(MULTIARCH).py
+ 	-rm $(DESTDIR)$(DESTSHARED)/_sysconfigdata_$(ABIFLAGS)_$(MACHDEP)_$(MULTIARCH).py
+ 	-rm -r $(DESTDIR)$(DESTSHARED)/__pycache__
+ 
+diff --git a/configure.ac b/configure.ac
+index 7c9074e..e9d2c61 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -75,7 +75,7 @@ if test "$cross_compiling" = yes; then
+ 	    AC_MSG_ERROR([python$PACKAGE_VERSION interpreter not found])
+ 	fi
+         AC_MSG_RESULT($interp)
+-	PYTHON_FOR_BUILD='_PYTHON_PROJECT_BASE=$(abs_builddir) _PYTHON_HOST_PLATFORM=$(_PYTHON_HOST_PLATFORM) PYTHONPATH=$(shell test -f pybuilddir.txt && echo $(abs_builddir)/`cat pybuilddir.txt`:)$(srcdir)/Lib _PYTHON_SYSCONFIGDATA_NAME=_sysconfigdata_$(ABIFLAGS)_$(MACHDEP)_$(MULTIARCH) '$interp
++	PYTHON_FOR_BUILD='_PYTHON_PROJECT_BASE=$(abs_builddir) _PYTHON_HOST_PLATFORM=$(_PYTHON_HOST_PLATFORM) PYTHONPATH=$(shell test -f pybuilddir.txt && echo $(abs_builddir)/`cat pybuilddir.txt`:)$(srcdir)/Lib _PYTHON_SYSCONFIGDATA_NAME=_sysconfigdata_$(ABIFLAGS)_$(MULTIARCH) '$interp
+     fi
+ elif test "$cross_compiling" = maybe; then
+     AC_MSG_ERROR([Cross compiling required --host=HOST-TUPLE and --build=ARCH])
