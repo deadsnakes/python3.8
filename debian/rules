@@ -786,8 +786,8 @@ ifeq ($(with_interp),static)
 	$(MAKE) -C $(buildd_static) install DESTDIR=$(CURDIR)/$(d)
 	ls -l $(d)/$(scriptdir)/_sysconfigdata*
 	sed $(sysconfig_substflags) \
-		$(buildd_shared)/$(shell cat $(buildd_shared)/pybuilddir.txt)/_sysconfigdata__$(PLAT)_$(DEB_HOST_MULTIARCH).py \
-		> $(d)/$(scriptdir)/_sysconfigdata__$(PLAT)_$(DEB_HOST_MULTIARCH).py
+		$(buildd_shared)/$(shell cat $(buildd_shared)/pybuilddir.txt)/_sysconfigdata__$(DEB_HOST_MULTIARCH).py \
+		> $(d)/$(scriptdir)/_sysconfigdata__$(DEB_HOST_MULTIARCH).py
 else
 	$(MAKE) -C $(buildd_shared) install DESTDIR=$(CURDIR)/$(d)
 endif
@@ -797,7 +797,7 @@ endif
 	rm -f $(d)/$(scriptdir)/lib-dynload/*.py
 	ls -l $(d)/$(scriptdir)/_sysconfigdata*
 	sed -i $(sysconfig_substflags) \
-		$(d)/$(scriptdir)/_sysconfigdata__$(PLAT)_$(DEB_HOST_MULTIARCH).py
+		$(d)/$(scriptdir)/_sysconfigdata__$(DEB_HOST_MULTIARCH).py
 
 	-find $(d)/usr/lib/python$(VER) -name '*_failed*.so'
 	find $(d)/usr/lib/python$(VER) -name '*_failed*.so' | xargs -r rm -f
@@ -896,7 +896,7 @@ endif
 		$(foreach i,$(MIN_PACKAGES),$(scriptdir)/$(i)) \
 		$(foreach i,$(MIN_ENCODINGS),$(scriptdir)/$(i)) \
 		$(scriptdir)/site.py \
-		$(scriptdir)/_sysconfigdata__$(PLAT)_$(DEB_HOST_MULTIARCH).py \
+		$(scriptdir)/_sysconfigdata__$(DEB_HOST_MULTIARCH).py \
 		`cd $(d); for i in $(MIN_EXTS); do \
 			test -e $(scriptdir)/lib-dynload/$$i.*.so \
 			  && echo $(scriptdir)/lib-dynload/$$i.*.so; \
@@ -1148,10 +1148,10 @@ endif
 		$(buildd_shdebug)/Makefile \
 		> $(d)-dbg/$(scriptdir)/config-$(VER)d-$(DEB_HOST_MULTIARCH)/Makefile
 	sed $(sysconfig_substflags) \
-		$(buildd_shdebug)/$(shell cat $(buildd_shdebug)/pybuilddir.txt)/_sysconfigdata_d_$(PLAT)_$(DEB_HOST_MULTIARCH).py \
-		> $(d)-dbg/$(scriptdir)/_sysconfigdata_d_$(PLAT)_$(DEB_HOST_MULTIARCH).py
+		$(buildd_shdebug)/$(shell cat $(buildd_shdebug)/pybuilddir.txt)/_sysconfigdata_d_$(DEB_HOST_MULTIARCH).py \
+		> $(d)-dbg/$(scriptdir)/_sysconfigdata_d_$(DEB_HOST_MULTIARCH).py
 	sed -i $(sysconfig_substflags) \
-		$(d)-dbg/$(scriptdir)/_sysconfigdata_d_$(PLAT)_$(DEB_HOST_MULTIARCH).py
+		$(d)-dbg/$(scriptdir)/_sysconfigdata_d_$(DEB_HOST_MULTIARCH).py
 
 	mv $(d)-dbg/usr/lib/libpython*.a $(d)-dbg/usr/lib/$(DEB_HOST_MULTIARCH)/
 
@@ -1172,7 +1172,7 @@ endif
 
 	cp -p $(d)-dbg/$(scriptdir)/lib-dynload/*.so \
 		$(d_ldbg)/$(scriptdir)/lib-dynload/
-	cp -p $(d)-dbg/$(scriptdir)/_sysconfigdata_d_$(PLAT)_$(DEB_HOST_MULTIARCH).py \
+	cp -p $(d)-dbg/$(scriptdir)/_sysconfigdata_d_$(DEB_HOST_MULTIARCH).py \
 		$(d_ldbg)/$(scriptdir)/
 	cp -p $(buildd_shdebug)/libpython$(VER)d.so.1.0 \
 		$(d_ldbg)/usr/lib/$(DEB_HOST_MULTIARCH)/
