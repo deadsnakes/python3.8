@@ -28,7 +28,7 @@ debian_dir=$(dirname $(dirname $0))
 
 # no root access needed after this point
 
-TESTPYTHON="python3.8dm -W default -bb -E -R -m test"
+TESTPYTHON="python3.8d -W default -bb -E -R -m test"
 TESTEXCLUSIONS="-x"
 
 . $debian_dir/tests/test-common.sh
