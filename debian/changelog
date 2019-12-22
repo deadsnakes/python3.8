@@ -1,3 +1,9 @@
+python3.8 (3.8.1-1+xenial3) xenial; urgency=medium
+
+  * Revert "Fix _sysconfigdata__{multiarch} module.".
+
+ -- Anthony Sottile <asottile@umich.edu>  Sat, 21 Dec 2019 22:38:57 -0800
+
 python3.8 (3.8.1-1+xenial2) xenial; urgency=medium
 
   * Fix _sysconfigdata__{multiarch} module.
