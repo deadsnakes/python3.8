@@ -1,3 +1,9 @@
+python3.8 (3.8.1-1+bionic3) bionic; urgency=medium
+
+  * Fix sysconfigdata module, more.
+
+ -- Anthony Sottile <asottile@umich.edu>  Sun, 22 Dec 2019 00:15:39 -0800
+
 python3.8 (3.8.1-1+bionic2) bionic; urgency=medium
 
   * Fix _sysconfigdata__{multiarch} module.
