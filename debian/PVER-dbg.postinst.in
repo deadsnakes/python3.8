@@ -12,23 +12,6 @@ if [ "$1" = configure ]; then
     else
 	echo >&2 "@PVER@-dbg: can't get files for byte-compilation"
     fi
-
-  if [ -d /usr/include/@PVER@_d ] && [ ! -h /usr/include/@PVER@_d ]; then
-    if rmdir /usr/include/@PVER@_d 2> /dev/null; then
-      ln -sf @PVER@dmu /usr/include/@PVER@_d
-    else
-      echo >&2 "WARNING: non-empty directory on upgrade: /usr/include/@PVER@_d"
-      ls -l /usr/include/@PVER@_d
-    fi
-  fi
-  if [ -d /usr/lib/@PVER@/config_d ] && [ ! -h /usr/lib/@PVER@/config_d ]; then
-    if rmdir /usr/lib/@PVER@/config_d 2> /dev/null; then
-      ln -sf config-dmu /usr/lib/@PVER@/config_d
-    else
-      echo >&2 "WARNING: non-empty directory on upgrade: /usr/lib/@PVER@/config_d"
-      ls -l /usr/lib/@PVER@/config_d
-    fi
-  fi
 fi
 
 #DEBHELPER#
