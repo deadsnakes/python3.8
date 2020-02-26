@@ -21,7 +21,7 @@ index 17592d7..722dc29 100644
        {% if switchers is defined and not embedded %}
        <script type="text/javascript" src="{{ pathto('_static/switchers.js', 1) }}"></script>{% endif %}
 diff --git a/Lib/idlelib/help.html b/Lib/idlelib/help.html
-index 09dc4c5..4a62dcb 100644
+index 0b2bdd2..6fe1a1d 100644
 --- a/Lib/idlelib/help.html
 +++ b/Lib/idlelib/help.html
 @@ -25,7 +25,7 @@
