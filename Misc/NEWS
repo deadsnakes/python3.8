@@ -2,6 +2,326 @@
 Python News
 +++++++++++
 
+What's New in Python 3.8.2 final?
+=================================
+
+*Release date: 2020-02-24*
+
+Core and Builtins
+-----------------
+
+- bpo-39382: Fix a use-after-free in the single inheritance path of
+  ``issubclass()``, when the ``__bases__`` of an object has a single
+  reference, and so does its first item. Patch by Yonatan Goldschmidt.
+
+- bpo-39427: Document all possibilities for the ``-X`` options in the
+  command line help section. Patch by Pablo Galindo.
+
+Library
+-------
+
+- bpo-39649: Remove obsolete check for `__args__` in
+  bdb.Bdb.format_stack_entry.
+
+- bpo-39681: Fix a regression where the C pickle module wouldn't allow
+  unpickling from a file-like object that doesn't expose a readinto()
+  method.
+
+- bpo-39546: Fix a regression in :class:`~argparse.ArgumentParser` where
+  ``allow_abbrev=False`` was ignored for long options that used a prefix
+  character other than "-".
+
+- bpo-39432: Implement PEP-489 algorithm for non-ascii "PyInit\_..." symbol
+  names in distutils to make it export the correct init symbol also on
+  Windows.
+
+Documentation
+-------------
+
+- bpo-17422: The language reference now specifies restrictions on class
+  namespaces. Adapted from a patch by Ethan Furman.
+
+- bpo-39572: Updated documentation of ``total`` flag of TypeDict.
+
+- bpo-39654: In pyclbr doc, update 'class' to 'module' where appropriate and
+  add readmodule comment. Patch by Hakan Çelik.
+
+IDLE
+----
+
+- bpo-39663: Add tests for pyparse find_good_parse_start().
+
+
+What's New in Python 3.8.2 release candidate 2?
+===============================================
+
+*Release date: 2020-02-17*
+
+Security
+--------
+
+- bpo-39184: Add audit events to functions in `fcntl`, `msvcrt`, `os`,
+  `resource`, `shutil`, `signal` and `syslog`.
+
+Core and Builtins
+-----------------
+
+- bpo-39619: Enable use of :func:`os.chroot` on HP-UX systems.
+
+- bpo-39606: Fix regression caused by fix for bpo-39386, that prevented
+  calling ``aclose`` on an async generator that had already been closed or
+  exhausted.
+
+- bpo-39453: Fixed a possible crash in :meth:`list.__contains__` when a list
+  is changed during comparing items. Patch by Dong-hee Na.
+
+- bpo-39219: Syntax errors raised in the tokenizer now always set correct
+  "text" and "offset" attributes.
+
+Library
+-------
+
+- bpo-27657: The original fix for bpo-27657, "Fix urlparse() with numeric
+  paths" (GH-16839) included in 3.8.1, inadvertently introduced a behavior
+  change that broke several third-party packages relying on the original
+  undefined parsing behavior. The change is reverted in 3.8.2, restoring the
+  behavior of 3.8.0 and earlier releases.
+
+- bpo-39474: Fixed starting position of AST for expressions like ``(a)(b)``,
+  ``(a)[b]`` and ``(a).b``.
+
+- bpo-21016: The :mod:`pydoc` and :mod:`trace` modules now use the
+  :mod:`sysconfig` module to get the path to the Python standard library, to
+  support uncommon installation path like ``/usr/lib64/python3.9/`` on
+  Fedora. Patch by Jan Matějek.
+
+- bpo-39595: Improved performance of zipfile.Path for files with a large
+  number of entries. Also improved performance and fixed minor issue as
+  published with `importlib_metadata 1.5
+  <https://importlib-metadata.readthedocs.io/en/latest/changelog%20(links).html#v1-5-0>`_.
+
+IDLE
+----
+
+- bpo-39600: In the font configuration window, remove duplicated font names.
+
+
+What's New in Python 3.8.2 release candidate 1?
+===============================================
+
+*Release date: 2020-02-10*
+
+Security
+--------
+
+- bpo-39401: Avoid unsafe load of ``api-ms-win-core-path-l1-1-0.dll`` at
+  startup on Windows 7.
+
+- bpo-39184: Add audit events to command execution functions in os and pty
+  modules.
+
+Core and Builtins
+-----------------
+
+- bpo-39579: Change the ending column offset of `Attribute` nodes
+  constructed in `ast_for_dotted_name` to point at the end of the current
+  node and not at the end of the last `NAME` node.
+
+- bpo-39510: Fix segfault in ``readinto()`` method on closed BufferedReader.
+
+- bpo-39492: Fix a reference cycle in the C Pickler that was preventing the
+  garbage collection of deleted, pickled objects.
+
+- bpo-39421: Fix possible crashes when operating with the functions in the
+  :mod:`heapq` module and custom comparison operators.
+
+- bpo-39386: Prevent double awaiting of async iterator.
+
+- bpo-39235: Fix AST end location for lone generator expression in function
+  call, e.g. f(i for i in a).
+
+- bpo-39209: Correctly handle multi-line tokens in interactive mode. Patch
+  by Pablo Galindo.
+
+- bpo-39216: Fix constant folding optimization for positional only arguments
+  - by Anthony Sottile.
+
+- bpo-39215: Fix ``SystemError`` when nested function has annotation on
+  positional-only argument - by Anthony Sottile.
+
+- bpo-38588: Fix possible crashes in dict and list when calling
+  :c:func:`PyObject_RichCompareBool`.
+
+- bpo-38610: Fix possible crashes in several list methods by holding strong
+  references to list elements when calling
+  :c:func:`PyObject_RichCompareBool`.
+
+Library
+-------
+
+- bpo-39590: Collections.deque now holds strong references during
+  deque.__contains__ and deque.count, fixing crashes.
+
+- bpo-38149: :func:`sys.audit` is now called only once per call of
+  :func:`glob.glob` and :func:`glob.iglob`.
+
+- bpo-39450: Striped whitespace from docstring before returning it from
+  :func:`unittest.case.shortDescription`.
+
+- bpo-39493: Mark ``typing.IO.closed`` as a property
+
+- bpo-39485: Fix a bug in :func:`unittest.mock.create_autospec` that would
+  complain about the wrong number of arguments for custom descriptors
+  defined in an extension module returning functions.
+
+- bpo-39082: Allow AsyncMock to correctly patch static/class methods
+
+- bpo-39430: Fixed race condition in lazy imports in :mod:`tarfile`.
+
+- bpo-39390: Fixed a regression with the `ignore` callback of
+  :func:`shutil.copytree`. The argument types are now str and List[str]
+  again.
+
+- bpo-39389: Write accurate compression level metadata in :mod:`gzip`
+  archives, rather than always signaling maximum compression.
+
+- bpo-39274: ``bool(fraction.Fraction)`` now returns a boolean even if
+  (numerator != 0) does not return a boolean (ex: numpy number).
+
+- bpo-39297: Improved performance of importlib.metadata distribution
+  discovery and resilients to inaccessible sys.path entries
+  (importlib_metadata v1.4.0).
+
+- bpo-39242: Updated the Gmane domain from news.gmane.org to news.gmane.io
+  which is used for examples of :class:`~nntplib.NNTP` news reader server
+  and nntplib tests.
+
+- bpo-38907: In http.server script, restore binding to IPv4 on Windows.
+
+- bpo-39152: Fix ttk.Scale.configure([name]) to return configuration tuple
+  for name or all options.  Giovanni Lombardo contributed part of the patch.
+
+- bpo-39198: If an exception were to be thrown in `Logger.isEnabledFor`
+  (say, by asyncio timeouts or stopit) , the `logging` global lock may not
+  be released appropriately, resulting in deadlock.  This change wraps that
+  block of code with `try...finally` to ensure the lock is released.
+
+- bpo-39191: Perform a check for running loop before starting a new task in
+  ``loop.run_until_complete()`` to fail fast; it prevents the side effect of
+  new task spawning before exception raising.
+
+- bpo-38871: Correctly parenthesize filter-based statements that contain
+  lambda expressions in mod:`lib2to3`. Patch by Dong-hee Na.
+
+- bpo-39142: A change was made to logging.config.dictConfig to avoid
+  converting instances of named tuples to ConvertingTuple. It's assumed that
+  named tuples are too specialised to be treated like ordinary tuples; if a
+  user of named tuples requires ConvertingTuple functionality, they will
+  have to implement that themselves in their named tuple class.
+
+- bpo-39129: Fix import path for ``asyncio.TimeoutError``
+
+- bpo-39057: :func:`urllib.request.proxy_bypass_environment` now ignores
+  leading dots and no longer ignores a trailing newline.
+
+- bpo-39056: Fixed handling invalid warning category in the -W option.  No
+  longer import the re module if it is not needed.
+
+- bpo-39055: :func:`base64.b64decode` with ``validate=True`` raises now a
+  binascii.Error if the input ends with a single ``\n``.
+
+- bpo-39033: Fix :exc:`NameError` in :mod:`zipimport`. Patch by Karthikeyan
+  Singaravelan.
+
+- bpo-38878: Fixed __subclasshook__ of :class:`os.PathLike` to return a
+  correct result upon inheritence. Patch by Bar Harel.
+
+- bpo-35182: Fixed :func:`Popen.communicate` subsequent call crash when the
+  child process has already closed any piped standard stream, but still
+  continues to be running. Patch by Andriy Maletsky.
+
+- bpo-38473: Use signature from inner mock for autospecced methods attached
+  with :func:`unittest.mock.attach_mock`. Patch by Karthikeyan Singaravelan.
+
+- bpo-38293: Add :func:`copy.copy` and :func:`copy.deepcopy` support to
+  :func:`property` objects.
+
+Documentation
+-------------
+
+- bpo-39153: Clarify refcounting semantics for the following functions: -
+  PyObject_SetItem - PyMapping_SetItemString - PyDict_SetItem -
+  PyDict_SetItemString
+
+- bpo-39392: Explain that when filling with turtle, overlap regions may be
+  left unfilled.
+
+- bpo-39381: Mention in docs that :func:`asyncio.get_event_loop` implicitly
+  creates new event loop only if called from the main thread.
+
+- bpo-38918: Add an entry for ``__module__`` in the "function" & "method"
+  sections of the `inspect docs types and members table
+  <https://docs.python.org/3/library/inspect.html#types-and-members>`_
+
+- bpo-3530: In the :mod:`ast` module documentation, fix a misleading
+  ``NodeTransformer`` example and add advice on when to use the
+  ``fix_missing_locations`` function.
+
+Tests
+-----
+
+- bpo-39502: Skip test_zipfile.test_add_file_after_2107() if
+  :func:`time.localtime` fails with :exc:`OverflowError`. It is the case on
+  AIX 6.1 for example.
+
+- bpo-38546: Fix test_ressources_gced_in_workers() of
+  test_concurrent_futures: explicitly stop the manager to prevent leaking a
+  child process running in the background after the test completes.
+
+Build
+-----
+
+- bpo-39144: The ctags and etags build targets both include Modules/_ctypes
+  and Python standard library source files.
+
+Windows
+-------
+
+- bpo-39439: Honor the Python path when a virtualenv is active on Windows.
+
+- bpo-39393: Improve the error message when attempting to load a DLL with
+  unresolved dependencies.
+
+- bpo-38883: :meth:`~pathlib.Path.home()` and
+  :meth:`~pathlib.Path.expanduser()` on Windows now prefer
+  :envvar:`USERPROFILE` and no longer use :envvar:`HOME`, which is not
+  normally set for regular user accounts. This makes them again behave like
+  :func:`os.path.expanduser`, which was changed to ignore :envvar:`HOME` in
+  3.8, see :issue:`36264`.
+
+- bpo-39185: The build.bat script has additional options for very-quiet
+  output (-q) and very-verbose output (-vv)
+
+IDLE
+----
+
+- bpo-30780: Add remaining configdialog tests for buttons and highlights and
+  keys tabs.
+
+- bpo-39388: IDLE Settings Cancel button now cancels pending changes
+
+- bpo-39050: Make IDLE Settings dialog Help button work again.
+
+- bpo-34118: Tag memoryview, range, and tuple as classes, the same as list,
+  etcetera, in the library manual built-in functions list.
+
+- bpo-38792: Close an IDLE shell calltip if a :exc:`KeyboardInterrupt` or
+  shell restart occurs.  Patch by Zackery Spytz.
+
+- bpo-32989: Add tests for editor newline_and_indent_event method. Remove
+  dead code from pyparse find_good_parse_start method.
+
+
 What's New in Python 3.8.1 final?
 =================================
 
@@ -19,13 +339,13 @@ Core and Builtins
   consistent with the "if" node. Patch by Lysandros Nikolaou.
 
 - bpo-39008: :c:func:`PySys_Audit` now requires ``Py_ssize_t`` to be used
-  for size arguments in the format string, regardless of whethen
+  for size arguments in the format string, regardless of whether
   ``PY_SSIZE_T_CLEAN`` was defined at include time.
 
 Library
 -------
 
-- bpo-39022: Update importliib.metadata to include improvements from
+- bpo-39022: Update importlib.metadata to include improvements from
   importlib_metadata 1.3 including better serialization of EntryPoints and
   improved documentation for custom finders.
 
@@ -55,7 +375,7 @@ macOS
 IDLE
 ----
 
-- bpo-38944: Excape key now closes IDLE completion windows.  Patch by Johnny
+- bpo-38944: Escape key now closes IDLE completion windows.  Patch by Johnny
   Najera.
 
 - bpo-38943: Fix IDLE autocomplete windows not always appearing on some
@@ -407,7 +727,7 @@ Library
 Documentation
 -------------
 
-- bpo-38294: Add list of no-longer-escaped chars to re.escape documentation
+- bpo-38294: Add list of no-longer-escaped chars to re.escape documentation.
 
 Tests
 -----
@@ -421,7 +741,7 @@ Tests
 Windows
 -------
 
-- bpo-38344: Fix error message in activate.bat
+- bpo-38344: Fix error message in activate.bat.
 
 - bpo-38359: Ensures ``pyw.exe`` launcher reads correct registry key.
 
