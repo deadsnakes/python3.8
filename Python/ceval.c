@@ -1159,7 +1159,7 @@ _PyEval_EvalFrameDefault(PyFrameObject *f, int throwflag)
         co->co_opcache_flag++;
         if (co->co_opcache_flag == OPCACHE_MIN_RUNS) {
             if (_PyCode_InitOpcache(co) < 0) {
-                return NULL;
+                goto exit_eval_frame;
             }
 #if OPCACHE_STATS
             opcache_code_objects_extra_mem +=
@@ -4686,6 +4686,7 @@ void
 PyEval_SetProfile(Py_tracefunc func, PyObject *arg)
 {
     if (PySys_Audit("sys.setprofile", NULL) < 0) {
+        _PyErr_WriteUnraisableMsg("in PyEval_SetProfile", NULL);
         return;
     }
 
@@ -4707,6 +4708,7 @@ void
 PyEval_SetTrace(Py_tracefunc func, PyObject *arg)
 {
     if (PySys_Audit("sys.settrace", NULL) < 0) {
+        _PyErr_WriteUnraisableMsg("in PyEval_SetTrace", NULL);
         return;
     }
 
@@ -4742,37 +4744,11 @@ _PyEval_GetCoroutineOriginTrackingDepth(void)
     return tstate->coroutine_origin_tracking_depth;
 }
 
-void
-_PyEval_SetAsyncGenFirstiter(PyObject *firstiter)
-{
-    PyThreadState *tstate = _PyThreadState_GET();
-
-    if (PySys_Audit("sys.set_asyncgen_hook_firstiter", NULL) < 0) {
-        return;
-    }
-
-    Py_XINCREF(firstiter);
-    Py_XSETREF(tstate->async_gen_firstiter, firstiter);
-}
-
 PyObject *
 _PyEval_GetAsyncGenFirstiter(void)
 {
     PyThreadState *tstate = _PyThreadState_GET();
     return tstate->async_gen_firstiter;
-}
-
-void
-_PyEval_SetAsyncGenFinalizer(PyObject *finalizer)
-{
-    PyThreadState *tstate = _PyThreadState_GET();
-
-    if (PySys_Audit("sys.set_asyncgen_hook_finalizer", NULL) < 0) {
-        return;
-    }
-
-    Py_XINCREF(finalizer);
-    Py_XSETREF(tstate->async_gen_finalizer, finalizer);
 }
 
 PyObject *
