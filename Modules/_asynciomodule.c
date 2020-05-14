@@ -2626,6 +2626,10 @@ task_step_impl(TaskObj *task, PyObject *exc)
     coro = task->task_coro;
     if (coro == NULL) {
         PyErr_SetString(PyExc_RuntimeError, "uninitialized Task object");
+        if (clear_exc) {
+            /* We created 'exc' during this call */
+            Py_DECREF(exc);
+        }
         return NULL;
     }
 
@@ -3261,6 +3265,8 @@ module_free(void *m)
     Py_CLEAR(context_kwname);
 
     module_free_freelists();
+
+    module_initialized = 0;
 }
 
 static int

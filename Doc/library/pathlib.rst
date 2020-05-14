@@ -515,8 +515,10 @@ Pure paths provide the following methods and properties:
       >>> PurePath('a/b.py').match('/*.py')
       False
 
-   As with other methods, case-sensitivity is observed::
+   As with other methods, case-sensitivity follows platform defaults::
 
+      >>> PurePosixPath('b.py').match('*.PY')
+      False
       >>> PureWindowsPath('b.py').match('*.PY')
       True
 
@@ -672,7 +674,7 @@ call fails (for example because the path doesn't exist).
 
 .. method:: Path.stat()
 
-   Return information about this path (similarly to :func:`os.stat`).
+   Return a :class:`os.stat_result` object containing information about this path, like :func:`os.stat`.
    The result is looked up at each call to this method.
 
    ::
