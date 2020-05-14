@@ -17,7 +17,7 @@ Objects, values and types
 
 :dfn:`Objects` are Python's abstraction for data.  All data in a Python program
 is represented by objects or by relations between objects. (In a sense, and in
-conformance to Von Neumann's model of a "stored program computer," code is also
+conformance to Von Neumann's model of a "stored program computer", code is also
 represented by objects.)
 
 .. index::
@@ -420,6 +420,11 @@ Mappings
       equal (e.g., ``1`` and ``1.0``) then they can be used interchangeably to index
       the same dictionary entry.
 
+      Dictionaries preserve insertion order, meaning that keys will be produced
+      in the same order they were added sequentially over the dictionary.
+      Replacing an existing key does not change the order, however removing a key
+      and re-inserting it will add it to the end instead of keeping its old place.
+
       Dictionaries are mutable; they can be created by the ``{...}`` notation (see
       section :ref:`dict`).
 
@@ -430,6 +435,11 @@ Mappings
       The extension modules :mod:`dbm.ndbm` and :mod:`dbm.gnu` provide
       additional examples of mapping types, as does the :mod:`collections`
       module.
+
+      .. versionchanged:: 3.7
+         Dictionaries did not preserve insertion order in versions of Python before 3.6.
+         In CPython 3.6, insertion order was preserved, but it was considered
+         an implementation detail at that time rather than a language guarantee.
 
 Callable types
    .. index::
@@ -1951,7 +1961,7 @@ namespace returned by ``__prepare__`` is passed in to ``__new__``, but when
 the final class object is created the namespace is copied into a new ``dict``.
 
 If the metaclass has no ``__prepare__`` attribute, then the class namespace
-is initialised as an empty :func:`dict`.
+is initialised as an empty ordered mapping.
 
 .. seealso::
 

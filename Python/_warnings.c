@@ -856,11 +856,11 @@ setup_context(Py_ssize_t stack_level, PyObject **filename, int *lineno,
         int rc;
 
         if (PyErr_Occurred()) {
-            return 0;
+            goto handle_error;
         }
         *registry = PyDict_New();
         if (*registry == NULL)
-            return 0;
+            goto handle_error;
 
          rc = _PyDict_SetItemId(globals, &PyId___warningregistry__, *registry);
          if (rc < 0)
@@ -886,10 +886,9 @@ setup_context(Py_ssize_t stack_level, PyObject **filename, int *lineno,
     return 1;
 
  handle_error:
-    /* filename not XDECREF'ed here as there is no way to jump here with a
-       dangling reference. */
     Py_XDECREF(*registry);
     Py_XDECREF(*module);
+    Py_DECREF(*filename);
     return 0;
 }
 
