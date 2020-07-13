@@ -2,6 +2,309 @@
 Python News
 +++++++++++
 
+What's New in Python 3.8.4 final?
+=================================
+
+*Release date: 2020-07-13*
+
+Security
+--------
+
+- bpo-41162: Audit hooks are now cleared later during finalization to avoid
+  missing events.
+
+- bpo-29778: Ensure :file:`python3.dll` is loaded from correct locations
+  when Python is embedded (CVE-2020-15523).
+
+Core and Builtins
+-----------------
+
+- bpo-41247: Always cache the running loop holder when running
+  ``asyncio.set_running_loop``.
+
+- bpo-41252: Fix incorrect refcounting in _ssl.c's
+  ``_servername_callback()``.
+
+- bpo-41218: Python 3.8.3 had a regression where compiling with
+  ast.PyCF_ALLOW_TOP_LEVEL_AWAIT would aggressively mark list comprehension
+  with CO_COROUTINE. Now only list comprehension making use of async/await
+  will tagged as so.
+
+- bpo-41175: Guard against a NULL pointer dereference within bytearrayobject
+  triggered by the ``bytearray() + bytearray()`` operation.
+
+- bpo-39960: The "hackcheck" that prevents sneaking around a type's
+  __setattr__() by calling the superclass method was rewritten to allow C
+  implemented heap types.
+
+Library
+-------
+
+- bpo-41235: Fix the error handling in
+  :meth:`ssl.SSLContext.load_dh_params`.
+
+- bpo-41193: The ``write_history()`` atexit function of the readline
+  completer now ignores any :exc:`OSError` to ignore error if the filesystem
+  is read-only, instead of only ignoring :exc:`FileNotFoundError` and
+  :exc:`PermissionError`.
+
+- bpo-41043: Fixed the use of :func:`~glob.glob` in the stdlib: literal part
+  of the path is now always correctly escaped.
+
+- bpo-39384: Fixed email.contentmanager to allow set_content() to set a null
+  string.
+
+IDLE
+----
+
+- bpo-37765: Add keywords to module name completion list.  Rewrite
+  Completions section of IDLE doc.
+
+- bpo-41152: The encoding of ``stdin``, ``stdout`` and ``stderr`` in IDLE is
+  now always UTF-8.
+
+
+What's New in Python 3.8.4 release candidate 1?
+===============================================
+
+*Release date: 2020-06-29*
+
+Security
+--------
+
+- bpo-41004: The __hash__() methods of  ipaddress.IPv4Interface and
+  ipaddress.IPv6Interface incorrectly generated constant hash values of 32
+  and 128 respectively. This resulted in always causing hash collisions. The
+  fix uses hash() to generate hash values for the tuple of (address, mask
+  length, network address).
+
+- bpo-39073: Disallow CR or LF in email.headerregistry.Address arguments to
+  guard against header injection attacks.
+
+Core and Builtins
+-----------------
+
+- bpo-41094: Fix decoding errors with audit when open files with non-ASCII
+  names on non-UTF-8 locale.
+
+- bpo-41056: Fixes a reference to deallocated stack space during startup
+  when constructing sys.path involving a relative symlink when code was
+  supplied via -c.  (discovered via Coverity)
+
+- bpo-35975: Stefan Behnel reported that cf_feature_version is used even
+  when PyCF_ONLY_AST is not set. This is against the intention and against
+  the documented behavior, so it's been fixed.
+
+- bpo-40957: Fix refleak in _Py_fopen_obj() when PySys_Audit() fails
+
+- bpo-40870: Raise :exc:`ValueError` when validating custom AST's where the
+  constants ``True``, ``False`` and ``None`` are used within a
+  :class:`ast.Name` node.
+
+- bpo-40826: Fix GIL usage in :c:func:`PyOS_Readline`: lock the GIL to set
+  an exception and pass the Python thread state when checking if there is a
+  pending signal.
+
+- bpo-40824: Unexpected errors in calling the ``__iter__`` method are no
+  longer masked by ``TypeError`` in the :keyword:`in` operator and functions
+  :func:`~operator.contains`, :func:`~operator.indexOf` and
+  :func:`~operator.countOf` of the :mod:`operator` module.
+
+- bpo-40663: Correctly generate annotations where parentheses are omitted
+  but required (e.g: ``Type[(str, int, *other))]``.
+
+Library
+-------
+
+- bpo-41138: Fixed the :mod:`trace` module CLI for Python source files with
+  non-UTF-8 encoding.
+
+- bpo-31938: Fix default-value signatures of several functions in the
+  :mod:`select` module - by Anthony Sottile.
+
+- bpo-41068: Fixed reading files with non-ASCII names from ZIP archive
+  directly after writing them.
+
+- bpo-41058: :func:`pdb.find_function` now correctly determines the source
+  file encoding.
+
+- bpo-41056: Fix a NULL pointer dereference within the ssl module during a
+  MemoryError in the keylog callback. (discovered by Coverity)
+
+- bpo-41048: :func:`mimetypes.read_mime_types` function reads the rule file
+  using UTF-8 encoding, not the locale encoding. Patch by Srinivas Reddy
+  Thatiparthy.
+
+- bpo-40448: :mod:`ensurepip` now disables the use of `pip` cache when
+  installing the bundled versions of `pip` and `setuptools`.  Patch by
+  Krzysztof Konopko.
+
+- bpo-40855: The standard deviation and variance functions in the statistics
+  module were ignoring their mu and xbar arguments.
+
+- bpo-40807: Stop codeop._maybe_compile, used by code.InteractiveInterpreter
+  (and IDLE). from from emitting each warning three times.
+
+- bpo-40834: Fix truncate when sending str object
+  with_xxsubinterpreters.channel_send.
+
+- bpo-38488: Update ensurepip to install pip 20.1.1 and setuptools 47.1.0.
+
+- bpo-40767: :mod:`webbrowser` now properly finds the default browser in
+  pure Wayland systems by checking the WAYLAND_DISPLAY environment variable.
+  Patch contributed by Jérémy Attali.
+
+- bpo-40795: :mod:`ctypes` module: If ctypes fails to convert the result of
+  a callback or if a ctypes callback function raises an exception,
+  sys.unraisablehook is now called with an exception set. Previously, the
+  error was logged into stderr by :c:func:`PyErr_Print`.
+
+- bpo-30008: Fix :mod:`ssl` code to be compatible with OpenSSL 1.1.x builds
+  that use ``no-deprecated`` and ``--api=1.1.0``.
+
+- bpo-40614: :func:`ast.parse` will not parse self documenting expressions
+  in f-strings when passed ``feature_version`` is less than ``(3, 8)``.
+
+- bpo-40626: Add h5 file extension as MIME Type application/x-hdf5, as per
+  HDF Group recommendation for HDF5 formatted data files. Patch contributed
+  by Mark Schwab.
+
+- bpo-25872: :mod:`linecache` could crash with a :exc:`KeyError` when
+  accessed from multiple threads. Fix by Michael Graczyk.
+
+- bpo-40597: If text content lines are longer than policy.max_line_length,
+  always use a content-encoding to make sure they are wrapped.
+
+- bpo-40515: The :mod:`ssl` and :mod:`hashlib` modules now actively check
+  that OpenSSL is build with thread support. Python 3.7.0 made thread
+  support mandatory and no longer works safely with a no-thread builds.
+
+- bpo-13097: ``ctypes`` now raises an ``ArgumentError`` when a callback is
+  invoked with more than 1024 arguments.
+
+- bpo-40457: The ssl module now support OpenSSL builds without TLS 1.0 and
+  1.1 methods.
+
+- bpo-39830: Add :class:`zipfile.Path` to ``__all__`` in the :mod:`zipfile`
+  module.
+
+- bpo-40025: Raise TypeError when _generate_next_value_ is defined after
+  members. Patch by Ethan Onstott.
+
+- bpo-39244: Fixed :class:`multiprocessing.context.get_all_start_methods` to
+  properly return the default method first on macOS.
+
+- bpo-39040: Fix parsing of invalid mime headers parameters by collapsing
+  whitespace between encoded words in a bare-quote-string.
+
+- bpo-35714: :exc:`struct.error` is now raised if there is a null character
+  in a :mod:`struct` format string.
+
+- bpo-36290: AST nodes are now raising :exc:`TypeError` on conflicting
+  keyword arguments. Patch contributed by Rémi Lapeyre.
+
+- bpo-29620: :func:`~unittest.TestCase.assertWarns` no longer raises a
+  ``RuntimeException`` when accessing a module's ``__warningregistry__``
+  causes importation of a new module, or when a new module is imported in
+  another thread. Patch by Kernc.
+
+- bpo-34226: Fix `cgi.parse_multipart` without content_length. Patch by
+  Roger Duran
+
+Tests
+-----
+
+- bpo-41085: Fix integer overflow in the :meth:`array.array.index` method on
+  64-bit Windows for index larger than ``2**31``.
+
+- bpo-38377: On Linux, skip tests using multiprocessing if the current user
+  cannot create a file in ``/dev/shm/`` directory. Add the
+  :func:`~test.support.skip_if_broken_multiprocessing_synchronize` function
+  to the :mod:`test.support` module.
+
+- bpo-41009: Fix use of ``support.require_{linux|mac|freebsd}_version()``
+  decorators as class decorator.
+
+- bpo-41003: Fix ``test_copyreg`` when ``numpy`` is installed:
+  ``test.pickletester`` now saves/restores warnings filters when importing
+  ``numpy``, to ignore filters installed by ``numpy``.
+
+- bpo-40964: Disable remote :mod:`imaplib` tests, host cyrus.andrew.cmu.edu
+  is blocking incoming connections.
+
+- bpo-40055: distutils.tests now saves/restores warnings filters to leave
+  them unchanged. Importing tests imports docutils which imports
+  pkg_resources which adds a warnings filter.
+
+- bpo-34401: Make test_gdb properly run on HP-UX. Patch by Michael Osipov.
+
+Build
+-----
+
+- bpo-40204: Pin Sphinx version to 2.3.1 in ``Doc/Makefile``.
+
+- bpo-40653: Move _dirnameW out of HAVE_SYMLINK to fix a potential compiling
+  issue.
+
+Windows
+-------
+
+- bpo-41074: Fixed support of non-ASCII names in functions
+  :func:`msilib.OpenDatabase` and :func:`msilib.init_database` and non-ASCII
+  SQL in method :meth:`msilib.Database.OpenView`.
+
+- bpo-40164: Updates Windows OpenSSL to 1.1.1g
+
+- bpo-39631: Changes the registered MIME type for ``.py`` files on Windows
+  to ``text/x-python`` instead of ``text/plain``.
+
+- bpo-40677: Manually define IO_REPARSE_TAG_APPEXECLINK in case some old
+  Windows SDK doesn't have it.
+
+- bpo-40650: Include winsock2.h in pytime.c for timeval.
+
+- bpo-39148: Add IPv6 support to :mod:`asyncio` datagram endpoints in
+  ProactorEventLoop. Change the raised exception for unknown address
+  families to ValueError as it's not coming from Windows API.
+
+macOS
+-----
+
+- bpo-39580: Avoid opening Finder window if running installer from the
+  command line. Patch contributed by Rick Heil.
+
+- bpo-41100: Fix configure error when building on macOS 11. Note that the
+  current Python release was released shortly after the first developer
+  preview of macOS 11 (Big Sur); there are other known issues with building
+  and running on the developer preview. Big Sur is expected to be fully
+  supported in a future bugfix release of Python 3.8.x and with 3.9.0.
+
+- bpo-41005: fixed an XDG settings issue not allowing macos to open browser
+  in webbrowser.py
+
+- bpo-40741: Update macOS installer to use SQLite 3.32.2.
+
+IDLE
+----
+
+- bpo-41144: Make Open Module open a special module such as os.path.
+
+- bpo-39885: Make context menu Cut and Copy work again when right-clicking
+  within a selection.
+
+- bpo-40723: Make test_idle pass when run after import.
+
+Tools/Demos
+-----------
+
+- bpo-40479: Update multissltest helper to test with latest OpenSSL 1.0.2,
+  1.1.0, 1.1.1, and 3.0.0-alpha.
+
+- bpo-40163: Fix multissltest tool. OpenSSL has changed download URL for old
+  releases. The multissltest tool now tries to download from current and old
+  download URLs.
+
+
 What's New in Python 3.8.3 final?
 =================================
 
