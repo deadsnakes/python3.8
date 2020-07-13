@@ -229,7 +229,7 @@ index da86ce9..8fd703e 100644
              object.__name__ not in ('xml.etree', 'test.pydoc_mod')):
              if docloc.startswith(("http://", "https://")):
 diff --git a/Lib/site.py b/Lib/site.py
-index a065ab0..cce53af 100644
+index 9fa21cc..a196b3e 100644
 --- a/Lib/site.py
 +++ b/Lib/site.py
 @@ -7,12 +7,18 @@
@@ -276,7 +276,7 @@ index a065ab0..cce53af 100644
              sitepackages.append(prefix)
              sitepackages.append(os.path.join(prefix, "lib", "site-packages"))
 diff --git a/Lib/test/test_site.py b/Lib/test/test_site.py
-index 1bbc697..fa031ab 100644
+index 9a047fd..376dfb9 100644
 --- a/Lib/test/test_site.py
 +++ b/Lib/test/test_site.py
 @@ -267,10 +267,10 @@ class HelperFunctionsTests(unittest.TestCase):

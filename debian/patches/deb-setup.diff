@@ -9,7 +9,7 @@ Subject: deb-setup
  1 file changed, 5 insertions(+), 8 deletions(-)
 
 diff --git a/setup.py b/setup.py
-index b168ed4..fe8d11e 100644
+index 6340669..cf7abe1 100644
 --- a/setup.py
 +++ b/setup.py
 @@ -385,8 +385,10 @@ class PyBuildExt(build_ext):
