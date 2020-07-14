@@ -1,3 +1,9 @@
+python3.8 (3.8.4-1+xenial1) xenial; urgency=medium
+
+  * Python 3.8.4 release.
+
+ -- Anthony Sottile <asottile@umich.edu>  Mon, 13 Jul 2020 18:31:35 -0700
+
 python3.8 (3.8.3-1+xenial1) xenial; urgency=medium
 
   * Python 3.8.3 release.
