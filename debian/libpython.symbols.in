@@ -1520,6 +1520,7 @@
  _PyNone_Type@Base @SVER@
  _PyNotImplemented_Type@Base @SVER@
  _PyOS_GetOpt@Base @SVER@
+ _PyOS_InterruptOccurred@Base 3.8.4
  _PyOS_IsMainThread@Base @SVER@
  _PyOS_ReadlineTState@Base @SVER@
  _PyOS_ResetGetOpt@Base @SVER@
