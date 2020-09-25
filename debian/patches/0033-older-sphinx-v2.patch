@@ -10,7 +10,7 @@ Subject: older sphinx v2
  4 files changed, 4 insertions(+), 7 deletions(-)
 
 diff --git a/Doc/c-api/typeobj.rst b/Doc/c-api/typeobj.rst
-index 163f599..84d0302 100644
+index 3d18623..03bddc8 100644
 --- a/Doc/c-api/typeobj.rst
 +++ b/Doc/c-api/typeobj.rst
 @@ -34,7 +34,6 @@ Quick Reference
@@ -30,7 +30,7 @@ index 163f599..84d0302 100644
     +---------------------------------------------------------+-----------------------------------+--------------+
     | Slot                                                    | :ref:`Type <slot-typedefs-table>` | special      |
 diff --git a/Doc/conf.py b/Doc/conf.py
-index ba0cad9..a03324a 100644
+index c8af55c..6556cc2 100644
 --- a/Doc/conf.py
 +++ b/Doc/conf.py
 @@ -45,7 +45,7 @@ today_fmt = '%B %d, %Y'
@@ -43,7 +43,7 @@ index ba0cad9..a03324a 100644
  # Ignore any .rst files in the venv/ directory.
  exclude_patterns = ['venv/*', 'README.rst']
 diff --git a/Doc/tools/extensions/pyspecific.py b/Doc/tools/extensions/pyspecific.py
-index a128c70..969ab30 100644
+index e3369cd..eab61d2 100644
 --- a/Doc/tools/extensions/pyspecific.py
 +++ b/Doc/tools/extensions/pyspecific.py
 @@ -9,6 +9,7 @@
@@ -62,7 +62,7 @@ index a128c70..969ab30 100644
  from sphinx.util.nodes import split_explicit_title
  from sphinx.writers.text import TextWriter, TextTranslator
  from sphinx.writers.latex import LaTeXTranslator
-@@ -435,7 +435,7 @@ class PydocTopicsBuilder(Builder):
+@@ -441,7 +441,7 @@ class PydocTopicsBuilder(Builder):
  
      def write(self, *ignored):
          writer = TextWriter(self)
