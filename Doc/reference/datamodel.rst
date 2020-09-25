@@ -2404,6 +2404,13 @@ left undefined.
    :ref:`faq-augmented-assignment-tuple-error`), but this behavior is in fact
    part of the data model.
 
+   .. note::
+
+      Due to a bug in the dispatching mechanism for ``**=``, a class that
+      defines :meth:`__ipow__` but returns ``NotImplemented`` would fail to
+      fall back to ``x.__pow__(y)`` and ``y.__rpow__(x)``. This bug is fixed
+      in Python 3.10.
+
 
 .. method:: object.__neg__(self)
             object.__pos__(self)
@@ -2596,7 +2603,7 @@ Awaitable Objects
 -----------------
 
 An :term:`awaitable` object generally implements an :meth:`__await__` method.
-:term:`Coroutine` objects returned from :keyword:`async def` functions
+:term:`Coroutine objects <coroutine>` returned from :keyword:`async def` functions
 are awaitable.
 
 .. note::
@@ -2621,7 +2628,7 @@ are awaitable.
 Coroutine Objects
 -----------------
 
-:term:`Coroutine` objects are :term:`awaitable` objects.
+:term:`Coroutine objects <coroutine>` are :term:`awaitable` objects.
 A coroutine's execution can be controlled by calling :meth:`__await__` and
 iterating over the result.  When the coroutine has finished executing and
 returns, the iterator raises :exc:`StopIteration`, and the exception's

@@ -324,7 +324,7 @@ every type as being compatible with :data:`Any` and :data:`Any` as being
 compatible with every type.
 
 This means that it is possible to perform any operation or method call on a
-value of type on :data:`Any` and assign it to any variable::
+value of type :data:`Any` and assign it to any variable::
 
    from typing import Any
 
@@ -733,7 +733,7 @@ The module defines the following classes, functions and decorators:
 
    .. versionadded:: 3.5.2
 
-.. class:: Coroutine(Awaitable[V_co], Generic[T_co T_contra, V_co])
+.. class:: Coroutine(Awaitable[V_co], Generic[T_co, T_contra, V_co])
 
    A generic version of :class:`collections.abc.Coroutine`.
    The variance and order of type variables
