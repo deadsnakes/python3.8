@@ -214,7 +214,7 @@ The module :mod:`curses` defines the following functions:
 .. function:: getmouse()
 
    After :meth:`~window.getch` returns :const:`KEY_MOUSE` to signal a mouse event, this
-   method should be call to retrieve the queued mouse event, represented as a
+   method should be called to retrieve the queued mouse event, represented as a
    5-tuple ``(id, x, y, z, bstate)``. *id* is an ID value used to distinguish
    multiple devices, and *x*, *y*, *z* are the event's coordinates.  (*z* is
    currently unused.)  *bstate* is an integer value whose bits will be set to
@@ -682,7 +682,7 @@ the following methods and attributes:
             window.addch(y, x, ch[, attr])
 
    Paint character *ch* at ``(y, x)`` with attributes *attr*, overwriting any
-   character previously painter at that location.  By default, the character
+   character previously painted at that location.  By default, the character
    position and attributes are the current settings for the window object.
 
    .. note::

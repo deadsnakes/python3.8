@@ -2,6 +2,198 @@
 Python News
 +++++++++++
 
+What's New in Python 3.8.6 final?
+=================================
+
+*Release date: 2020-09-23*
+
+Core and Builtins
+-----------------
+
+- bpo-41525: The output of ``python --help`` contains now only ASCII
+  characters.
+
+Library
+-------
+
+- bpo-41817: fix `tkinter.EventType` Enum so all members are strings, and
+  none are tuples
+
+- bpo-41815: Fix SQLite3 segfault when backing up closed database. Patch
+  contributed by Peter David McCormick.
+
+- bpo-41517: fix bug allowing Enums to be extended via multiple inheritance
+
+- bpo-39587: use the correct mix-in data type when constructing Enums
+
+- bpo-41789: Honor `object` overrides in `Enum` class creation
+  (specifically, `__str__`, `__repr__`, `__format__`, and `__reduce_ex__`).
+
+- bpo-39651: Fix a race condition in the ``call_soon_threadsafe()`` method
+  of ``asyncio.ProactorEventLoop``: do nothing if the self-pipe socket has
+  been closed.
+
+- bpo-41720: Fixed :meth:`turtle.Vec2D.__rmul__` for arguments which are not
+  int or float.
+
+- bpo-39728: fix default `_missing_` so a duplicate `ValueError` is not set
+  as the `__context__` of the original `ValueError`
+
+- bpo-37479: When `Enum.__str__` is overridden in a derived class, the
+  override will be used by `Enum.__format__` regardless of whether mixin
+  classes are present.
+
+Documentation
+-------------
+
+- bpo-35293: Fix RemovedInSphinx40Warning when building the documentation.
+  Patch by Dong-hee Na.
+
+- bpo-37149: Change Shipman tkinter doc link from archive.org to TkDocs.
+  (The doc has been removed from the NMT server.)  The new link responds
+  much faster and includes a short explanatory note.
+
+Tests
+-----
+
+- bpo-41731: Make test_cmd_line_script pass with option '-vv'.
+
+Windows
+-------
+
+- bpo-41744: Fixes automatic import of props file when using the Nuget
+  package.
+
+IDLE
+----
+
+- bpo-35764: Rewrite the Calltips doc section.
+
+- bpo-40181: In calltips, stop reminding that '/' marks the end of
+  positional-only arguments.
+
+
+What's New in Python 3.8.6 release candidate 1?
+===============================================
+
+*Release date: 2020-09-07*
+
+Core and Builtins
+-----------------
+
+- bpo-41654: Fix a crash that occurred when destroying subclasses of
+  :class:`MemoryError`. Patch by Pablo Galindo.
+
+- bpo-41533: Free the stack allocated in ``va_build_stack`` if
+  ``do_mkstack`` fails and the stack is not a ``small_stack``.
+
+- bpo-38156: Handle interrupts that come after EOF correctly in
+  ``PyOS_StdioReadline``.
+
+Library
+-------
+
+- bpo-41696: Fix handling of debug mode in :func:`asyncio.run`. This allows
+  setting ``PYTHONASYNCIODEBUG`` or ``-X dev`` to enable asyncio debug mode
+  when using :func:`asyncio.run`.
+
+- bpo-39010: Restarting a ``ProactorEventLoop`` on Windows no longer logs
+  spurious ``ConnectionResetErrors``.
+
+- bpo-41609: The pdb whatis command correctly reports instance methods as
+  'Method' rather than 'Function'.
+
+- bpo-32751: When cancelling the task due to a timeout,
+  :meth:`asyncio.wait_for` will now wait until the cancellation is complete
+  also in the case when *timeout* is <= 0, like it does with positive
+  timeouts.
+
+- bpo-37658: :meth:`asyncio.wait_for` now properly handles races between
+  cancellation of itself and the completion of the wrapped awaitable.
+
+- bpo-40782: Change the method asyncio.AbstractEventLoop.run_in_executor to
+  not be a coroutine.
+
+- bpo-41520: Fix :mod:`codeop` regression that prevented turning compile
+  warnings into errors.
+
+- bpo-41503: Fixed a race between setTarget and flush in
+  logging.handlers.MemoryHandler.
+
+- bpo-41497: Fix potential UnicodeDecodeError in dis module.
+
+- bpo-41490: Update :mod:`ensurepip` to install pip 20.2.1 and setuptools
+  49.2.1.
+
+- bpo-41467: On Windows, fix asyncio ``recv_into()`` return value when the
+  socket/pipe is closed (:exc:`BrokenPipeError`): return ``0`` rather than
+  an empty byte string (``b''``).
+
+- bpo-41425: Make tkinter doc example runnable.
+
+- bpo-41384: Raise TclError instead of TypeError when an unknown option is
+  passed to tkinter.OptionMenu.
+
+- bpo-38731: Fix :exc:`NameError` in command-line interface of
+  :mod:`py_compile`.
+
+- bpo-41364: Reduce import overhead of :mod:`uuid`.
+
+- bpo-41344: Prevent creating :class:`shared_memory.SharedMemory` objects
+  with :code:`size=0`.
+
+- bpo-40726: Handle cases where the ``end_lineno`` is ``None`` on
+  :func:`ast.increment_lineno`.
+
+- bpo-31122: ssl.wrap_socket() now raises ssl.SSLEOFError rather than
+  OSError when peer closes connection during TLS negotiation
+
+- bpo-33660: Fix pathlib.PosixPath to resolve a relative path located on the
+  root directory properly.
+
+Documentation
+-------------
+
+- bpo-41624: Fix the signature of :class:`typing.Coroutine`.
+
+- bpo-40204: Enable Sphinx 3.2 ``c_allow_pre_v3`` option and disable
+  ``c_warn_on_allowed_pre_v3`` option to make the documentation compatible
+  with Sphinx 2 and Sphinx 3.
+
+- bpo-41045: Add documentation for debug feature of f-strings.
+
+- bpo-41314: Changed the release when ``from __future__ import annotations``
+  becomes the default from ``4.0`` to ``3.10`` (following a change in PEP
+  563).
+
+- bpo-39883: Make code, examples, and recipes in the Python documentation be
+  licensed under the more permissive BSD0 license in addition to the
+  existing Python 2.0 license.
+
+Windows
+-------
+
+- bpo-41492: Fixes the description that appears in UAC prompts.
+
+- bpo-40741: Update Windows release to include SQLite 3.32.3.
+
+IDLE
+----
+
+- bpo-41468: Improve IDLE run crash error message (which users should never
+  see).
+
+- bpo-41373: Save files loaded with no line ending, as when blank, or
+  different line endings, by setting its line ending to the system default.
+  Fix regression in 3.8.4 and 3.9.0b4.
+
+C API
+-----
+
+- bpo-41524: Fix bug in PyOS_mystrnicmp and PyOS_mystricmp that incremented
+  pointers beyond the end of a string.
+
+
 What's New in Python 3.8.5 final?
 =================================
 
@@ -1407,7 +1599,7 @@ IDLE
 
 - bpo-4630: Add an option to toggle IDLE's cursor blink for shell, editor,
   and output windows.  See Settings, General, Window Preferences, Cursor
-  Blink. Patch by Zachary Spytz.
+  Blink. Patch by Zackery Spytz.
 
 - bpo-38598: Do not try to compile IDLE shell or output windows
 
@@ -3400,7 +3592,7 @@ Documentation
   between Python versions.
 
 - bpo-36686: Improve documentation of the stdin, stdout, and stderr
-  arguments of of the ``asyncio.subprocess_exec`` function to specify which
+  arguments of the ``asyncio.subprocess_exec`` function to specify which
   values are supported. Also mention that decoding as text is not supported.
 
   Add a few tests to verify that the various values passed to the std*
@@ -7040,8 +7232,8 @@ Tests
 
 - bpo-34391: Fix ftplib test for TLS 1.3 by reading from data socket.
 
-- bpo-11192: Fix `test_socket` on AIX AIX 6.1 and later IPv6 zone id
-  supports only supported by inet_pton6_zone() Switch to runtime-based
+- bpo-11192: Fix `test_socket` on AIX 6.1 and later IPv6 zone id supports
+  only supported by inet_pton6_zone() Switch to runtime-based
   platform.system() to establish current platform  rather than build-time
   based sys.platform()
 
