@@ -281,33 +281,10 @@ stamps/stamp-build: stamps/stamp-build-static stamps/stamp-mincheck \
     stamps/stamp-check stamps/stamp-pybench
 	touch $@
 
-PROFILE_EXCLUDES = test_compiler test_distutils test_subprocess \
-	test_multiprocessing test_socket test_socketserver \
-	test_thread test_threaded_import test_threadedtempfile \
-	test_threading test_threading_local test_threadsignals \
-	test_concurrent_futures test_ctypes \
-	test_dbm_dumb test_dbm_ndbm test_pydoc test_sundry \
-	test_signal test_ioctl test_gdb test_ensurepip test_venv \
-	test_asyncio test_io test_poplib
-
-# TODO: these hang/fail with new OpenSSL
-PROFILE_EXCLUDES += \
-	test_asyncio test_ftplib test_httplib test_imaplib test_nntplib test_poplib test_ssl
-
-# TODO: these fail in the profile build
-PROFILE_EXCLUDES += \
-	test_cmd_line_script test_zipimport_support
-
-# TODO: update profiled-build.diff to support --next
-#       --next=20
-PROFILE_TASK = -m test.regrtest --pgo \
-	-x $(sort $(TEST_EXCLUDES) $(PROFILE_EXCLUDES))
-
 stamps/stamp-build-static: stamps/stamp-configure-static
 	dh_testdir
 	$(MAKE) $(NJOBS) -C $(buildd_static) \
-		EXTRA_CFLAGS="$(EXTRA_OPT_CFLAGS)" \
-		PROFILE_TASK='$(PROFILE_TASK)' $(make_build_target)
+		EXTRA_CFLAGS="$(EXTRA_OPT_CFLAGS)" $(make_build_target)
 
 	: # check that things are correctly built
 ifeq ($(DEB_HOST_GNU_TYPE),$(DEB_BUILD_GNU_TYPE))
@@ -321,14 +298,12 @@ endif
 	touch stamps/stamp-build-static
 
 run-profile-task:
-	$(MAKE) -C $(buildd_static) \
-		PROFILE_TASK='$(PROFILE_TASK)' run_profile_task
+	$(MAKE) -C $(buildd_static) run_profile_task
 
 stamps/stamp-build-shared: stamps/stamp-configure-shared
 	dh_testdir
 	$(MAKE) $(NJOBS) -C $(buildd_shared) \
-		EXTRA_CFLAGS="$(EXTRA_OPT_CFLAGS)" \
-		PROFILE_TASK='$(PROFILE_TASK)' $(make_build_target)
+		EXTRA_CFLAGS="$(EXTRA_OPT_CFLAGS)" $(make_build_target)
 	: # build a static library with PIC objects
 	$(MAKE) $(NJOBS) -C $(buildd_shared) \
 		EXTRA_CFLAGS="$(EXTRA_OPT_CFLAGS)" \
