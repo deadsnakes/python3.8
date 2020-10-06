@@ -1,3 +1,9 @@
+python3.8 (3.8.6-1+bionic2) bionic; urgency=medium
+
+  * Use faster pgo.
+
+ -- Anthony Sottile <asottile@umich.edu>  Mon, 05 Oct 2020 20:22:36 -0700
+
 python3.8 (3.8.6-1+bionic1) bionic; urgency=medium
 
   * Python 3.8.6 release.
