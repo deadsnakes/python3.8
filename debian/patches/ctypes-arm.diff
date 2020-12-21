@@ -8,10 +8,10 @@ Subject: ctypes-arm
  1 file changed, 13 insertions(+), 2 deletions(-)
 
 diff --git a/Lib/ctypes/util.py b/Lib/ctypes/util.py
-index 97973bc..00189c7 100644
+index 0c2510e..3907247 100644
 --- a/Lib/ctypes/util.py
 +++ b/Lib/ctypes/util.py
-@@ -256,16 +256,27 @@ elif os.name == "posix":
+@@ -269,16 +269,27 @@ elif os.name == "posix":
  
          def _findSoname_ldconfig(name):
              import struct

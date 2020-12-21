@@ -23,10 +23,10 @@ index b49b506..6f3f30c 100644
      elif os.name == "nt":
          if python_build:
 diff --git a/Lib/sysconfig.py b/Lib/sysconfig.py
-index b9e2faf..d941ca9 100644
+index 9caf158..a17ba62 100644
 --- a/Lib/sysconfig.py
 +++ b/Lib/sysconfig.py
-@@ -558,6 +558,12 @@ def get_config_vars(*args):
+@@ -559,6 +559,12 @@ def get_config_vars(*args):
          # the init-function.
          _CONFIG_VARS['userbase'] = _getuserbase()
  
