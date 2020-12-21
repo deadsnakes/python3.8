@@ -402,10 +402,10 @@ Initially :pep:`484` defined Python static type system as using
 a class ``B`` is expected if and only if ``A`` is a subclass of ``B``.
 
 This requirement previously also applied to abstract base classes, such as
-:class:`Iterable`. The problem with this approach is that a class had
+:class:`~collections.abc.Iterable`. The problem with this approach is that a class had
 to be explicitly marked to support them, which is unpythonic and unlike
 what one would normally do in idiomatic dynamically typed Python code.
-For example, this conforms to the :pep:`484`::
+For example, this conforms to :pep:`484`::
 
    from typing import Sized, Iterable, Iterator
 
@@ -570,7 +570,7 @@ The module defines the following classes, functions and decorators:
    :ref:`type variables <generics>`, and unions of any of these types.
    For example::
 
-      def new_non_team_user(user_class: Type[Union[BaseUser, ProUser]]): ...
+      def new_non_team_user(user_class: Type[Union[BasicUser, ProUser]]): ...
 
    ``Type[Any]`` is equivalent to ``Type`` which in turn is equivalent
    to ``type``, which is the root of Python's metaclass hierarchy.
@@ -1167,7 +1167,7 @@ The module defines the following classes, functions and decorators:
    Such a protocol can be used with :func:`isinstance` and :func:`issubclass`.
    This raises :exc:`TypeError` when applied to a non-protocol class.  This
    allows a simple-minded structural check, very similar to "one trick ponies"
-   in :mod:`collections.abc` such as :class:`Iterable`.  For example::
+   in :mod:`collections.abc` such as :class:`~collections.abc.Iterable`.  For example::
 
       @runtime_checkable
       class Closable(Protocol):

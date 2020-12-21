@@ -103,9 +103,9 @@ paths longer than this would not resolve and errors would result.
 
 In the latest versions of Windows, this limitation can be expanded to
 approximately 32,000 characters. Your administrator will need to activate the
-"Enable Win32 long paths" group policy, or set the registry value
-``HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\FileSystem@LongPathsEnabled``
-to ``1``.
+"Enable Win32 long paths" group policy, or set ``LongPathsEnabled`` to ``1``
+in the registry key
+``HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\FileSystem``.
 
 This allows the :func:`open` function, the :mod:`os` module and most other
 path functionality to accept and return paths longer than 260 characters.
@@ -421,6 +421,12 @@ dependants, such as Idle), pip and the Python documentation are not included.
     runtime may have already been installed on a user's system previously or
     automatically via Windows Update, and can be detected by finding
     ``ucrtbase.dll`` in the system directory.
+
+.. note::
+
+   When running on Windows 7, Python 3.8 requires the KB2533623 update to be
+   installed. The embeddable distribution does not detect this update, and may
+   fail at runtime. Later versions of Windows include this update.
 
 Third-party packages should be installed by the application installer alongside
 the embedded distribution. Using pip to manage dependencies as for a regular
