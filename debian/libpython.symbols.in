@@ -1624,6 +1624,7 @@
  _PySet_NextEntry@Base @SVER@
  _PySet_Update@Base @SVER@
  _PySignal_AfterFork@Base @SVER@
+ _PySignal_Init@Base 3.8.7
  _PySlice_FromIndices@Base @SVER@
  _PySlice_GetLongIndices@Base @SVER@
  _PyStack_AsDict@Base @SVER@
