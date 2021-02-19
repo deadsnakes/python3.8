@@ -209,9 +209,9 @@ def library_recipes():
 
     result.extend([
           dict(
-              name="OpenSSL 1.1.1g",
-              url="https://www.openssl.org/source/openssl-1.1.1g.tar.gz",
-              checksum='76766e98997660138cdaf13a187bd234',
+              name="OpenSSL 1.1.1i",
+              url="https://www.openssl.org/source/openssl-1.1.1i.tar.gz",
+              checksum='08987c3cf125202e2b0840035efb392c',
               buildrecipe=build_universal_openssl,
               configure=None,
               install=None,
@@ -307,9 +307,9 @@ def library_recipes():
                   ),
           ),
           dict(
-              name="SQLite 3.33.0",
-              url="https://sqlite.org/2020/sqlite-autoconf-3330000.tar.gz",
-              checksum='842a8a100d7b01b09e543deb2b7951dd',
+              name="SQLite 3.34.0",
+              url="https://sqlite.org/2020/sqlite-autoconf-3340000.tar.gz",
+              checksum='7f33c9db7b713957fcb9271fe9049fef',
               extra_cflags=('-Os '
                             '-DSQLITE_ENABLE_FTS5 '
                             '-DSQLITE_ENABLE_FTS4 '
@@ -1090,7 +1090,6 @@ def buildPythonDocs():
     if not os.path.exists(htmlDir):
         # Create virtual environment for docs builds with blurb and sphinx
         runCommand('make venv')
-        runCommand('venv/bin/python3 -m pip install -U Sphinx==2.3.1')
         runCommand('make html PYTHON=venv/bin/python')
     os.rename(htmlDir, docdir)
     os.chdir(curDir)

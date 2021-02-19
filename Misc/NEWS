@@ -2,6 +2,173 @@
 Python News
 +++++++++++
 
+What's New in Python 3.8.8 final?
+=================================
+
+*Release date: 2021-02-19*
+
+There were no new changes in version 3.8.8.
+
+
+
+What's New in Python 3.8.8 release candidate 1?
+===============================================
+
+*Release date: 2021-02-16*
+
+Security
+--------
+
+- bpo-42967: Fix web cache poisoning vulnerability by defaulting the query
+  args separator to ``&``, and allowing the user to choose a custom
+  separator.
+
+- bpo-42938: Avoid static buffers when computing the repr of
+  :class:`ctypes.c_double` and :class:`ctypes.c_longdouble` values.
+
+Core and Builtins
+-----------------
+
+- bpo-42819: :mod:`readline`: Explicitly disable bracketed paste in the
+  interactive interpreter, even if it's set in the inputrc, is enabled by
+  default (eg GNU Readline 8.1), or a user calls
+  ``readline.read_init_file()``. The Python REPL has not implemented
+  bracketed paste support. Also, bracketed mode writes the ``"\x1b[?2004h"``
+  escape sequence into stdout which causes test failures in applications
+  that don't support it. It can still be explicitly enabled by calling
+  ``readline.parse_and_bind("set enable-bracketed-paste on")``. Patch by
+  Dustin Rodrigues.
+
+Library
+-------
+
+- bpo-43108: Fixed a reference leak in the :mod:`curses` module. Patch by
+  Pablo Galindo
+
+- bpo-42780: Fix os.set_inheritable() for O_PATH file descriptors on Linux.
+
+- bpo-41748: Fix HTMLParser parsing rules for element attributes containing
+  commas with spaces. Patch by Karl Dubost.
+
+- bpo-42759: Fixed equality comparison of :class:`tkinter.Variable` and
+  :class:`tkinter.font.Font`. Objects which belong to different Tcl
+  interpreters are now always different, even if they have the same name.
+
+- bpo-23328: Allow / character in username, password fields on _PROXY
+  envars.
+
+- bpo-42681: Fixed range checks for color and pair numbers in :mod:`curses`.
+
+- bpo-42531: :func:`importlib.resources.path` now works for :term:`package`\
+  s missing the optional :attr:`__file__` attribute (more specifically,
+  packages whose :attr:`__spec__`\ ``.``\
+  :attr:`~importlib.machinery.ModuleSpec.origin` :keyword:`is`
+  :data:`None`).
+
+- bpo-42388: Fix subprocess.check_output(..., input=None) behavior when
+  text=True to be consistent with that of the documentation and
+  universal_newlines=True.
+
+- bpo-42384: Make pdb populate sys.path[0] exactly the same as regular
+  python execution.
+
+- bpo-42383: Fix pdb: previously pdb would fail to restart the debugging
+  target if it was specified using a relative path and the current directory
+  changed.
+
+- bpo-42318: Fixed support of non-BMP characters in :mod:`tkinter` on macOS.
+
+- bpo-42005: Fix CLI of :mod:`cProfile` and :mod:`profile` to catch
+  :exc:`BrokenPipeError`.
+
+- bpo-41604: Don't decrement the reference count of the previous user_ptr
+  when set_panel_userptr fails.
+
+- bpo-26407: Unexpected errors in calling the ``__iter__`` method are no
+  longer masked by ``TypeError`` in :func:`csv.reader`,
+  :func:`csv.writer.writerow` and :meth:`csv.writer.writerows`.
+
+- bpo-39068: Fix initialization race condition in :func:`a85encode` and
+  :func:`b85encode` in :mod:`base64`. Patch by Brandon Stansbury.
+
+- bpo-36589: The :func:`curses.update_lines_cols` function now returns
+  ``None`` instead of ``1`` on success.
+
+- bpo-33289: Correct call to :mod:`tkinter.colorchooser` to return RGB
+  triplet of ints instead of floats.  Patch by Cheryl Sabella.
+
+Documentation
+-------------
+
+- bpo-40304: Fix doc for type(name, bases, dict).  Patch by Boris
+  Verkhovskiy and Éric Araujo.
+
+- bpo-42811: Updated importlib.utils.resolve_name() doc to use
+  __spec__.parent instead of __package__. (Thanks Yair Frid.)
+
+Tests
+-----
+
+- bpo-42794: Update test_nntplib to use offical group name of news.aioe.org
+  for testing. Patch by Dong-hee Na.
+
+- bpo-40810: In :mod:`sqlite3`, fix ``CheckTraceCallbackContent`` for SQLite
+  pre 3.7.15.
+
+Build
+-----
+
+- bpo-29076: Add fish shell support to macOS installer.
+
+Windows
+-------
+
+- bpo-41837: Updated Windows installer to include OpenSSL 1.1.1i
+
+- bpo-42584: Upgrade Windows installer to use SQLite 3.34.0.
+
+macOS
+-----
+
+- bpo-41837: Update macOS installer build to use OpenSSL 1.1.1i.
+
+- bpo-42584: Update macOS installer to use SQLite 3.34.0.
+
+IDLE
+----
+
+- bpo-43008: Make IDLE invoke :func:`sys.excepthook` in normal, 2-process
+  mode. Patch by Ken Hilton.
+
+- bpo-33065: Fix problem debugging user classes with __repr__ method.
+
+- bpo-42508: Keep IDLE running on macOS.  Remove obsolete workaround that
+  prevented running files with shortcuts when using new universal2
+  installers built on macOS 11.
+
+- bpo-23544: Disable Debug=>Stack Viewer when user code is running or
+  Debugger is active, to prevent hang or crash.  Patch by Zackery Spytz.
+
+- bpo-32631: Finish zzdummy example extension module: make menu entries
+  work; add docstrings and tests with 100% coverage.
+
+Tools/Demos
+-----------
+
+- bpo-42726: Fixed Python 3 compatibility issue with gdb/libpython.py
+  handling of attribute dictionaries.
+
+C API
+-----
+
+- bpo-43030: Fixed a compiler warning in :c:func:`Py_UNICODE_ISSPACE()` on
+  platforms with signed ``wchar_t``.
+
+- bpo-40052: Fix an alignment build warning/error in function
+  ``PyVectorcall_Function()``. Patch by Andreas Schneider, Antoine Pitrou
+  and Petr Viktorin.
+
+
 What's New in Python 3.8.7 final?
 =================================
 
