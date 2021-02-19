@@ -22,7 +22,7 @@ index 4cca13b..e791edb 100644
  # Ignore any .rst files in the venv/ directory.
  exclude_patterns = ['venv/*', 'README.rst']
 diff --git a/Doc/library/turtle.rst b/Doc/library/turtle.rst
-index d348753..fb1f45b 100644
+index 6a9d619..877c27a 100644
 --- a/Doc/library/turtle.rst
 +++ b/Doc/library/turtle.rst
 @@ -250,7 +250,6 @@ Turtle motion
@@ -191,7 +191,7 @@ index d348753..fb1f45b 100644
        >>> turtle.pos()
        (440.00,-0.00)
 @@ -665,7 +643,6 @@ Tell Turtle's state
-    orientation which depends on the mode - "standard"/"world" or "logo").
+    orientation which depends on the mode - "standard"/"world" or "logo".
  
     .. doctest::
 -      :skipif: _tkinter is None
@@ -279,7 +279,7 @@ index d348753..fb1f45b 100644
        >>> turtle.penup()
        >>> turtle.isdown()
 @@ -917,7 +884,6 @@ Color control
-     newly set pencolor.
+    newly set pencolor.
  
     .. doctest::
 -      :skipif: _tkinter is None
@@ -287,7 +287,7 @@ index d348753..fb1f45b 100644
         >>> colormode()
         1.0
 @@ -966,7 +932,6 @@ Color control
-     with the newly set fillcolor.
+    with the newly set fillcolor.
  
     .. doctest::
 -      :skipif: _tkinter is None
@@ -295,7 +295,7 @@ index d348753..fb1f45b 100644
         >>> turtle.fillcolor("violet")
         >>> turtle.fillcolor()
 @@ -1005,7 +970,6 @@ Color control
-     with the newly set colors.
+    with the newly set colors.
  
     .. doctest::
 -      :skipif: _tkinter is None
@@ -359,7 +359,7 @@ index d348753..fb1f45b 100644
        >>> turtle.shape()
        'classic'
 @@ -1195,7 +1152,6 @@ Appearance
-    resizemode("user") is called by :func:`shapesize` when used with arguments.
+    ``resizemode("user")`` is called by :func:`shapesize` when used with arguments.
  
     .. doctest::
 -      :skipif: _tkinter is None
@@ -575,7 +575,7 @@ index d348753..fb1f45b 100644
        >>> def f():
        ...     fd(50)
 @@ -1824,7 +1754,6 @@ Using screen events
-    named turtle:
+    named ``turtle``:
  
     .. doctest::
 -      :skipif: _tkinter is None
