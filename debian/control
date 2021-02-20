@@ -60,6 +60,7 @@ Multi-Arch: same
 Priority: optional
 Pre-Depends: ${misc:Pre-Depends}
 Depends: libpython3.8-minimal (= ${binary:Version}), mime-support, ${shlibs:Depends}, ${misc:Depends}
+Recommends: ca-certificates
 Description: Interactive high-level object-oriented language (standard library, version 3.8)
  Python is a high-level, interactive, object-oriented language. Its 3.8 version
  includes an extensive class library with lots of goodies for
