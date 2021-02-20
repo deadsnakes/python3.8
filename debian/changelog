@@ -1,3 +1,9 @@
+python3.8 (3.8.8-1+bionic2) bionic; urgency=medium
+
+  * libpython-stdlib: recommends ca-certificates
+
+ -- Anthony Sottile <asottile@umich.edu>  Sat, 20 Feb 2021 13:09:14 -0800
+
 python3.8 (3.8.8-1+bionic1) bionic; urgency=medium
 
   * Python 3.8.8 release.
