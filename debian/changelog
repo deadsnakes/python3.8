@@ -1,3 +1,9 @@
+python3.8 (3.8.9-1+xenial1) xenial; urgency=medium
+
+  * Python 3.8.9 release.
+
+ -- Anthony Sottile <asottile@umich.edu>  Fri, 02 Apr 2021 18:02:10 -0700
+
 python3.8 (3.8.8-1+xenial2) xenial; urgency=medium
 
   * libpython-stdlib: recommends ca-certificates
