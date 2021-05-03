@@ -237,6 +237,7 @@ p_doc	:= $(PVER)-doc
 p_dbg	:= $(PVER)-dbg
 p_udeb	:= $(PVER)-udeb
 p_venv	:= $(PVER)-venv
+p_full	:= $(PVER)-full
 
 p_lbase	:= lib$(PVER)-stdlib
 p_lmin	:= lib$(PVER)-minimal
@@ -1332,7 +1333,7 @@ binary-arch: build-arch install
 	-dh_icons -a || dh_iconcache -a
 #	dh_installmime -a
 	dh_installchangelogs -a
-	for i in $(p_dev) $(p_dbg) $(p_venv); do \
+	for i in $(p_dev) $(p_dbg) $(p_venv) $(p_full); do \
 	  rm -rf debian/$$i/usr/share/doc/$$i; \
 	  ln -s $(p_base) debian/$$i/usr/share/doc/$$i; \
 	done
