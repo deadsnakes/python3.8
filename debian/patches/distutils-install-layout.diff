@@ -276,10 +276,10 @@ index 9fa21cc..a196b3e 100644
              sitepackages.append(prefix)
              sitepackages.append(os.path.join(prefix, "lib", "site-packages"))
 diff --git a/Lib/test/test_site.py b/Lib/test/test_site.py
-index 6b3dba0..0cb5dee 100644
+index 9b2df6b..32b9531 100644
 --- a/Lib/test/test_site.py
 +++ b/Lib/test/test_site.py
-@@ -267,10 +267,10 @@ class HelperFunctionsTests(unittest.TestCase):
+@@ -268,10 +268,10 @@ class HelperFunctionsTests(unittest.TestCase):
          dirs = site.getsitepackages()
          if os.sep == '/':
              # OS X, Linux, FreeBSD, etc
