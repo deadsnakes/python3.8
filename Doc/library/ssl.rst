@@ -886,6 +886,14 @@ Constants
 
    .. versionadded:: 3.6
 
+.. data:: OP_IGNORE_UNEXPECTED_EOF
+
+   Ignore unexpected shutdown of TLS connections.
+
+   This option is only available with OpenSSL 3.0.0 and later.
+
+   .. versionadded:: 3.10
+
 .. data:: HAS_ALPN
 
    Whether the OpenSSL library has built-in support for the *Application-Layer
@@ -2031,6 +2039,11 @@ to speed up repeated connections from the same clients.
       Only writeable with OpenSSL 1.1.0 or higher.
 
    .. versionadded:: 3.7
+
+   .. versionchanged:: 3.9.3
+
+      The flag had no effect with OpenSSL before version 1.1.1k. Python 3.8.9,
+      3.9.3, and 3.10 include workarounds for previous versions.
 
 .. attribute:: SSLContext.verify_flags
 
