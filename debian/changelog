@@ -1,3 +1,9 @@
+python3.8 (3.8.12-1+bionic3) bionic; urgency=medium
+
+  * Fix control file for removed docs builds.
+
+ -- Anthony Sottile <asottile@umich.edu>  Sat, 15 Jan 2022 13:39:47 -0500
+
 python3.8 (3.8.12-1+bionic2) bionic; urgency=medium
 
   * Remove docs and symbols builds.
