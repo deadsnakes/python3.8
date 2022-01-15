@@ -1316,15 +1316,6 @@ endif
 	  fi; \
 	done
 
-	dh_makeshlibs -p$(p_lib) -V '$(p_lib)'
-	dh_makeshlibs -p$(p_ldbg) -V '$(p_ldbg)'
-# don't include the following symbols, found in extensions
-# which either can be built as builtin or extension.
-	sed -ri \
-	  -e '/^ (PyInit_|_add_one_to_index|asdl_)/d' \
-	  -e '/^ (PyExpat_XML_|PyExpat_Xml)/d' \
-	  -e '/^ (ffi_type_|_ctypes_)/d' \
-	    $(d_lib)/DEBIAN/symbols $(d_ldbg)/DEBIAN/symbols
 	dh_installdeb -a
 	dh_shlibdeps -a
 	dep=`sed -n '/^shlibs:Depends/s/[^=]*=\(.*\)/\1/p' $(d_min).substvars | awk -v RS=', ' -v ORS=', ' '/^libc6/ { print }'`; \

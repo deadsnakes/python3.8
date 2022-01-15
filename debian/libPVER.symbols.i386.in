@@ -1,7 +1,0 @@
-libpython@VER@.so.1.0 libpython@VER@ #MINVER#
-#include "libpython.symbols"
- PyModule_Create2@Base @SVER@
- PyModule_FromDefAndSpec2@Base @SVER@
- _Py_force_double@Base @SVER@
- _Py_get_387controlword@Base @SVER@
- _Py_set_387controlword@Base @SVER@
