@@ -1,3 +1,9 @@
+python3.8 (3.8.13-1+bionic1) bionic; urgency=medium
+
+  * Python 3.8.13 release.
+
+ -- Anthony Sottile <asottile@umich.edu>  Wed, 16 Mar 2022 13:28:59 -0400
+
 python3.8 (3.8.12-1+bionic3) bionic; urgency=medium
 
   * Fix control file for removed docs builds.
