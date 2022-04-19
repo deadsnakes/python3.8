@@ -42,6 +42,9 @@ with open(filename, "wb") as logfile:
             rfds, _, _ = select.select([master], [], [])
             if master in rfds:
                 data = os.read(master, 65536)
+                # Check for EOF
+                if not data:
+                    break
                 os.write(1, data)
                 logfile.write(data)
                 logfile.flush()

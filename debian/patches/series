@@ -26,3 +26,4 @@ pydoc-use-pager.diff
 build-math-object.diff
 argparse-no-shutil.diff
 0033-sysconfigdata-name.patch
+0029-destshared-location.patch

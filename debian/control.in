@@ -83,6 +83,7 @@ Description: Minimal subset of the Python language (version @VER@)
  be used in the boot process for some basic tasks.
  See /usr/share/doc/@PVER@-minimal/README.Debian for a list of the modules
  contained in this package.
+XB-Cnf-Visible-Pkgname: @PVER@
 
 Package: lib@PVER@-minimal
 Architecture: any

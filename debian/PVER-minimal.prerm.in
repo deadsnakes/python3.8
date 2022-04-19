@@ -12,7 +12,7 @@ case "$1" in
 	    $hook rtremove @PVER@ || continue
 	done
 
-	if which update-binfmts >/dev/null; then
+	if command -v update-binfmts >/dev/null; then
 	    update-binfmts --package @PVER@ --remove @PVER@ /usr/bin/@PVER@
 	fi
 

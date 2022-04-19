@@ -10,7 +10,7 @@ Subject: sysconfigdata-name
  4 files changed, 8 insertions(+), 7 deletions(-)
 
 diff --git a/Lib/distutils/sysconfig.py b/Lib/distutils/sysconfig.py
-index 3b536c2..caeb1f0 100644
+index 8df93b2..92086ac 100644
 --- a/Lib/distutils/sysconfig.py
 +++ b/Lib/distutils/sysconfig.py
 @@ -459,9 +459,8 @@ def _init_posix():
@@ -40,7 +40,7 @@ index f1cc516..e836145 100644
      ))
  
 diff --git a/Makefile.pre.in b/Makefile.pre.in
-index 57daa57..915f578 100644
+index 2e5a2fc..24efaf2 100644
 --- a/Makefile.pre.in
 +++ b/Makefile.pre.in
 @@ -1475,8 +1475,10 @@ libinstall:	build_all $(srcdir)/Modules/xxmodule.c

@@ -2,18 +2,12 @@ From: Ubuntu Core Developers <ubuntu-devel-discuss@lists.ubuntu.com>
 Date: Thu, 14 Feb 2019 18:59:14 -0800
 Subject: distutils-sysconfig
 
-# DP: Get CONFIGURE_CFLAGS, CONFIGURE_CPPFLAGS, CONFIGURE_LDFLAGS from
-# DP: the python build, when CFLAGS, CPPFLAGS, LDSHARED) are not set
-# DP: in the environment.
-# DP: Get CONFIGURE_CFLAGS, CONFIGURE_CPPFLAGS, CONFIGURE_LDFLAGS from
-# DP: the python build, when CFLAGS, CPPFLAGS, LDSHARED) are not set
-# DP: in the environment.
 ---
- Lib/distutils/sysconfig.py | 15 +++++++++++++--
- 1 file changed, 13 insertions(+), 2 deletions(-)
+ Lib/distutils/sysconfig.py | 17 ++++++++++++++---
+ 1 file changed, 14 insertions(+), 3 deletions(-)
 
 diff --git a/Lib/distutils/sysconfig.py b/Lib/distutils/sysconfig.py
-index 1428a6a..b49b506 100644
+index 1428a6a..0b13290 100644
 --- a/Lib/distutils/sysconfig.py
 +++ b/Lib/distutils/sysconfig.py
 @@ -194,9 +194,11 @@ def customize_compiler(compiler):
@@ -53,3 +47,12 @@ index 1428a6a..b49b506 100644
          if 'AR' in os.environ:
              ar = os.environ['AR']
          if 'ARFLAGS' in os.environ:
+@@ -237,7 +248,7 @@ def customize_compiler(compiler):
+             compiler=cc_cmd,
+             compiler_so=cc_cmd + ' ' + ccshared,
+             compiler_cxx=cxx,
+-            linker_so=ldshared,
++            linker_so=ldshared + ' ' + ccshared,
+             linker_exe=cc,
+             archiver=archiver)
+ 

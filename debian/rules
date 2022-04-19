@@ -57,10 +57,10 @@ ifneq (,$(findstring nobench, $(DEB_BUILD_OPTIONS)))
   WITHOUT_BENCH := yes
 endif
 ifeq ($(on_buildd),yes)
-  ifneq (,$(filter $(DEB_HOST_ARCH), armel hppa mips mipsel mips64 mips64el s390 hurd-i386 kfreebsd-amd64 kfreebsd-i386))
+  ifneq (,$(filter $(DEB_HOST_ARCH), armel hppa mips mipsel mips64 mips64el riscv64 s390 hurd-i386 kfreebsd-amd64 kfreebsd-i386))
     WITHOUT_CHECK := yes
   endif
-  ifneq (,$(filter $(DEB_HOST_ARCH), armel hppa mips mipsel mips64 mips64el s390 hurd-i386 kfreebsd-amd64 kfreebsd-i386))
+  ifneq (,$(filter $(DEB_HOST_ARCH), armel hppa mips mipsel mips64 mips64el riscv64 s390 hurd-i386 kfreebsd-amd64 kfreebsd-i386))
     WITHOUT_BENCH := yes
   endif
 endif
@@ -112,7 +112,6 @@ MIN_ENCODINGS := $(foreach i, \
 			encodings/$(i)) \
 		 codecs.py stringprep.py
 
-with_tk := no
 with_interp := static
 #with_interp := shared
 
@@ -128,6 +127,9 @@ ifeq ($(distribution),Ubuntu)
   PY_MINPRIO = required
   PY_MINPRIO = optional
   #with_udeb = yes
+  # test_ssl assumes that openssl is compiled with security level set to 1
+  # make it so, during the build
+  export OPENSSL_CONF = $(CURDIR)/debian/openssl.cnf
 else
   PY_MINPRIO = $(PY_PRIO)
 endif
@@ -145,9 +147,11 @@ endif
 
 CC=$(DEB_HOST_GNU_TYPE)-gcc
 CXX=$(DEB_HOST_GNU_TYPE)-g++
-
 AR=$(DEB_HOST_GNU_TYPE)-ar
 RANLIB=$(DEB_HOST_GNU_TYPE)-ranlib
+
+# configure and dtrace consume these
+export CC CXX
 
 DPKG_CPPFLAGS= $(shell $(dpkg_buildflags) --get CPPFLAGS)
 DPKG_CFLAGS  := $(shell $(dpkg_buildflags) --get CFLAGS)
@@ -156,9 +160,12 @@ DPKG_LDFLAGS = $(shell $(dpkg_buildflags) --get LDFLAGS)
 OPT_CFLAGS   := $(filter-out -O%,$(DPKG_CFLAGS)) # default is -O3
 DEBUG_CFLAGS := $(patsubst -O%,-Og,$(DPKG_CFLAGS))
 
-# on ia64, disable -O3 until gcc bug #85412 is fixed
 ifeq ($(DEB_HOST_ARCH),ia64)
-    EXTRA_OPT_CFLAGS += -O2
+    DPKG_CPPFLAGS += -DWITH_PYMALLOC_RADIX_TREE=0
+endif
+# see #972202, and https://gcc.gnu.org/PR97431
+ifneq (,$(filter $(DEB_HOST_ARCH), hppa sh4))
+    EXTRA_OPT_CFLAGS += -fno-inline-small-functions
 endif
 ifneq (,$(filter $(DEB_HOST_ARCH), ppc64 ppc64el))
     OPT_CFLAGS += -fexceptions
@@ -167,16 +174,23 @@ endif
 
 ifeq ($(DEB_HOST_GNU_TYPE),$(DEB_BUILD_GNU_TYPE))
   ifeq ($(DEB_HOST_ARCH_OS),linux)
-    ifneq (,$(findstring $(DEB_HOST_ARCH), amd64 armel armhf i386 powerpc ppc64 ppc64el s390x))
+    ifneq (,$(findstring $(DEB_HOST_ARCH), amd64 armel armhf arm64 i386 powerpc ppc64 ppc64el s390x))
       with_pgo := yes
     endif
   endif
 endif
 
-ifneq (,$(findstring $(DEB_HOST_ARCH), amd64 armel armhf i386 powerpc ppc64 ppc64el s390x))
+ifneq (,$(findstring $(DEB_HOST_ARCH), amd64 armel armhf arm64 i386 powerpc ppc64 ppc64el s390x))
   with_lto := yes
 endif
-with_lto :=
+
+ifneq (,$(findstring nopgo, $(DEB_BUILD_OPTIONS)))
+  with_pgo :=
+endif
+
+ifneq (,$(findstring nolto, $(DEB_BUILD_OPTIONS)))
+  with_lto :=
+endif
 
 ifneq (,$(findstring noopt, $(DEB_BUILD_OPTIONS)))
     OPT_CFLAGS := $(filter-out -O%, $(OPT_CFLAGS))
@@ -185,8 +199,9 @@ ifneq (,$(findstring noopt, $(DEB_BUILD_OPTIONS)))
     with_lto =
 endif
 
+BASE_LTO_CFLAGS = -g -fwrapv -O3
 ifeq ($(with_lto),yes)
-    LTO_CFLAGS = -g -flto -fuse-linker-plugin
+    LTO_CFLAGS = $(BASE_LTO_CFLAGS) -flto -fuse-linker-plugin
     with_fat_lto := $(shell dpkg --compare-versions $$($(CC) --version \
 			| sed -n '/^$(CC)/s,.* ,,p') ge 4.9 && echo yes)
     ifeq ($(with_fat_lto),yes)
@@ -199,12 +214,15 @@ endif
 
 sysconfig_substflags = \
 	-e 's,gcc-8,gcc,;s,g++-8,g++,' \
+	$(if $(with_lto),$(foreach i,-flto=auto -flto -fuse-linker-plugin -ffat-lto-objects,-e 's/$(i)//g')) \
 	-e '/^OPT/s,-O3,-O2,' \
-	-e 's/-O3/-O2/g;s/$(LTO_CFLAGS)//g' \
+	-e 's/-O3/-O2/g' \
 	-e 's/-fprofile-use *-fprofile-correction//g' \
 	-e 's/-fstack-protector /-fstack-protector-strong /g' \
 	-e 's/-specs=[^ ]*//g' \
 	-e 's/-fdebug-prefix-map=[^ ]*//g' \
+	-e 's/-ffile-prefix-map=[^ ]*//g' \
+	-e 's/-Wl,-z,relro//g' \
 	-e 's,^RUNSHARED *=.*,RUNSHARED=,' \
 	-e '/BLDLIBRARY/s/-L\. //'
 
@@ -214,7 +232,7 @@ else ifeq ($(derivative),Debian)
   arch_substvars = # '-Vpython38:Breaks=$(shell tr '\n' ' ' < debian/py38-breaks.$(derivative))'
 endif
 
-make_build_target = $(if $(with_pgo),profile-opt)
+make_build_target = $(if $(filter yes, $(with_pgo)),profile-opt)
 
 buildd_static	:= $(CURDIR)/build-static
 buildd_shared	:= $(CURDIR)/build-shared
@@ -263,19 +281,24 @@ d_ltst	:= debian/$(p_ltst)
 build-arch: stamps/stamp-build
 build-indep:
 build: build-arch
-stamps/stamp-build: stamps/stamp-build-static stamps/stamp-mincheck \
+stamps/stamp-build: stamps/stamp-build-static \
+    stamps/stamp-mincheck \
     stamps/stamp-build-shared stamps/stamp-build-debug \
     stamps/stamp-build-shared-debug \
     stamps/stamp-check stamps/stamp-pybench
 	touch $@
 
+PROFILE_TASK = ../Lib/test/regrtest.py --pgo
+
 stamps/stamp-build-static: stamps/stamp-configure-static
 	dh_testdir
 	$(MAKE) $(NJOBS) -C $(buildd_static) \
-		EXTRA_CFLAGS="$(EXTRA_OPT_CFLAGS)" $(make_build_target)
+		EXTRA_CFLAGS="$(EXTRA_OPT_CFLAGS)" \
+		CONFIGURE_LDFLAGS="$(DPKG_LDFLAGS) $(LTO_CFLAGS)" \
+		PROFILE_TASK='$(PROFILE_TASK)' $(make_build_target)
 
+ifeq (,$(filter nocheck,$(DEB_BUILD_OPTIONS)))
 	: # check that things are correctly built
-ifeq ($(DEB_HOST_GNU_TYPE),$(DEB_BUILD_GNU_TYPE))
   ifneq (,$(filter $(DEB_HOST_ARCH_OS), linux))
 	cd $(buildd_static) && ./python -c 'from _multiprocessing import SemLock'
   endif
@@ -286,12 +309,13 @@ endif
 	touch stamps/stamp-build-static
 
 run-profile-task:
-	$(MAKE) -C $(buildd_static) run_profile_task
+	$(MAKE) -C $(buildd_static) \
+		PROFILE_TASK='$(PROFILE_TASK)' run_profile_task
 
 stamps/stamp-build-shared: stamps/stamp-configure-shared
 	dh_testdir
 	$(MAKE) $(NJOBS) -C $(buildd_shared) \
-		EXTRA_CFLAGS="$(EXTRA_OPT_CFLAGS)" $(make_build_target)
+		EXTRA_CFLAGS="$(EXTRA_OPT_CFLAGS)"
 	: # build a static library with PIC objects
 	$(MAKE) $(NJOBS) -C $(buildd_shared) \
 		EXTRA_CFLAGS="$(EXTRA_OPT_CFLAGS)" \
@@ -301,7 +325,7 @@ stamps/stamp-build-shared: stamps/stamp-configure-shared
 stamps/stamp-build-debug: stamps/stamp-configure-debug
 	dh_testdir
 	$(MAKE) $(NJOBS) -C $(buildd_debug) \
-		EXTRA_CFLAGS="$(DEBUG_CFLAGS)" build_all
+		EXTRA_CFLAGS="$(DEBUG_CFLAGS)"
 
 	cd $(buildd_static) && ./python -c 'import _decimal'
 	cd $(buildd_debug) && ./python -c 'import math, cmath'
@@ -312,14 +336,14 @@ stamps/stamp-build-shared-debug: stamps/stamp-configure-shared-debug
 	dh_testdir
 	: # build the shared debug library
 	$(MAKE) $(NJOBS) -C $(buildd_shdebug) \
-		EXTRA_CFLAGS="$(DEBUG_CFLAGS)" build_all
+		EXTRA_CFLAGS="$(DEBUG_CFLAGS)"
 	touch stamps/stamp-build-shared-debug
 
 common_configure_args = \
 		--prefix=/usr \
+		--libdir=/usr/lib/$(DEB_HOST_MULTIARCH) \
 		--enable-ipv6 \
 		--enable-loadable-sqlite-extensions \
-		--enable-optimizations \
 		--with-dbmliborder=bdb:gdbm \
 		--with-computed-gotos \
 		--without-ensurepip \
@@ -348,8 +372,8 @@ stamps/stamp-configure-shared: stamps/stamp-patch
 	rm -rf $(buildd_shared)
 	mkdir -p $(buildd_shared)
 	cd $(buildd_shared) && \
-	  CC="$(CC)" CXX="$(CXX)" AR="$(AR)" RANLIB="$(RANLIB)" CFLAGS="$(OPT_CFLAGS)" \
-	  CPPFLAGS="$(DPKG_CPPFLAGS)" LDFLAGS="$(DPKG_LDFLAGS)" \
+	  AR="$(AR)" RANLIB="$(RANLIB)" CFLAGS="$(OPT_CFLAGS)" \
+	  CPPFLAGS="$(DPKG_CPPFLAGS)" LDFLAGS="$(DPKG_LDFLAGS) $(LTO_CFLAGS)" \
 	    $(config_site) \
 	    ../configure \
 		--enable-shared \
@@ -366,8 +390,8 @@ stamps/stamp-configure-static: stamps/stamp-patch
 	rm -rf $(buildd_static)
 	mkdir -p $(buildd_static)
 	cd $(buildd_static) && \
-	  CC="$(CC)" CXX="$(CXX)" AR="$(AR)" RANLIB="$(RANLIB)" CFLAGS="$(OPT_CFLAGS)" \
-	  CPPFLAGS="$(DPKG_CPPFLAGS)" LDFLAGS="$(DPKG_LDFLAGS)" \
+	  AR="$(AR)" RANLIB="$(RANLIB)" CFLAGS="$(OPT_CFLAGS)" \
+	  CPPFLAGS="$(DPKG_CPPFLAGS)" LDFLAGS="$(DPKG_LDFLAGS) $(LTO_CFLAGS)" \
 	    $(config_site) \
 	    ../configure \
 		$(common_configure_args)
@@ -379,7 +403,7 @@ stamps/stamp-configure-debug: stamps/stamp-patch
 	rm -rf $(buildd_debug)
 	mkdir -p $(buildd_debug)
 	cd $(buildd_debug) && \
-	  CC="$(CC)" CXX="$(CXX)" AR="$(AR)" RANLIB="$(RANLIB)" CFLAGS="$(DEBUG_CFLAGS)" \
+	  AR="$(AR)" RANLIB="$(RANLIB)" CFLAGS="$(DEBUG_CFLAGS)" \
 	  CPPFLAGS="$(DPKG_CPPFLAGS)" LDFLAGS="$(DPKG_LDFLAGS)" \
 	    $(config_site) \
 	    ../configure \
@@ -393,7 +417,7 @@ stamps/stamp-configure-shared-debug: stamps/stamp-patch
 	rm -rf $(buildd_shdebug)
 	mkdir -p $(buildd_shdebug)
 	cd $(buildd_shdebug) && \
-	  CC="$(CC)" CXX="$(CXX)" AR="$(AR)" RANLIB="$(RANLIB)" CFLAGS="$(DEBUG_CFLAGS)" \
+	  AR="$(AR)" RANLIB="$(RANLIB)" CFLAGS="$(DEBUG_CFLAGS)" \
 	  CPPFLAGS="$(DPKG_CPPFLAGS)" LDFLAGS="$(DPKG_LDFLAGS)" \
 	    $(config_site) \
 	    ../configure \
@@ -431,14 +455,14 @@ ifeq ($(DEB_HOST_GNU_TYPE),$(DEB_BUILD_GNU_TYPE))
 	for m in $(MIN_MODS) $(MIN_PACKAGES) $(MIN_EXTS) $(MIN_BUILTINS); do \
 	  echo "import $$m"; \
 	done > $(buildd_static)/minmods.py
-	cd $(buildd_static) && ./python ../debian/pymindeps.py minmods.py \
+	cd $(buildd_static) && ./python -S ../debian/pymindeps.py minmods.py \
 	  > mindeps.txt
 	-if [ -x /usr/bin/dot ]; then \
-	  cd $(buildd_static) && ./python ../debian/depgraph.py \
+	  cd $(buildd_static) && ./python -S ../debian/depgraph.py \
 	    < mindeps.txt > mindeps.dot; \
 	  dot -Tpng -o mindeps.png mindeps.dot; \
 	else true; fi
-	cd $(buildd_static) && ./python ../debian/mincheck.py \
+	cd $(buildd_static) && ./python -S ../debian/mincheck.py \
 		minmods.py mindeps.txt
 endif
 	touch stamps/stamp-mincheck
@@ -476,12 +500,17 @@ ifneq (,$(filter $(DEB_HOST_ARCH), arm armel avr32 m68k))
     TEST_EXCLUDES += test_compiler
   endif
 endif
+TEST_EXCLUDES += test_ttk_guionly
 # https://buildd.debian.org/status/logs.php?pkg=python3.5&ver=3.5.1-1&arch=alpha&suite=sid
 ifneq (,$(filter $(DEB_HOST_ARCH), alpha))
   TEST_EXCLUDES += test_signal
 endif
 ifneq (,$(filter $(DEB_HOST_ARCH), sparc sparc64))
   TEST_EXCLUDES += test_gdb
+endif
+
+ifneq (,$(filter $(DEB_HOST_ARCH), alpha armhf riscv64 sparc64))
+  TEST_EXCLUDES += test_concurrent_futures
 endif
 
 # fail/hang with new OpenSSL
@@ -520,7 +549,7 @@ else
 	: # build locales needed by the testsuite
 	rm -rf locales
 	mkdir locales
-	if which localedef >/dev/null 2>&1; then \
+	if command -v localedef >/dev/null 2>&1; then \
 	  sh debian/locale-gen; \
 	fi
 
@@ -644,6 +673,7 @@ control-file:
 	    -e "s/@MINPRIO@/$(PY_MINPRIO)/g" \
 	    -e "s/@bd_qual@/$(bd_qual)/g" \
 	    -e "s/@bd_gcc@/$(bd_gcc)/g" \
+	    -e "s/@bd_dbm@/$(bd_dbm)/g" \
 	    -e "s/@bd_dpkgdev@/$(bd_dpkgdev)/g" \
 		debian/control.in \
 		$(if $(with_udeb),debian/control.udeb) \
@@ -678,6 +708,7 @@ clean: control-file
 	rm -rf locales
 	rm -rf $(d)-dbg
 	rm -f configure
+	rm -f netlify.toml
 	rm -rf $(TEST_DIR) debian/testdir
 
 	for f in debian/*.in; do \
@@ -749,8 +780,6 @@ endif
 	  mv $$i $(d)/$(scriptdir)/lib-dynload/$$d; \
 	done
 
-	mv $(d)/usr/lib/libpython*.a $(d)/usr/lib/$(DEB_HOST_MULTIARCH)/
-
 	mkdir -p $(d)/usr/lib/python3
 	mv $(d)/usr/lib/python$(VER)/site-packages \
 		$(d)/usr/lib/python3/dist-packages
@@ -786,7 +815,8 @@ endif
 
 	: # versioned install only
 	rm -f $(d)/usr/bin/{2to3,idle3,pydoc3,pysetup3,python3,python3-config}
-	rm -f $(d)/usr/lib/*/pkgconfig/python3{,-embed}.pc
+	rm -f $(d)/usr/lib/*/pkgconfig/python3.pc
+	rm -f $(d)/usr/lib/*/pkgconfig/python3-embed.pc
 
 	dh_installdirs -p$(p_lib) \
 		usr/lib/$(DEB_HOST_MULTIARCH) \
@@ -869,6 +899,8 @@ endif
 #	mv $(d)/usr/share/include/python$(VER)/* $(d)/usr/include/python$(VER)/.
 #	rm -rf $(d)/usr/share/include
 
+	sed -i $(sysconfig_substflags) \
+		$(d)/usr/bin/$(PVER)-config
 	cp $(d)/usr/bin/$(PVER)-config $(d)/usr/bin/$(DEB_HOST_MULTIARCH)-$(PVER)-config
 
 	dh_installdirs -p$(p_ldev) \
@@ -926,29 +958,36 @@ endif
 	ln -sf $(DEB_HOST_MULTIARCH)-$(PVER)-config $(d_dev)/usr/bin/$(PVER)-config
 	ln -sf $(DEB_HOST_MULTIARCH)-$(PVER)-config.1.gz $(d_dev)/usr/share/man/man1/$(PVER)-config.1.gz
 
-ifeq ($(with_tk),yes)
-	: # Move the Tkinter extension files into $(p_tk).
-	dh_installdirs -p$(p_tk) \
-		$(scriptdir) \
-		usr/lib/python$(VER)/lib-dynload
-	$(dh_compat2) dh_movefiles -p$(p_tk) --sourcedir=$(d) \
-		usr/lib/python$(VER)/lib-dynload/_tkinter*.so
-endif
+
+	: # Tkinter library files shipped in python3-tk
+	rm -rf $(d)/usr/lib/python$(VER)/tkinter
+
+	: # distutils shipped in python3-distutils
+	rm -rf $(d)/usr/lib/python$(VER)/distutils/*
+	: # except for __init__.py + version.py
+	cp Lib/distutils/{__init__,version}.py \
+		$(d)/usr/lib/python$(VER)/distutils/.
+
+	: # lib2to3 shipped in python3-lib2to3
+	rm -rf \
+		usr/bin/2to3-$(VER) \
+		$(d)/usr/bin/2to3-$(VER) \
+		usr/lib/python$(VER)/lib2to3 \
+		$(d)/usr/share/man/man1/2to3-$(VER).1 \
+		$(d)/usr/lib/python$(VER)/lib2to3
 
 	: # The test framework into $(p_lbase)
 	$(dh_compat2) dh_movefiles -p$(p_lbase) --sourcedir=$(d) \
 		$(scriptdir)/test/{libregrtest,support} \
+		$(scriptdir)/test/{ann_module,ann_module2,ann_module3}.py \
 		$(scriptdir)/test/{regrtest,test_support,__init__,__main__}.py
 
-	: # The complete testsuite into $(p_lbase)
+	: # The complete testsuite into $(p_ltst)
 	$(dh_compat2) dh_movefiles -p$(p_ltst) --sourcedir=$(d) \
 		$(scriptdir)/test \
 		$(scriptdir)/ctypes/test \
-		$(scriptdir)/distutils/tests \
-		$(scriptdir)/lib2to3/tests \
 		$(scriptdir)/sqlite3/test \
 		$(scriptdir)/idlelib/idle_test \
-		$(scriptdir)/tkinter/test \
 		$(scriptdir)/unittest/test
 	: # test_ctypes fails with test_macholib.py installed
 	rm -f $(d_ltst)/$(scriptdir)/ctypes/test/test_macholib.py
@@ -957,21 +996,6 @@ endif
 
 	: # fixed upstream ...
 	chmod -x $(d_ltst)/$(scriptdir)/test/{test_dbm_gnu,test_dbm_ndbm}.py
-
-	: # Tkinter library files shipped in python3-tk
-	rm -rf $(d)/usr/lib/python$(VER)/tkinter
-
-	: # distutils shipped in python3-distutils
-	rm -rf $(d)/usr/lib/python$(VER)/distutils/*
-	: # ... except for distutils.version
-	cp Lib/distutils/{__init__,version}.py \
-		$(d)/usr/lib/python$(VER)/distutils/.
-
-	: # lib2to3 shipped in python3-lib2to3
-	rm -rf \
-		$(d)/usr/bin/2to3-$(VER) \
-		$(d)/usr/share/man/man1/2to3-$(VER).1 \
-		$(d)/usr/lib/python$(VER)/lib2to3
 
 	: # Move the demos and tools into $(p_exam)'s doc directory
 	dh_installdirs -p$(p_exam) \
@@ -997,7 +1021,9 @@ endif
 
 	: # Replace all '#!' calls to python with $(PY_INTERPRETER)
 	: # and make them executable
-	for i in `find debian -mindepth 3 -type f`; do \
+	for p in $(shell dh_listpackages); do \
+	[ -d debian/$$p ] || continue; \
+	for i in `find debian/$$p -type f`; do \
 	  sed '1s,#!.*python[^ ]*\(.*\),#! $(PY_INTERPRETER)\1,' \
 		$$i > $$i.temp; \
 	  if cmp --quiet $$i $$i.temp; then \
@@ -1010,6 +1036,7 @@ endif
 	    chmod 755 $$i; \
 	    echo "fixed interpreter: $$i"; \
 	  fi; \
+	done; \
 	done
 
 	: # Move the docs into $(p_base)'s /usr/share/doc/$(PVER) directory,
@@ -1034,9 +1061,6 @@ endif
 		$(d_base)/usr/share/doc/$(PVER)/README.Debian
 	install -m 644 -p debian/README.$(p_idle) \
 		$(d_idle)/usr/share/doc/$(p_idle)/README.Debian
-ifeq ($(with_tk),yes)
-	cp -p debian/README.Tk $(d_tk)/usr/share/doc/$(p_tk)/
-endif
 
 	: # pyvenv and ensurepip files into $(p_venv)
 	dh_installdirs -p$(p_venv) \
@@ -1093,14 +1117,24 @@ endif
 	sed -i $(sysconfig_substflags) \
 		$(d)-dbg/$(scriptdir)/_sysconfigdata_d_$(DEB_HOST_MULTIARCH).py
 
-	mv $(d)-dbg/usr/lib/libpython*.a $(d)-dbg/usr/lib/$(DEB_HOST_MULTIARCH)/
-
 	for i in $(d)-dbg/$(scriptdir)/lib-dynload/*.so; do \
 	  case "$$i" in *$(DEB_HOST_MULTIARCH)*) continue; esac; \
 	  b=$$(basename $$i .cpython-$(EXT_VER)d.so); \
 	  d=$${b}.cpython-$(EXT_VER)d-$(DEB_HOST_MULTIARCH).so; \
 	  mv $$i $(d)-dbg/$(scriptdir)/lib-dynload/$$d; \
 	done
+
+	rm -f $(d)-dbg/$(scriptdir)/lib-dynload/_tkinter*.so
+	rm -f $(d)-dbg/usr/lib/debug/$(scriptdir)/lib-dynload/_tkinter*.so
+
+ifeq ($(with_gdbm),yes)
+	# move debug files to corresponding debug package
+	dh_installdirs -p$(p_gdbm_dbg) $(scriptdir)/lib-dynload
+	dh_install --autodest -p$(p_gdbm_dbg) --sourcedir $(d)-dbg \
+		$(scriptdir)/lib-dynload/_gdbm*.so
+endif
+	rm -f $(d)-dbg/$(scriptdir)/lib-dynload/_gdbm*.so
+	rm -f $(d)-dbg/usr/lib/debug/$(scriptdir)/lib-dynload/_gdbm*.so
 
 	dh_installdirs -p$(p_ldbg) \
 		usr/bin \
@@ -1125,6 +1159,10 @@ endif
 	  $(d_ldbg)/usr/lib/$(DEB_HOST_MULTIARCH)/pkgconfig/.
 	ln -s python-$(VER)d.pc \
 	  $(d_ldbg)/usr/lib/$(DEB_HOST_MULTIARCH)/pkgconfig/python-$(VER)-dbg.pc
+	cp $(d)-dbg/usr/lib/$(DEB_HOST_MULTIARCH)/pkgconfig/python-$(VER)d-embed.pc \
+	  $(d_ldbg)/usr/lib/$(DEB_HOST_MULTIARCH)/pkgconfig/.
+	ln -s python-$(VER)d-embed.pc \
+	  $(d_ldbg)/usr/lib/$(DEB_HOST_MULTIARCH)/pkgconfig/python-$(VER)-dbg-embed.pc
 
 	dh_installdirs -p$(p_dbg) \
 		usr/bin \
@@ -1135,15 +1173,6 @@ endif
 		$(d_dbg)/usr/share/doc/$(p_base)/README.debug
 	cp -p $(buildd_debug)/python $(d_dbg)/usr/bin/$(PVER)d
 	ln -sf python$(VER)d $(d_dbg)/usr/bin/$(PVER)-dbg
-
-ifneq ($(with_tk),yes)
-	rm -f $(d_ldbg)/$(scriptdir)/lib-dynload/_tkinter*.so
-	rm -f $(d_ldbg)/usr/lib/debug/$(scriptdir)/lib-dynload/_tkinter*.so
-endif
-ifneq ($(with_gdbm),yes)
-	rm -f $(d_ldbg)/$(scriptdir)/lib-dynload/_gdbm*.so
-	rm -f $(d_ldbg)/usr/lib/debug/$(scriptdir)/lib-dynload/_gdbm*.so
-endif
 
 	cp -a $(d)-dbg/$(scriptdir)/config-$(VER)d-$(DEB_HOST_MULTIARCH) \
 		$(d_ldbg)/$(scriptdir)/
@@ -1167,6 +1196,8 @@ endif
 	ln -sf $(PVER).1.gz $(d_dbg)/usr/share/man/man1/$(PVER)-dbg.1.gz
 
 	: # in $(p_ldbg), prefix python-config with triplets
+	sed -i $(sysconfig_substflags) \
+		$(d)-dbg/usr/bin/$(PVER)d-config
 	cp $(d)-dbg/usr/bin/$(PVER)d-config \
 		$(d_ldbg)/usr/bin/$(DEB_HOST_MULTIARCH)-$(PVER)d-config
 	ln -sf $(DEB_HOST_MULTIARCH)-$(PVER)d-config \
@@ -1284,12 +1315,8 @@ binary-arch: build-arch install
 	  ln -s $(p_lbase) debian/$$i/usr/share/doc/$$i; \
 	done
 	-find debian ! -perm -200 -print -exec chmod +w {} \;
-ifneq ($(with_tk),yes)
 	rm -f $(d_lbase)/$(scriptdir)/lib-dynload/_tkinter*.so
-endif
-ifneq ($(with_gdbm),yes)
 	rm -f $(d_lbase)/$(scriptdir)/lib-dynload/_gdbm*.so
-endif
 
 	find $(d_ldbg) $(d_ldev) -name '*.a' ! -type l \
 		| xargs -n 1 $(DEB_HOST_GNU_TYPE)-objcopy -p --remove-section=.gnu.lto_.*
@@ -1309,7 +1336,7 @@ endif
 	chmod 644 $(d_lmin)/$(scriptdir)/token.py
 
 	: # make python scripts starting with '#!' executable
-	for i in `find debian -mindepth 3 -type f ! -name '*.dpatch' ! -perm 755`; do \
+	for i in `find debian -mindepth 3 -type f ! -perm 755`; do \
 	  if head -1 $$i | grep -q '^#!'; then \
 	    chmod 755 $$i; \
 	    echo "make executable: $$i"; \
@@ -1352,11 +1379,10 @@ stamps/stamp-patch:
 	done >> stamps/pxx
 
 	touch Parser/acceler.c Parser/grammar1.c Parser/listnode.c \
-	  Parser/node.c Parser/parser.c Parser/bitset.c Parser/metagrammar.c \
-	  Parser/firstsets.c Parser/grammar.c Parser/pgen.c
+	  Parser/node.c Parser/parser.c Parser/token.c
+
 	touch Objects/obmalloc.c Python/dynamic_annotations.c \
-	  Python/mysnprintf.c Python/pyctype.c Parser/tokenizer_pgen.c \
-	  Parser/printgrammar.c Parser/parsetok_pgen.c Parser/pgenmain.c
+	  Python/mysnprintf.c Python/pyctype.c
 	@sleep 1
 	touch Grammar/Grammar 
 	@sleep 1
@@ -1374,9 +1400,7 @@ unpatch:
 
 update-patches: $(patchdir)/series
 	export QUILT_PATCHES=$(patchdir); \
-	export QUILT_REFRESH_ARGS="--no-timestamps --no-index -pab"; \
-	export QUILT_DIFF_ARGS="--no-timestamps --no-index -pab"; \
-	while quilt push; do quilt refresh; done
+	while quilt push; do quilt refresh -pab --no-timestamps --no-index; done
 
 binary: binary-indep binary-arch
 

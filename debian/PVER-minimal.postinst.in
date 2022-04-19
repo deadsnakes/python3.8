@@ -11,19 +11,24 @@ fi
 case "$1" in
     configure)
         # Create empty directories in /usr/local
+        if [ -e /etc/staff-group-for-usr-local ]; then
+            perm=2755; group=staff
+        else
+            perm=755; group=root
+        fi
         if [ ! -e /usr/local/lib/@PVER@ ]; then
             mkdir -p /usr/local/lib/@PVER@ 2> /dev/null || true
-            chmod 2775 /usr/local/lib/@PVER@ 2> /dev/null || true
-            chown root:staff /usr/local/lib/@PVER@ 2> /dev/null || true
+            chmod $perm /usr/local/lib/@PVER@ 2> /dev/null || true
+            chown root:$group /usr/local/lib/@PVER@ 2> /dev/null || true
         fi
 	localsite=/usr/local/lib/@PVER@/dist-packages
         if [ ! -e $localsite ]; then
             mkdir -p $localsite 2> /dev/null || true
-            chmod 2775 $localsite 2> /dev/null || true
-            chown root:staff $localsite 2> /dev/null || true
+            chmod $perm $localsite 2> /dev/null || true
+            chown root:$group $localsite 2> /dev/null || true
         fi
 
-	if which update-binfmts >/dev/null; then
+	if command -v update-binfmts >/dev/null; then
 	    update-binfmts --import @PVER@
 	fi
 
