@@ -112,6 +112,8 @@ MIN_ENCODINGS := $(foreach i, \
 			encodings/$(i)) \
 		 codecs.py stringprep.py
 
+with_tk := yes
+with_gdbm := yes
 with_interp := static
 #with_interp := shared
 
@@ -254,6 +256,12 @@ p_idle	:= idle-$(PVER)
 p_dbg	:= $(PVER)-dbg
 p_udeb	:= $(PVER)-udeb
 p_venv	:= $(PVER)-venv
+p_tk	:= $(PVER)-tk
+p_tk_dbg	:= $(PVER)-tk-dbg
+p_gdbm	:= $(PVER)-gdbm
+p_gdbm_dbg	:= $(PVER)-gdbm-dbg
+p_dist	:= $(PVER)-distutils
+p_2to3	:= $(PVER)-lib2to3
 p_full	:= $(PVER)-full
 
 p_lbase	:= lib$(PVER)-stdlib
@@ -271,6 +279,10 @@ d_idle	:= debian/$(p_idle)
 d_dbg	:= debian/$(p_dbg)
 d_udeb	:= debian/$(p_udeb)
 d_venv	:= debian/$(p_venv)
+d_tk	:= debian/$(p_tk)
+d_tk_dbg	:= debian/$(p_tk_dbg)
+d_gdbm	:= debian/$(p_gdbm)
+d_gdbm_dbg	:= debian/$(p_gdbm_dbg)
 
 d_lbase	:= debian/$(p_lbase)
 d_lmin	:= debian/$(p_lmin)
@@ -348,7 +360,6 @@ common_configure_args = \
 		--with-computed-gotos \
 		--without-ensurepip \
 		--with-system-expat \
-		--with-system-libmpdec \
 
 ifneq (,$(filter $(DEB_HOST_ARCH), avr32 or1k))
   common_configure_args += --without-ffi
@@ -958,23 +969,22 @@ endif
 	ln -sf $(DEB_HOST_MULTIARCH)-$(PVER)-config $(d_dev)/usr/bin/$(PVER)-config
 	ln -sf $(DEB_HOST_MULTIARCH)-$(PVER)-config.1.gz $(d_dev)/usr/share/man/man1/$(PVER)-config.1.gz
 
+ifeq ($(with_tk),yes)
+	: # Move the Tkinter extension files into $(p_tk).
+	dh_installdirs -p$(p_tk) \
+		$(scriptdir) \
+		usr/lib/python$(VER)/lib-dynload
+	$(dh_compat2) dh_movefiles -p$(p_tk) --sourcedir=$(d) \
+		usr/lib/python$(VER)/lib-dynload/_tkinter*.so
+endif
 
-	: # Tkinter library files shipped in python3-tk
-	rm -rf $(d)/usr/lib/python$(VER)/tkinter
-
-	: # distutils shipped in python3-distutils
-	rm -rf $(d)/usr/lib/python$(VER)/distutils/*
-	: # except for __init__.py + version.py
-	cp Lib/distutils/{__init__,version}.py \
-		$(d)/usr/lib/python$(VER)/distutils/.
-
-	: # lib2to3 shipped in python3-lib2to3
-	rm -rf \
-		usr/bin/2to3-$(VER) \
-		$(d)/usr/bin/2to3-$(VER) \
-		usr/lib/python$(VER)/lib2to3 \
-		$(d)/usr/share/man/man1/2to3-$(VER).1 \
-		$(d)/usr/lib/python$(VER)/lib2to3
+ifeq ($(with_gdbm),yes)
+	: # Move the GDBM files into $(p_gdbm).
+	dh_installdirs -p$(p_gdbm) \
+		usr/lib/python$(VER)/lib-dynload
+	$(dh_compat2) dh_movefiles -p$(p_gdbm) --sourcedir=$(d) \
+		usr/lib/python$(VER)/lib-dynload/_gdbm*.so
+endif
 
 	: # The test framework into $(p_lbase)
 	$(dh_compat2) dh_movefiles -p$(p_lbase) --sourcedir=$(d) \
@@ -986,8 +996,11 @@ endif
 	$(dh_compat2) dh_movefiles -p$(p_ltst) --sourcedir=$(d) \
 		$(scriptdir)/test \
 		$(scriptdir)/ctypes/test \
+		$(scriptdir)/distutils/tests \
+		$(scriptdir)/lib2to3/tests \
 		$(scriptdir)/sqlite3/test \
 		$(scriptdir)/idlelib/idle_test \
+		$(scriptdir)/tkinter/test \
 		$(scriptdir)/unittest/test
 	: # test_ctypes fails with test_macholib.py installed
 	rm -f $(d_ltst)/$(scriptdir)/ctypes/test/test_macholib.py
@@ -996,6 +1009,23 @@ endif
 
 	: # fixed upstream ...
 	chmod -x $(d_ltst)/$(scriptdir)/test/{test_dbm_gnu,test_dbm_ndbm}.py
+
+ifeq ($(with_tk),yes)
+	: # Move the Tkinter lib files into $(p_tk).
+	$(dh_compat2) dh_movefiles -p$(p_tk) --sourcedir=$(d) \
+		usr/lib/python$(VER)/tkinter
+endif
+
+	: # Move the distutils files into $(p_dist).
+	: # Except __init__.py / version.py
+	$(dh_compat2) dh_movefiles -p$(p_dist) --sourcedir=$(d) \
+		-X distutils/__init__.py -X distutils/version.py \
+		usr/lib/python$(VER)/distutils
+
+	: # Move the lib2to3 files into $(p_2to3)
+	$(dh_compat2) dh_movefiles -p$(p_2to3) --sourcedir=$(d) \
+		usr/bin/2to3-$(VER) \
+		usr/lib/python$(VER)/lib2to3
 
 	: # Move the demos and tools into $(p_exam)'s doc directory
 	dh_installdirs -p$(p_exam) \
@@ -1061,6 +1091,9 @@ endif
 		$(d_base)/usr/share/doc/$(PVER)/README.Debian
 	install -m 644 -p debian/README.$(p_idle) \
 		$(d_idle)/usr/share/doc/$(p_idle)/README.Debian
+ifeq ($(with_tk),yes)
+	cp -p debian/README.Tk $(d_tk)/usr/share/doc/$(p_tk)/
+endif
 
 	: # pyvenv and ensurepip files into $(p_venv)
 	dh_installdirs -p$(p_venv) \
@@ -1124,6 +1157,12 @@ endif
 	  mv $$i $(d)-dbg/$(scriptdir)/lib-dynload/$$d; \
 	done
 
+ifeq ($(with_tk),yes)
+	# move debug files to corresponding debug package
+	dh_installdirs -p$(p_tk_dbg) $(scriptdir)/lib-dynload
+	dh_install --autodest -p$(p_tk_dbg) --sourcedir $(d)-dbg \
+		$(scriptdir)/lib-dynload/_tkinter*.so
+endif
 	rm -f $(d)-dbg/$(scriptdir)/lib-dynload/_tkinter*.so
 	rm -f $(d)-dbg/usr/lib/debug/$(scriptdir)/lib-dynload/_tkinter*.so
 
@@ -1173,6 +1212,19 @@ endif
 		$(d_dbg)/usr/share/doc/$(p_base)/README.debug
 	cp -p $(buildd_debug)/python $(d_dbg)/usr/bin/$(PVER)d
 	ln -sf python$(VER)d $(d_dbg)/usr/bin/$(PVER)-dbg
+
+ifneq ($(with_tk),yes)
+	rm -f $(d_ldbg)/$(scriptdir)/lib-dynload/_tkinter*.so
+	rm -f $(d_ldbg)/usr/lib/debug/$(scriptdir)/lib-dynload/_tkinter*.so
+else
+	dh_strip -p$(p_tk) --dbg-package=$(p_tk_dbg)
+endif
+ifneq ($(with_gdbm),yes)
+	rm -f $(d_ldbg)/$(scriptdir)/lib-dynload/_gdbm*.so
+	rm -f $(d_ldbg)/usr/lib/debug/$(scriptdir)/lib-dynload/_gdbm*.so
+else
+	dh_strip -p$(p_gdbm) --dbg-package=$(p_gdbm_dbg)
+endif
 
 	cp -a $(d)-dbg/$(scriptdir)/config-$(VER)d-$(DEB_HOST_MULTIARCH) \
 		$(d_ldbg)/$(scriptdir)/
@@ -1315,8 +1367,12 @@ binary-arch: build-arch install
 	  ln -s $(p_lbase) debian/$$i/usr/share/doc/$$i; \
 	done
 	-find debian ! -perm -200 -print -exec chmod +w {} \;
+ifneq ($(with_tk),yes)
 	rm -f $(d_lbase)/$(scriptdir)/lib-dynload/_tkinter*.so
+endif
+ifneq ($(with_gdbm),yes)
 	rm -f $(d_lbase)/$(scriptdir)/lib-dynload/_gdbm*.so
+endif
 
 	find $(d_ldbg) $(d_ldev) -name '*.a' ! -type l \
 		| xargs -n 1 $(DEB_HOST_GNU_TYPE)-objcopy -p --remove-section=.gnu.lto_.*
