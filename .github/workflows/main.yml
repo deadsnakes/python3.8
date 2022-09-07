@@ -1,0 +1,14 @@
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        required: true
+        type: string
+
+jobs:
+  main:
+    uses: deadsnakes/runbooks/.github/workflows/update.yml@main
+    with:
+      dists-json: '["bionic", "jammy"]'
+      version: ${{ inputs.version }}
+    secrets: inherit
