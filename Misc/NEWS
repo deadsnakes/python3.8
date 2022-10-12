@@ -2,6 +2,46 @@
 Python News
 +++++++++++
 
+What's New in Python 3.8.15 final?
+==================================
+
+*Release date: 2022-10-11*
+
+Security
+--------
+
+- gh-issue-97616: Fix multiplying a list by an integer (``list *= int``):
+  detect the integer overflow when the new allocated length is close to the
+  maximum size. Issue reported by Jordan Limor.  Patch by Victor Stinner.
+
+- gh-issue-97612: Fix a shell code injection vulnerability in the
+  ``get-remote-certificate.py`` example script. The script no longer uses a
+  shell to run ``openssl`` commands. Issue reported and initial fix by Caleb
+  Shortt. Patch by Victor Stinner.
+
+Core and Builtins
+-----------------
+
+- gh-issue-96848: Fix command line parsing: reject :option:`-X
+  int_max_str_digits <-X>` option with no value (invalid) when the
+  :envvar:`PYTHONINTMAXSTRDIGITS` environment variable is set to a valid
+  limit. Patch by Victor Stinner.
+
+- gh-issue-95778: When :exc:`ValueError` is raised if an integer is larger
+  than the limit, mention the :func:`sys.set_int_max_str_digits` function in
+  the error message. Patch by Victor Stinner.
+
+Library
+-------
+
+- gh-issue-97005: Update bundled libexpat to 2.4.9
+
+Windows
+-------
+
+- gh-issue-96577: Fixes a potential buffer overrun in :mod:`msilib`.
+
+
 What's New in Python 3.8.14 final?
 ==================================
 
