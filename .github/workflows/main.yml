@@ -9,6 +9,6 @@ jobs:
   main:
     uses: deadsnakes/runbooks/.github/workflows/update.yml@main
     with:
-      dists-json: '["bionic", "jammy"]'
+      dists-json: '["jammy"]'
       version: ${{ inputs.version }}
     secrets: inherit
