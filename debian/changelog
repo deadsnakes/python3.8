@@ -1,3 +1,9 @@
+python3.8 (3.8.19-1+jammy1) jammy; urgency=medium
+
+  * Python 3.8.19 release.
+
+ -- Anthony Sottile (deadsnakes) <asottile+deadsnakes@umich.edu>  Sat, 06 Apr 2024 17:58:10 +0000
+
 python3.8 (3.8.18-1+jammy1) jammy; urgency=medium
 
   * Python 3.8.18 release.
