@@ -2,6 +2,86 @@
 Python News
 +++++++++++
 
+What's New in Python 3.8.19 final?
+==================================
+
+*Release date: 2024-03-19*
+
+Security
+--------
+
+- gh-issue-115398: Allow controlling Expat >=2.6.0 reparse deferral
+  (CVE-2023-52425) by adding five new methods:
+
+  * :meth:`xml.etree.ElementTree.XMLParser.flush`
+  * :meth:`xml.etree.ElementTree.XMLPullParser.flush`
+  * :meth:`xml.parsers.expat.xmlparser.GetReparseDeferralEnabled`
+  * :meth:`xml.parsers.expat.xmlparser.SetReparseDeferralEnabled`
+  * :meth:`xml.sax.expatreader.ExpatParser.flush`
+
+- gh-issue-115399: Update bundled libexpat to 2.6.0
+
+- gh-issue-113659: Skip ``.pth`` files with names starting with a dot or
+  hidden file attribute.
+
+Core and Builtins
+-----------------
+
+- gh-issue-102388: Fix a bug where ``iso2022_jp_3`` and ``iso2022_jp_2004``
+  codecs read out of bounds
+
+Library
+-------
+
+- gh-issue-115197: ``urllib.request`` no longer resolves the hostname before
+  checking it against the system's proxy bypass list on macOS and Windows.
+
+- gh-issue-115133: Fix tests for
+  :class:`~xml.etree.ElementTree.XMLPullParser` with Expat 2.6.0.
+
+- gh-issue-81194: Fix a crash in :func:`socket.if_indextoname` with specific
+  value (UINT_MAX). Fix an integer overflow in :func:`socket.if_indextoname`
+  on 64-bit non-Windows platforms.
+
+- gh-issue-109858: Protect :mod:`zipfile` from "quoted-overlap" zipbomb. It
+  now raises BadZipFile when try to read an entry that overlaps with other
+  entry or central directory.
+
+- gh-issue-107077: Seems that in some conditions, OpenSSL will return
+  ``SSL_ERROR_SYSCALL`` instead of ``SSL_ERROR_SSL`` when a certification
+  verification has failed, but the error parameters will still contain
+  ``ERR_LIB_SSL`` and ``SSL_R_CERTIFICATE_VERIFY_FAILED``. We are now
+  detecting this situation and raising the appropiate
+  ``ssl.SSLCertVerificationError``. Patch by Pablo Galindo
+
+- gh-issue-91133: Fix a bug in :class:`tempfile.TemporaryDirectory` cleanup,
+  which now no longer dereferences symlinks when working around file system
+  permission errors.
+
+Documentation
+-------------
+
+- gh-issue-115399: Document CVE-2023-52425 of Expat <2.6.0 under "XML
+  vulnerabilities".
+
+Tests
+-----
+
+- gh-issue-108310: SSL tests for pre-handshake close were previously not
+  enabled on Python 3.8 due to an incorrect backport. This is now fixed.
+  Patch by Lumír Balhar.
+
+Windows
+-------
+
+- gh-issue-111239: Update Windows builds to use zlib v1.3.1.
+
+- gh-issue-109991: Windows builds now use OpenSSL 1.1.1w. Note that OpenSSL
+  1.1 has reached its end of life and no future fixes will be made, and this
+  version of Python is no longer receiving maintenance fixes and will not be
+  updated to OpenSSL 3.0.
+
+
 What's New in Python 3.8.18 final?
 ==================================
 
