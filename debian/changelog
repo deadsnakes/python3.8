@@ -1,3 +1,9 @@
+python3.8 (3.8.19-1+noble1) noble; urgency=medium
+
+  * Repackage for ubuntu noble.
+
+ -- Anthony Sottile <asottile@umich.edu>  Sat, 27 Apr 2024 15:37:22 -0400
+
 python3.8 (3.8.19-1+jammy1) jammy; urgency=medium
 
   * Python 3.8.19 release.
