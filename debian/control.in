@@ -14,7 +14,7 @@ Build-Depends: debhelper (>= 9), @bd_dpkgdev@
   locales [!armel !avr32 !hppa !ia64 !mipsel],
   libsqlite3-dev, libffi-dev (>= 3.0.5) [!or1k !avr32],
   libgpm2 [!hurd-i386 !kfreebsd-i386 !kfreebsd-amd64],
-  mime-support, netbase, bzip2, time, python3@bd_qual@,
+  media-types, netbase, bzip2, time, python3@bd_qual@,
   net-tools, xvfb, xauth
 Build-Depends-Indep: python3-sphinx, texinfo
 Standards-Version: 4.3.0
@@ -28,7 +28,7 @@ Multi-Arch: allowed
 Priority: @PRIO@
 Depends: @PVER@-minimal (= ${binary:Version}),
  lib@PVER@-stdlib (= ${binary:Version}),
- mime-support,
+ media-types,
  ${shlibs:Depends}, ${misc:Depends}
 Suggests: @PVER@-venv, binutils
 Breaks: python3-all (<< 3.6.5~rc1-1),
@@ -59,7 +59,7 @@ Architecture: any
 Multi-Arch: same
 Priority: @PRIO@
 Pre-Depends: ${misc:Pre-Depends}
-Depends: lib@PVER@-minimal (= ${binary:Version}), mime-support, tzdata, ${shlibs:Depends}, ${misc:Depends}
+Depends: lib@PVER@-minimal (= ${binary:Version}), media-types, tzdata, ${shlibs:Depends}, ${misc:Depends}
 Recommends: ca-certificates
 Description: Interactive high-level object-oriented language (standard library, version @VER@)
  Python is a high-level, interactive, object-oriented language. Its @VER@ version

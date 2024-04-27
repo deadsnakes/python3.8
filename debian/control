@@ -14,7 +14,7 @@ Build-Depends: debhelper (>= 9), dpkg-dev (>= 1.17.11),
   locales [!armel !avr32 !hppa !ia64 !mipsel],
   libsqlite3-dev, libffi-dev (>= 3.0.5) [!or1k !avr32],
   libgpm2 [!hurd-i386 !kfreebsd-i386 !kfreebsd-amd64],
-  mime-support, netbase, bzip2, time, python3:any,
+  media-types, netbase, bzip2, time, python3:any,
   net-tools, xvfb, xauth
 Build-Depends-Indep: python3-sphinx, texinfo
 Standards-Version: 4.3.0
@@ -28,7 +28,7 @@ Multi-Arch: allowed
 Priority: optional
 Depends: python3.8-minimal (= ${binary:Version}),
  libpython3.8-stdlib (= ${binary:Version}),
- mime-support,
+ media-types,
  ${shlibs:Depends}, ${misc:Depends}
 Suggests: python3.8-venv, binutils
 Breaks: python3-all (<< 3.6.5~rc1-1),
@@ -59,7 +59,7 @@ Architecture: any
 Multi-Arch: same
 Priority: optional
 Pre-Depends: ${misc:Pre-Depends}
-Depends: libpython3.8-minimal (= ${binary:Version}), mime-support, tzdata, ${shlibs:Depends}, ${misc:Depends}
+Depends: libpython3.8-minimal (= ${binary:Version}), media-types, tzdata, ${shlibs:Depends}, ${misc:Depends}
 Recommends: ca-certificates
 Description: Interactive high-level object-oriented language (standard library, version 3.8)
  Python is a high-level, interactive, object-oriented language. Its 3.8 version
