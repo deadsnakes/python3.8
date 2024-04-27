@@ -221,9 +221,9 @@ sysconfig_substflags = \
 	-e 's/-O3/-O2/g' \
 	-e 's/-fprofile-use *-fprofile-correction//g' \
 	-e 's/-fstack-protector /-fstack-protector-strong /g' \
-	-e 's/-specs=[^ ]*//g' \
-	-e 's/-fdebug-prefix-map=[^ ]*//g' \
-	-e 's/-ffile-prefix-map=[^ ]*//g' \
+	-e "s/-specs=[^ '\"]*//g" \
+	-e "s/-fdebug-prefix-map=[^ '\"]*//g" \
+	-e "s/-ffile-prefix-map=[^ '\"]*//g" \
 	-e 's/-Wl,-z,relro//g' \
 	-e 's,^RUNSHARED *=.*,RUNSHARED=,' \
 	-e '/BLDLIBRARY/s/-L\. //'
