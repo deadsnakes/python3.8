@@ -1,3 +1,9 @@
+python3.8 (3.8.20-1+noble1) noble; urgency=medium
+
+  * Python 3.8.20 release.
+
+ -- Anthony Sottile (deadsnakes) <asottile+deadsnakes@umich.edu>  Sat, 07 Sep 2024 18:35:07 +0000
+
 python3.8 (3.8.19-1+noble2) noble; urgency=medium
 
   * adjust sysconfig substitution flags to avoid quotes
