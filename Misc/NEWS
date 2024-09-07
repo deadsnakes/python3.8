@@ -2,6 +2,107 @@
 Python News
 +++++++++++
 
+What's New in Python 3.8.20 final?
+==================================
+
+*Release date: 2024-09-06*
+
+Windows
+-------
+
+- gh-119690: Fixes data type confusion in audit events raised by
+  ``_winapi.CreateFile`` and ``_winapi.CreateNamedPipe``.
+
+- gh-116773: Fix instances of ``<_overlapped.Overlapped object at 0xXXX>
+  still has pending operation at deallocation, the process may crash``.
+
+Tests
+-----
+
+- gh-112769: The tests now correctly compare zlib version when
+  :const:`zlib.ZLIB_RUNTIME_VERSION` contains non-integer suffixes. For
+  example zlib-ng defines the version as ``1.3.0.zlib-ng``.
+
+- gh-117187: Fix XML tests for vanilla Expat <2.6.0.
+
+Security
+--------
+
+- gh-123678: Upgrade libexpat to 2.6.3
+
+- gh-121957: Fixed missing audit events around interactive use of Python,
+  now also properly firing for ``python -i``, as well as for ``python -m
+  asyncio``. The event in question is ``cpython.run_stdin``.
+
+- gh-122133: Authenticate the socket connection for the
+  ``socket.socketpair()`` fallback on platforms where ``AF_UNIX`` is not
+  available like Windows.
+
+  Patch by Gregory P. Smith <greg@krypto.org> and Seth Larson
+  <seth@python.org>. Reported by Ellie <el@horse64.org>
+
+- gh-121285: Remove backtracking from tarfile header parsing for
+  ``hdrcharset``, PAX, and GNU sparse headers.
+
+- gh-118486: :func:`os.mkdir` on Windows now accepts *mode* of ``0o700`` to
+  restrict the new directory to the current user. This fixes CVE-2024-4030
+  affecting :func:`tempfile.mkdtemp` in scenarios where the base temporary
+  directory is more permissive than the default.
+
+- gh-114572: :meth:`ssl.SSLContext.cert_store_stats` and
+  :meth:`ssl.SSLContext.get_ca_certs` now correctly lock access to the
+  certificate store, when the :class:`ssl.SSLContext` is shared across
+  multiple threads.
+
+- gh-116741: Update bundled libexpat to 2.6.2
+
+Library
+-------
+
+- gh-123270: Applied a more surgical fix for malformed payloads in
+  :class:`zipfile.Path` causing infinite loops (gh-122905) without breaking
+  contents using legitimate characters.
+
+- gh-123067: Fix quadratic complexity in parsing ``"``-quoted cookie values
+  with backslashes by :mod:`http.cookies`.
+
+- gh-121650: :mod:`email` headers with embedded newlines are now quoted on
+  output. The :mod:`~email.generator` will now refuse to serialize (write)
+  headers that are unsafely folded or delimited; see
+  :attr:`~email.policy.Policy.verify_generated_headers`. (Contributed by Bas
+  Bloemsaat and Petr Viktorin in :gh:`121650`.)
+
+- gh-113171: Fixed various false positives and false negatives in
+
+  * :attr:`ipaddress.IPv4Address.is_private` (see these docs for details)
+  * :attr:`ipaddress.IPv4Address.is_global`
+  * :attr:`ipaddress.IPv6Address.is_private`
+  * :attr:`ipaddress.IPv6Address.is_global`
+
+  Also in the corresponding :class:`ipaddress.IPv4Network` and
+  :class:`ipaddress.IPv6Network` attributes.
+
+- gh-102988: :func:`email.utils.getaddresses` and
+  :func:`email.utils.parseaddr` now return ``('', '')`` 2-tuples in more
+  situations where invalid email addresses are encountered instead of
+  potentially inaccurate values. Add optional *strict* parameter to these
+  two functions: use ``strict=False`` to get the old behavior, accept
+  malformed inputs. ``getattr(email.utils, 'supports_strict_parsing',
+  False)`` can be use to check if the *strict* paramater is available. Patch
+  by Thomas Dwyer and Victor Stinner to improve the CVE-2023-27043 fix.
+
+- gh-67693: Fix :func:`urllib.parse.urlunparse` and
+  :func:`urllib.parse.urlunsplit` for URIs with path starting with multiple
+  slashes and no authority. Based on patch by Ashwin Ramaswami.
+
+Core and Builtins
+-----------------
+
+- gh-112275: A deadlock involving ``pystate.c``'s ``HEAD_LOCK`` in
+  ``posixmodule.c`` at fork is now fixed. Patch by ChuBoning based on
+  previous Python 3.12 fix by Victor Stinner.
+
+
 What's New in Python 3.8.19 final?
 ==================================
 
@@ -10,7 +111,7 @@ What's New in Python 3.8.19 final?
 Security
 --------
 
-- gh-issue-115398: Allow controlling Expat >=2.6.0 reparse deferral
+- gh-115398: Allow controlling Expat >=2.6.0 reparse deferral
   (CVE-2023-52425) by adding five new methods:
 
   * :meth:`xml.etree.ElementTree.XMLParser.flush`
@@ -19,65 +120,65 @@ Security
   * :meth:`xml.parsers.expat.xmlparser.SetReparseDeferralEnabled`
   * :meth:`xml.sax.expatreader.ExpatParser.flush`
 
-- gh-issue-115399: Update bundled libexpat to 2.6.0
+- gh-115399: Update bundled libexpat to 2.6.0
 
-- gh-issue-113659: Skip ``.pth`` files with names starting with a dot or
-  hidden file attribute.
+- gh-113659: Skip ``.pth`` files with names starting with a dot or hidden
+  file attribute.
 
 Core and Builtins
 -----------------
 
-- gh-issue-102388: Fix a bug where ``iso2022_jp_3`` and ``iso2022_jp_2004``
-  codecs read out of bounds
+- gh-102388: Fix a bug where ``iso2022_jp_3`` and ``iso2022_jp_2004`` codecs
+  read out of bounds
 
 Library
 -------
 
-- gh-issue-115197: ``urllib.request`` no longer resolves the hostname before
+- gh-115197: ``urllib.request`` no longer resolves the hostname before
   checking it against the system's proxy bypass list on macOS and Windows.
 
-- gh-issue-115133: Fix tests for
-  :class:`~xml.etree.ElementTree.XMLPullParser` with Expat 2.6.0.
+- gh-115133: Fix tests for :class:`~xml.etree.ElementTree.XMLPullParser`
+  with Expat 2.6.0.
 
-- gh-issue-81194: Fix a crash in :func:`socket.if_indextoname` with specific
-  value (UINT_MAX). Fix an integer overflow in :func:`socket.if_indextoname`
-  on 64-bit non-Windows platforms.
+- gh-81194: Fix a crash in :func:`socket.if_indextoname` with specific value
+  (UINT_MAX). Fix an integer overflow in :func:`socket.if_indextoname` on
+  64-bit non-Windows platforms.
 
-- gh-issue-109858: Protect :mod:`zipfile` from "quoted-overlap" zipbomb. It
-  now raises BadZipFile when try to read an entry that overlaps with other
-  entry or central directory.
+- gh-109858: Protect :mod:`zipfile` from "quoted-overlap" zipbomb. It now
+  raises BadZipFile when try to read an entry that overlaps with other entry
+  or central directory.
 
-- gh-issue-107077: Seems that in some conditions, OpenSSL will return
+- gh-107077: Seems that in some conditions, OpenSSL will return
   ``SSL_ERROR_SYSCALL`` instead of ``SSL_ERROR_SSL`` when a certification
   verification has failed, but the error parameters will still contain
   ``ERR_LIB_SSL`` and ``SSL_R_CERTIFICATE_VERIFY_FAILED``. We are now
   detecting this situation and raising the appropiate
   ``ssl.SSLCertVerificationError``. Patch by Pablo Galindo
 
-- gh-issue-91133: Fix a bug in :class:`tempfile.TemporaryDirectory` cleanup,
-  which now no longer dereferences symlinks when working around file system
+- gh-91133: Fix a bug in :class:`tempfile.TemporaryDirectory` cleanup, which
+  now no longer dereferences symlinks when working around file system
   permission errors.
 
 Documentation
 -------------
 
-- gh-issue-115399: Document CVE-2023-52425 of Expat <2.6.0 under "XML
+- gh-115399: Document CVE-2023-52425 of Expat <2.6.0 under "XML
   vulnerabilities".
 
 Tests
 -----
 
-- gh-issue-108310: SSL tests for pre-handshake close were previously not
-  enabled on Python 3.8 due to an incorrect backport. This is now fixed.
-  Patch by Lumír Balhar.
+- gh-108310: SSL tests for pre-handshake close were previously not enabled
+  on Python 3.8 due to an incorrect backport. This is now fixed. Patch by
+  Lumír Balhar.
 
 Windows
 -------
 
-- gh-issue-111239: Update Windows builds to use zlib v1.3.1.
+- gh-111239: Update Windows builds to use zlib v1.3.1.
 
-- gh-issue-109991: Windows builds now use OpenSSL 1.1.1w. Note that OpenSSL
-  1.1 has reached its end of life and no future fixes will be made, and this
+- gh-109991: Windows builds now use OpenSSL 1.1.1w. Note that OpenSSL 1.1
+  has reached its end of life and no future fixes will be made, and this
   version of Python is no longer receiving maintenance fixes and will not be
   updated to OpenSSL 3.0.
 
@@ -90,10 +191,10 @@ What's New in Python 3.8.18 final?
 Security
 --------
 
-- gh-issue-108310: Fixed an issue where instances of :class:`ssl.SSLSocket`
-  were vulnerable to a bypass of the TLS handshake and included protections
-  (like certificate verification) and treating sent unencrypted data as if
-  it were post-handshake TLS encrypted data.  Security issue reported as
+- gh-108310: Fixed an issue where instances of :class:`ssl.SSLSocket` were
+  vulnerable to a bypass of the TLS handshake and included protections (like
+  certificate verification) and treating sent unencrypted data as if it were
+  post-handshake TLS encrypted data.  Security issue reported as
   `CVE-2023-40217
   <https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2023-40217>`_ by Aapo
   Oksman. Patch by Gregory P. Smith.
@@ -101,15 +202,15 @@ Security
 Library
 -------
 
-- gh-issue-107845: :func:`tarfile.data_filter` now takes the location of
-  symlinks into account when determining their target, so it will no longer
-  reject some valid tarballs with ``LinkOutsideDestinationError``.
+- gh-107845: :func:`tarfile.data_filter` now takes the location of symlinks
+  into account when determining their target, so it will no longer reject
+  some valid tarballs with ``LinkOutsideDestinationError``.
 
 Tools/Demos
 -----------
 
-- gh-issue-107565: Update multissltests and GitHub CI workflows to use
-  OpenSSL 1.1.1v, 3.0.10, and 3.1.2.
+- gh-107565: Update multissltests and GitHub CI workflows to use OpenSSL
+  1.1.1v, 3.0.10, and 3.1.2.
 
 
 What's New in Python 3.8.17 final?
@@ -120,58 +221,58 @@ What's New in Python 3.8.17 final?
 Security
 --------
 
-- gh-issue-103142: The version of OpenSSL used in our binary builds has been
+- gh-103142: The version of OpenSSL used in our binary builds has been
   upgraded to 1.1.1u to address several CVEs.
 
-- gh-issue-99889: Fixed a security in flaw in :func:`uu.decode` that could
-  allow for directory traversal based on the input if no ``out_file`` was
+- gh-99889: Fixed a security in flaw in :func:`uu.decode` that could allow
+  for directory traversal based on the input if no ``out_file`` was
   specified.
 
-- gh-issue-104049: Do not expose the local on-disk location in directory
-  indexes produced by :class:`http.client.SimpleHTTPRequestHandler`.
+- gh-104049: Do not expose the local on-disk location in directory indexes
+  produced by :class:`http.client.SimpleHTTPRequestHandler`.
 
-- gh-issue-102153: :func:`urllib.parse.urlsplit` now strips leading C0
-  control and space characters following the specification for URLs defined
-  by WHATWG in response to CVE-2023-24329. Patch by Illia Volochii.
+- gh-102153: :func:`urllib.parse.urlsplit` now strips leading C0 control and
+  space characters following the specification for URLs defined by WHATWG in
+  response to CVE-2023-24329. Patch by Illia Volochii.
 
-- gh-issue-101727: Updated the OpenSSL version used in Windows and macOS
-  binary release builds to 1.1.1t to address CVE-2023-0286, CVE-2022-4303,
-  and CVE-2022-4303 per `the OpenSSL 2023-02-07 security advisory
+- gh-101727: Updated the OpenSSL version used in Windows and macOS binary
+  release builds to 1.1.1t to address CVE-2023-0286, CVE-2022-4303, and
+  CVE-2022-4303 per `the OpenSSL 2023-02-07 security advisory
   <https://www.openssl.org/news/secadv/20230207.txt>`_.
 
-- gh-issue-101283: :class:`subprocess.Popen` now uses a safer approach to
-  find ``cmd.exe`` when launching with ``shell=True``. Patch by Eryk Sun,
-  based on a patch by Oleg Iarygin.
+- gh-101283: :class:`subprocess.Popen` now uses a safer approach to find
+  ``cmd.exe`` when launching with ``shell=True``. Patch by Eryk Sun, based
+  on a patch by Oleg Iarygin.
 
 Library
 -------
 
-- gh-issue-103935: Use :func:`io.open_code` for files to be executed instead
-  of raw :func:`open`
+- gh-103935: Use :func:`io.open_code` for files to be executed instead of
+  raw :func:`open`
 
-- gh-issue-102953: The extraction methods in :mod:`tarfile`, and
+- gh-102953: The extraction methods in :mod:`tarfile`, and
   :func:`shutil.unpack_archive`, have a new a *filter* argument that allows
   limiting tar features than may be surprising or dangerous, such as
   creating files outside the destination directory. See
   :ref:`tarfile-extraction-filter` for details.
 
-- gh-issue-101997: Upgrade pip wheel bundled with ensurepip (pip 23.0.1)
+- gh-101997: Upgrade pip wheel bundled with ensurepip (pip 23.0.1)
 
 Build
 -----
 
-- gh-issue-102306: [3.8] Avoid GHA CI macOS test_posix failure by using the
+- gh-102306: [3.8] Avoid GHA CI macOS test_posix failure by using the
   appropriate macOS SDK.
 
 Windows
 -------
 
-- gh-issue-100180: Update Windows installer to OpenSSL 1.1.1s
+- gh-100180: Update Windows installer to OpenSSL 1.1.1s
 
 macOS
 -----
 
-- gh-issue-103142: Update macOS installer to use OpenSSL 1.1.1u.
+- gh-103142: Update macOS installer to use OpenSSL 1.1.1u.
 
 
 What's New in Python 3.8.16 final?
@@ -182,34 +283,33 @@ What's New in Python 3.8.16 final?
 Security
 --------
 
-- gh-issue-100001: ``python -m http.server`` no longer allows terminal
-  control characters sent within a garbage request to be printed to the
-  stderr server log.
+- gh-100001: ``python -m http.server`` no longer allows terminal control
+  characters sent within a garbage request to be printed to the stderr
+  server log.
 
   This is done by changing the :mod:`http.server`
   :class:`BaseHTTPRequestHandler` ``.log_message`` method to replace control
   characters with a ``\xHH`` hex escape before printing.
 
-- gh-issue-87604: Avoid publishing list of active per-interpreter audit
-  hooks via the :mod:`gc` module
+- gh-87604: Avoid publishing list of active per-interpreter audit hooks via
+  the :mod:`gc` module
 
-- gh-issue-98433: The IDNA codec decoder used on DNS hostnames by
-  :mod:`socket` or :mod:`asyncio` related name resolution functions no
-  longer involves a quadratic algorithm. This prevents a potential CPU
-  denial of service if an out-of-spec excessive length hostname involving
-  bidirectional characters were decoded. Some protocols such as
-  :mod:`urllib` http ``3xx`` redirects potentially allow for an attacker to
-  supply such a name.
+- gh-98433: The IDNA codec decoder used on DNS hostnames by :mod:`socket` or
+  :mod:`asyncio` related name resolution functions no longer involves a
+  quadratic algorithm. This prevents a potential CPU denial of service if an
+  out-of-spec excessive length hostname involving bidirectional characters
+  were decoded. Some protocols such as :mod:`urllib` http ``3xx`` redirects
+  potentially allow for an attacker to supply such a name.
 
-- gh-issue-98739: Update bundled libexpat to 2.5.0
+- gh-98739: Update bundled libexpat to 2.5.0
 
-- gh-issue-98517: Port XKCP's fix for the buffer overflows in SHA-3
+- gh-98517: Port XKCP's fix for the buffer overflows in SHA-3
   (CVE-2022-37454).
 
-- gh-issue-68966: The deprecated mailcap module now refuses to inject unsafe
-  text (filenames, MIME types, parameters) into shell commands. Instead of
-  using such text, it will warn and act as if a match was not found (or for
-  test commands, as if the test failed).
+- gh-68966: The deprecated mailcap module now refuses to inject unsafe text
+  (filenames, MIME types, parameters) into shell commands. Instead of using
+  such text, it will warn and act as if a match was not found (or for test
+  commands, as if the test failed).
 
 
 What's New in Python 3.8.15 final?
@@ -220,11 +320,11 @@ What's New in Python 3.8.15 final?
 Security
 --------
 
-- gh-issue-97616: Fix multiplying a list by an integer (``list *= int``):
-  detect the integer overflow when the new allocated length is close to the
-  maximum size. Issue reported by Jordan Limor.  Patch by Victor Stinner.
+- gh-97616: Fix multiplying a list by an integer (``list *= int``): detect
+  the integer overflow when the new allocated length is close to the maximum
+  size. Issue reported by Jordan Limor.  Patch by Victor Stinner.
 
-- gh-issue-97612: Fix a shell code injection vulnerability in the
+- gh-97612: Fix a shell code injection vulnerability in the
   ``get-remote-certificate.py`` example script. The script no longer uses a
   shell to run ``openssl`` commands. Issue reported and initial fix by Caleb
   Shortt. Patch by Victor Stinner.
@@ -232,24 +332,24 @@ Security
 Core and Builtins
 -----------------
 
-- gh-issue-96848: Fix command line parsing: reject :option:`-X
-  int_max_str_digits <-X>` option with no value (invalid) when the
+- gh-96848: Fix command line parsing: reject :option:`-X int_max_str_digits
+  <-X>` option with no value (invalid) when the
   :envvar:`PYTHONINTMAXSTRDIGITS` environment variable is set to a valid
   limit. Patch by Victor Stinner.
 
-- gh-issue-95778: When :exc:`ValueError` is raised if an integer is larger
-  than the limit, mention the :func:`sys.set_int_max_str_digits` function in
-  the error message. Patch by Victor Stinner.
+- gh-95778: When :exc:`ValueError` is raised if an integer is larger than
+  the limit, mention the :func:`sys.set_int_max_str_digits` function in the
+  error message. Patch by Victor Stinner.
 
 Library
 -------
 
-- gh-issue-97005: Update bundled libexpat to 2.4.9
+- gh-97005: Update bundled libexpat to 2.4.9
 
 Windows
 -------
 
-- gh-issue-96577: Fixes a potential buffer overrun in :mod:`msilib`.
+- gh-96577: Fixes a potential buffer overrun in :mod:`msilib`.
 
 
 What's New in Python 3.8.14 final?
@@ -260,12 +360,11 @@ What's New in Python 3.8.14 final?
 Security
 --------
 
-- gh-issue-95778: Converting between :class:`int` and :class:`str` in bases
-  other than 2 (binary), 4, 8 (octal), 16 (hexadecimal), or 32 such as base
-  10 (decimal) now raises a :exc:`ValueError` if the number of digits in
-  string form is above a limit to avoid potential denial of service attacks
-  due to the algorithmic complexity. This is a mitigation for
-  `CVE-2020-10735
+- gh-95778: Converting between :class:`int` and :class:`str` in bases other
+  than 2 (binary), 4, 8 (octal), 16 (hexadecimal), or 32 such as base 10
+  (decimal) now raises a :exc:`ValueError` if the number of digits in string
+  form is above a limit to avoid potential denial of service attacks due to
+  the algorithmic complexity. This is a mitigation for `CVE-2020-10735
   <https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2020-10735>`_.
 
   This new limit can be configured or disabled by environment variable,
@@ -277,15 +376,15 @@ Security
   feedback from Victor Stinner, Thomas Wouters, Steve Dower, Ned Deily, and
   Mark Dickinson.
 
-- gh-issue-87389: :mod:`http.server`: Fix an open redirection vulnerability
-  in the HTTP server when an URI path starts with ``//``.  Vulnerability
+- gh-87389: :mod:`http.server`: Fix an open redirection vulnerability in the
+  HTTP server when an URI path starts with ``//``.  Vulnerability
   discovered, and initial fix proposed, by Hamza Avvan.
 
 Core and Builtins
 -----------------
 
-- gh-issue-93065: Fix contextvars HAMT implementation to handle iteration
-  over deep trees.
+- gh-93065: Fix contextvars HAMT implementation to handle iteration over
+  deep trees.
 
   The bug was discovered and fixed by Eli Libman. See
   `MagicStack/immutables#84
@@ -304,15 +403,15 @@ Library
 Documentation
 -------------
 
-- gh-issue-91888: Add a new ``gh`` role to the documentation to link to
-  GitHub issues.
+- gh-91888: Add a new ``gh`` role to the documentation to link to GitHub
+  issues.
 
 - bpo-47138: Pin Jinja to a version compatible with Sphinx version 2.4.4.
 
 Tests
 -----
 
-- gh-issue-94208: ``test_ssl`` is now checking for supported TLS version and
+- gh-94208: ``test_ssl`` is now checking for supported TLS version and
   protocols in more tests.
 
 - bpo-47016: Create a GitHub Actions workflow for verifying bundled pip and
