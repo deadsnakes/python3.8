@@ -1,3 +1,9 @@
+# archived
+
+moved to [py3.8](https://github.com/deadsnakes/py3.8)
+
+___
+
 python3.8
 =========
 
